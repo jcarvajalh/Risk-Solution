@@ -26,4 +26,8 @@
   --color-border: #e5e5e5; /* TODO: confirmar en Figma */
 
   /* TODO: colores semánticos (éxito/error/advertencia) — pedir a Figma antes de definir. */
+
+  /* Sombras. Derivado de Figma (tarjetas). TODO: confirmar. */
+  --shadow-card:
+    0 4px 4px rgba(0, 0, 0, 0.02), 0 4px 4px rgba(0, 0, 0, 0.05);
 }

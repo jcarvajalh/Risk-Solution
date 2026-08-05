@@ -14,4 +14,29 @@
   }
 }
 
-/* TODO: añadir keyframes y clases rs-* conforme se construyan las secciones. */
+/*
+ * Overlay del hero. Oscurece la foto de fondo para garantizar el contraste del
+ * texto blanco. Gradiente construido con tokens (sin hex sueltos): primary al
+ * 38.5% en el borde derecho → ink al 70% hacia la izquierda.
+ * Mapea: linear-gradient(270deg, rgba(21,94,239,.385) 0%, rgba(0,0,0,.7) 73.56%).
+ */
+.rs-hero-overlay {
+  background: linear-gradient(
+    270deg,
+    color-mix(in srgb, var(--color-primary) 38.5%, transparent) 0%,
+    color-mix(in srgb, var(--color-ink) 70%, transparent) 73.56%
+  );
+}
+
+/*
+ * Etiqueta de módulo (carrusel del ecosistema). El color de acento por módulo se
+ * inyecta con la variable --rs-accent (definida inline en cada tarjeta desde los
+ * datos). El fondo es ese acento al 15% (como en Figma), vía color-mix.
+ * TODO: tokenizar los acentos de módulo cuando se confirmen (hoy son provisionales).
+ */
+.rs-module-tag {
+  background-color: color-mix(in srgb, var(--rs-accent) 15%, transparent);
+  color: var(--rs-accent);
+}
+
+/* TODO: añadir más keyframes y clases rs-* conforme se construyan las secciones. */

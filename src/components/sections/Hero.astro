@@ -1,0 +1,67 @@
+---
+/**
+ * Hero del home. Fondo de imagen a sangre completa + overlay en gradiente; el
+ * contenido (badge, título, descripción y CTAs) va alineado a la izquierda dentro
+ * del contenedor. Layout con flex, mobile-first y muy adaptable. Lee su contenido
+ * de site.ts (patrón de datos 6.3).
+ *
+ * Mapeo Figma (referencia, no copia literal):
+ * - Badge en JetBrains Mono → mapeado a Geist (uppercase + tracking). Regla 4.1.
+ * - #F5F7FA (badge/CTA secundario) → mapeado a white.
+ * - Título Geist 72/70 -0.04em → responsivo (40 → 56 → 72px). "financieros." en primary.
+ * - Descripción Geist 20/26 -0.04em. Contenedor de texto máx. ~623px.
+ * - Foto de fondo por slug (AppImage name="hero-background").
+ * - Gradiente → clase CSS .rs-hero-overlay (tokens primary/ink).
+ */
+import { hero } from "@config/site";
+import AppImage from "@components/ui/AppImage.astro";
+import Badge from "@components/ui/Badge.astro";
+import Button from "@components/ui/Button.astro";
+---
+
+<section
+  class="relative isolate flex min-h-dvh items-center overflow-hidden bg-ink"
+>
+  <!-- Foto de fondo (slug: hero-background) -->
+  <AppImage
+    name={hero.backgroundImage}
+    alt=""
+    loading="eager"
+    class="absolute inset-0 -z-20 h-full w-full object-cover"
+  />
+
+  <!-- Overlay en gradiente -->
+  <div class="rs-hero-overlay absolute inset-0 -z-10" aria-hidden="true"></div>
+
+  <!-- Contenido -->
+  <div class="mx-auto w-full max-w-[1060px] px-5 pt-28 pb-16 sm:px-6 lg:py-0">
+    <div class="max-w-[623px]">
+      <Badge variant="light">{hero.badge}</Badge>
+
+      <h1
+        class="mt-6 text-[2.5rem] leading-[1.02] font-semibold tracking-[-0.04em] text-white md:text-[3.5rem] lg:text-[4.5rem] lg:leading-[0.97]"
+      >
+        {hero.titleLead}<span class="text-primary">{hero.titleAccent}</span>
+      </h1>
+
+      <p
+        class="mt-6 max-w-[578px] text-base font-medium tracking-[-0.04em] text-white sm:text-lg lg:text-xl lg:leading-[26px]"
+      >
+        {hero.description}
+      </p>
+
+      <div class="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <Button
+          href={hero.primaryCta.href}
+          label={hero.primaryCta.label}
+          variant="primary"
+        />
+        <Button
+          href={hero.secondaryCta.href}
+          label={hero.secondaryCta.label}
+          variant="ghost"
+        />
+      </div>
+    </div>
+  </div>
+</section>

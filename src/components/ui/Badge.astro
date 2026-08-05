@@ -1,0 +1,35 @@
+---
+/**
+ * Badge/eyebrow: píldora con borde fino y texto en mayúsculas. Reutilizable
+ * (hero, secciones…). Regla DRY 6.2.
+ *
+ * Mapeo Figma: texto en JetBrains Mono → Geist (font-sans), única familia (4.1).
+ *
+ * Variantes:
+ * - light:   borde y texto claros (sobre fondos oscuros, p. ej. el hero).
+ * - primary: borde y texto azules (sobre fondos claros).
+ */
+import { cn } from "@lib/utils";
+
+interface Props {
+  variant?: "light" | "primary";
+  class?: string;
+}
+
+const { variant = "primary", class: className } = Astro.props;
+
+const variantClasses: Record<NonNullable<Props["variant"]>, string> = {
+  light: "border-white/60 text-white",
+  primary: "border-primary/60 text-primary",
+};
+---
+
+<span
+  class={cn(
+    "inline-flex items-center rounded-full border-[0.5px] px-4 py-2 text-xs font-medium tracking-[-0.02em] uppercase",
+    variantClasses[variant],
+    className,
+  )}
+>
+  <slot />
+</span>

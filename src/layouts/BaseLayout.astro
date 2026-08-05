@@ -60,12 +60,12 @@ const canonicalURL = new URL(
   <body>
     <a href="#main" class="sr-only focus:not-sr-only">Saltar al contenido</a>
 
-    <!-- TODO: <Header /> -->
+    <slot name="header" />
 
     <main id="main">
       <slot />
     </main>
 
-    <!-- TODO: <Footer /> -->
+    <slot name="footer" />
   </body>
 </html>

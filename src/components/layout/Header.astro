@@ -1,0 +1,75 @@
+---
+/**
+ * Header del sitio. Fondo transparente: se monta sobre el hero (el texto es
+ * blanco para contrastar con la imagen del hero). Layout con flex, sin
+ * position:absolute salvo el propio header sobre el hero. Mobile-first: en
+ * pantallas < lg se colapsa en un menú hamburguesa (isla React).
+ *
+ * La navegación se lee de @config/navigation (no se hardcodea en el marcado).
+ *
+ * Notas de mapeo desde Figma (referencia, no copia literal):
+ * - Enlaces Inter 12/600 → mapeados a Geist (font-sans), única familia del sitio.
+ * - Botón CTA → primitivo Button (variant primary). Radio 5px, bg-primary.
+ * - Ícono del logo: placeholder por slug (AppImage name="logo"). Para reemplazarlo,
+ *   agregar el archivo en src/assets/images/logo.(svg|png|jpg|webp).
+ * - Contenedor ~1060px derivado del margen de 190px sobre el frame de 1440px.
+ *   TODO: confirmar el ancho de contenedor global del sistema.
+ */
+import { mainNav, headerCta } from "@config/navigation";
+import AppImage from "@components/ui/AppImage.astro";
+import Button from "@components/ui/Button.astro";
+import MobileNav from "@components/islands/MobileNav";
+---
+
+<header class="absolute inset-x-0 top-0 z-50 h-20">
+  <div
+    class="mx-auto flex h-full max-w-[1060px] items-center justify-between px-5 sm:px-6"
+  >
+    <!-- Logo -->
+    <a
+      href="/"
+      class="flex items-center gap-2.5 text-white"
+      aria-label="Risk Solution — Ir al inicio"
+    >
+      <AppImage
+        name="logo"
+        alt="Risk Solution"
+        width={26}
+        height={26}
+        class="size-[26px]"
+        loading="eager"
+      />
+      <span
+        class="text-2xl leading-none font-semibold tracking-[-0.02em] whitespace-nowrap"
+      >
+        Risk Solution
+      </span>
+    </a>
+
+    <!-- Navegación desktop -->
+    <nav aria-label="Principal" class="hidden items-center gap-8 lg:flex">
+      {
+        mainNav.map((item) => (
+          <a
+            href={item.href}
+            class="text-sm font-semibold tracking-[-0.02em] text-white transition-opacity hover:opacity-70"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+
+      <Button
+        href={headerCta.href}
+        label={headerCta.label}
+        variant="primary"
+        class="ml-2"
+      />
+    </nav>
+
+    <!-- Navegación móvil (isla React) -->
+    <div class="lg:hidden">
+      <MobileNav client:idle />
+    </div>
+  </div>
+</header>

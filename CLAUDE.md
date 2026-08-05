@@ -534,7 +534,7 @@ Actualiza esta sección conforme avancemos.
 - [x] Dependencias instaladas
 - [x] Estructura de carpetas creada
 - [x] Tokens de diseño en `theme.css` (paleta base confirmada; derivados pendientes de Figma)
-- [ ] Geist servida localmente (pendiente: añadir los `.woff2` a `public/fonts/geist/`)
+- [x] Geist servida localmente (`.woff2` 400/500/600/700 en `public/fonts/geist/`)
 - [x] `public/_headers`
 - [ ] `BaseLayout.astro` (esqueleto inicial creado; completar con Figma)
 - [ ] Header + Footer

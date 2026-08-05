@@ -1,16 +1,22 @@
 ---
 /**
- * Home. PLACEHOLDER provisional para que el proyecto arranque. Se construirá
- * sección por sección desde Figma (pendiente en el estado del proyecto).
+ * Home. El Header se monta sobre el hero mediante el slot "header" del layout
+ * (queda como hermano de <main>, semántica correcta, y visualmente encima del
+ * hero gracias a su posicionamiento).
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/layout/Header.astro";
+import Hero from "@components/sections/Hero.astro";
+import Problem from "@components/sections/Problem.astro";
+import Ecosystem from "@components/sections/Ecosystem.astro";
 ---
 
 <BaseLayout>
-  <section class="mx-auto max-w-3xl px-6 py-24">
-    <h1 class="text-4xl font-bold text-ink">Risk Solution</h1>
-    <p class="mt-4 text-lg text-primary">
-      Estructura inicial lista. Contenido pendiente de construir desde Figma.
-    </p>
-  </section>
+  <Header slot="header" />
+
+  <Hero />
+  <Problem />
+  <Ecosystem />
+
+  <!-- TODO: siguientes secciones del home. -->
 </BaseLayout>
