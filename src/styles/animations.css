@@ -28,4 +28,15 @@
   );
 }
 
+/*
+ * Etiqueta de módulo (carrusel del ecosistema). El color de acento por módulo se
+ * inyecta con la variable --rs-accent (definida inline en cada tarjeta desde los
+ * datos). El fondo es ese acento al 15% (como en Figma), vía color-mix.
+ * TODO: tokenizar los acentos de módulo cuando se confirmen (hoy son provisionales).
+ */
+.rs-module-tag {
+  background-color: color-mix(in srgb, var(--rs-accent) 15%, transparent);
+  color: var(--rs-accent);
+}
+
 /* TODO: añadir más keyframes y clases rs-* conforme se construyan las secciones. */

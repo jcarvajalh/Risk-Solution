@@ -72,6 +72,88 @@ export const problem = {
   ],
 };
 
+/**
+ * Sección "El ecosistema Risk" — carrusel de módulos. Copy y colores de Figma.
+ *
+ * TODO IMPORTANTE:
+ * - Faltan 4 de los 7 módulos (nombre, acento, ícono, descripción, imagen, slug).
+ * - Los `accent` son PROVISIONALES (de Figma). Tokenizar al confirmar la paleta
+ *   de módulos. Ojo contraste: #DDBF00 sobre blanco no cumple WCAG AA.
+ * - Los `href` apuntan a /modulos hasta confirmar los slugs (pendiente 1).
+ * - Los íconos son equivalentes lucide de los PNG del diseño.
+ * - Las imágenes de gráfico van por slug bajo src/assets/images/modules/.
+ */
+export const ecosystem = {
+  eyebrow: "EL ECOSISTEMA RISK",
+  title: "Siete módulos. Una sola plataforma.",
+  subtitle:
+    "Cada módulo opera de forma independiente, pero todos comparten una misma fuente de datos y un mismo lenguaje visual ejecutivo.",
+  cta: { label: "Solicitar Demo", href: "/contacto" },
+  modules: [
+    {
+      name: "Riesgo de crédito",
+      accent: "#155EEF",
+      icon: "lucide:triangle-alert",
+      description:
+        "Pérdida esperada, análisis de cosechas, calidad y concentración de cartera.",
+      chartImage: "modules/riesgo-de-credito",
+      href: "/modulos",
+    },
+    {
+      name: "Business Intelligence",
+      accent: "#00970F",
+      icon: "lucide:bar-chart-3",
+      description:
+        "Informe de gestión diario, solvencia, ROE/ROA y flujo de efectivo.",
+      chartImage: "modules/business-intelligence",
+      href: "/modulos",
+    },
+    {
+      name: "Riesgo operacional",
+      accent: "#DDBF00",
+      icon: "lucide:workflow",
+      // TODO: revisar copy, ¿"matrices de eventos"?
+      description: "Mapas de procesos, matrices eventos.",
+      chartImage: "modules/riesgo-operacional",
+      href: "/modulos",
+    },
+    // --- Módulos deducidos del copy del hero (nombres confirmados). ---
+    // TODO: color, ícono y descripción PROVISIONALES; reemplazar con los de Figma.
+    {
+      name: "Riesgo de liquidez",
+      accent: "#0E7490", // TODO Figma
+      icon: "lucide:droplets", // TODO Figma
+      description: "Brechas de liquidez, indicadores regulatorios y proyección de flujos de caja.", // TODO copy
+      chartImage: "modules/riesgo-de-liquidez",
+      href: "/modulos",
+    },
+    {
+      name: "Riesgo de mercado",
+      accent: "#7C3AED", // TODO Figma
+      icon: "lucide:trending-up", // TODO Figma
+      description: "Valor en riesgo (VaR), sensibilidades y exposición por factor de mercado.", // TODO copy
+      chartImage: "modules/riesgo-de-mercado",
+      href: "/modulos",
+    },
+    {
+      name: "SARLAFT",
+      accent: "#DC2626", // TODO Figma
+      icon: "lucide:shield-check", // TODO Figma
+      description: "Segmentación, señales de alerta y reportes ROS/UIAF.", // TODO copy
+      chartImage: "modules/sarlaft",
+      href: "/modulos",
+    },
+    {
+      name: "Otorgamiento",
+      accent: "#4F46E5", // TODO Figma
+      icon: "lucide:file-check", // TODO Figma
+      description: "Originación, scoring y decisión de crédito en un solo flujo.", // TODO copy
+      chartImage: "modules/otorgamiento",
+      href: "/modulos",
+    },
+  ],
+};
+
 /** Clientes reales CONFIRMADOS. No agregar otros sin confirmación (sección 2). */
 export const clients = ["InfiHuila", "Infi Caldas", "Infi Manizales"] as const;
 

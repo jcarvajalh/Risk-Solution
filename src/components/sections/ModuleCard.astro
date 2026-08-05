@@ -1,0 +1,60 @@
+---
+/**
+ * Tarjeta de módulo del carrusel del ecosistema. El color de acento por módulo se
+ * pasa por la variable inline --rs-accent (la etiqueta lo usa vía .rs-module-tag).
+ * El gráfico es una imagen por slug (placeholder hasta que se agregue).
+ */
+import { Icon } from "astro-icon/components";
+import AppImage from "@components/ui/AppImage.astro";
+
+interface ModuleTeaser {
+  name: string;
+  accent: string;
+  icon: string;
+  description: string;
+  chartImage: string;
+  href: string;
+}
+
+interface Props {
+  module: ModuleTeaser;
+  /** Copia visual para el carrusel infinito: se oculta a lectores y al tabulado. */
+  clone?: boolean;
+}
+
+const { module: mod, clone = false } = Astro.props;
+---
+
+<article
+  class="flex w-[280px] shrink-0 flex-col rounded-[10px] border-[0.5px] border-black/10 bg-bg p-6 sm:w-[400px] sm:p-7 lg:w-[501px]"
+  style={`--rs-accent: ${mod.accent};`}
+  aria-hidden={clone ? "true" : undefined}
+>
+  <span
+    class="rs-module-tag inline-flex items-center gap-2 self-start rounded-[10px] px-3 py-2.5 text-lg font-semibold tracking-[-0.04em]"
+  >
+    <Icon name={mod.icon} class="size-[18px]" aria-hidden="true" />
+    {mod.name}
+  </span>
+
+  <p class="mt-4 text-sm font-medium tracking-[-0.04em] text-ink-secondary">
+    {mod.description}
+  </p>
+
+  <a
+    href={mod.href}
+    tabindex={clone ? -1 : undefined}
+    class="mt-3 inline-flex items-center gap-1 text-sm font-medium tracking-[-0.04em] text-ink-secondary transition-colors hover:text-ink"
+  >
+    Ver módulo
+    <Icon name="lucide:chevron-right" class="size-4" aria-hidden="true" />
+  </a>
+
+  <div class="mt-5 overflow-hidden rounded-[10px] bg-surface">
+    <AppImage
+      name={mod.chartImage}
+      alt={`Gráfico del módulo ${mod.name}`}
+      class="h-[176px] w-full object-cover"
+    />
+  </div>
+</article>
