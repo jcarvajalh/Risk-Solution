@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/*
+ * Tokens de diseño — fuente única de verdad (Tailwind v4, enfoque CSS-first).
+ * Tailwind genera las utilidades desde aquí y el CSS plano consume estas mismas
+ * variables con var(--token). Nunca declares un valor de diseño dos veces.
+ */
+@theme {
+  --font-sans: "Geist", system-ui, sans-serif;
+
+  /* Paleta CONFIRMADA — única fuente de verdad para estos cuatro valores. */
+  --color-primary: #155eef;
+  --color-bg: #f7f7f7;
+  --color-surface: #ffffff;
+  --color-ink: #000000;
+
+  /*
+   * Valores derivados PROVISIONALES (cálculos, no confirmados).
+   * TODO: extraer de Figma y reemplazar. No propagar a documentación.
+   */
+  --color-primary-hover: #1250cb; /* TODO: confirmar en Figma */
+  --color-primary-active: #0e40a2; /* TODO: confirmar en Figma */
+  --color-primary-subtle: #e8f0fe; /* TODO: confirmar en Figma — fondos suaves, badges */
+  --color-ink-secondary: #4b4b4b; /* TODO: confirmar en Figma — texto de apoyo */
+  --color-ink-muted: #6b6b6b; /* TODO: confirmar en Figma — metadatos, captions */
+  --color-border: #e5e5e5; /* TODO: confirmar en Figma */
+
+  /* TODO: colores semánticos (éxito/error/advertencia) — pedir a Figma antes de definir. */
+}

@@ -1,0 +1,7 @@
+# Configuración de pnpm. Aunque no hay workspaces, aquí viven los ajustes que en
+# pnpm 11 ya no se leen desde package.json.
+#
+# Dependencias autorizadas a ejecutar scripts de build (compilan binarios nativos).
+allowBuilds:
+  esbuild: true
+  sharp: true
