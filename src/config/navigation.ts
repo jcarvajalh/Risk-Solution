@@ -23,8 +23,18 @@ export const mainNav: NavLink[] = [
       { label: "Casos de éxito", href: "/recursos/casos-de-exito" },
     ],
   },
-  { label: "Contacto", href: "/contacto", isCta: true },
+  { label: "Contacto", href: "/contacto" },
 ];
+
+/**
+ * CTA del header ("Solicitar Demo"). Es una acción separada de los enlaces de
+ * navegación (así aparece en el diseño del home).
+ * TODO: confirmar destino real (¿/contacto o un formulario de demo dedicado?).
+ */
+export const headerCta: NavLink = {
+  label: "Solicitar Demo",
+  href: "/contacto",
+};
 
 /**
  * Navegación del footer. Se refinará cuando se defina el contenido definitivo;

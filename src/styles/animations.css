@@ -14,4 +14,18 @@
   }
 }
 
-/* TODO: añadir keyframes y clases rs-* conforme se construyan las secciones. */
+/*
+ * Overlay del hero. Oscurece la foto de fondo para garantizar el contraste del
+ * texto blanco. Gradiente construido con tokens (sin hex sueltos): primary al
+ * 38.5% en el borde derecho → ink al 70% hacia la izquierda.
+ * Mapea: linear-gradient(270deg, rgba(21,94,239,.385) 0%, rgba(0,0,0,.7) 73.56%).
+ */
+.rs-hero-overlay {
+  background: linear-gradient(
+    270deg,
+    color-mix(in srgb, var(--color-primary) 38.5%, transparent) 0%,
+    color-mix(in srgb, var(--color-ink) 70%, transparent) 73.56%
+  );
+}
+
+/* TODO: añadir más keyframes y clases rs-* conforme se construyan las secciones. */

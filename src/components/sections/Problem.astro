@@ -1,0 +1,54 @@
+---
+/**
+ * Sección "El costo de no saberlo a tiempo" (problema). Encabezado centrado +
+ * grilla bento de 4 tarjetas (2 filas con columnas ancha/angosta alternadas).
+ * Lee su contenido de site.ts (patrón de datos 6.3).
+ *
+ * Mapeo Figma (referencia, no copia literal):
+ * - Layout con CSS grid (sin position:absolute). Filas: [ancha 479 + angosta 220]
+ *   y [angosta 220 + ancha 479]; en móvil se apilan (1 columna).
+ * - Radios asimétricos: anchas 0/20px (rounded-tr + bl), angostas 20px/0 (tl + br).
+ * - Título #1F1F1F → text-ink; texto #555 → ink-secondary; badge/íconos → primary.
+ * - Sombra → token shadow-card.
+ */
+import { problem } from "@config/site";
+import Badge from "@components/ui/Badge.astro";
+import ProblemCard from "@components/sections/ProblemCard.astro";
+
+const wideRadius = "rounded-tr-[20px] rounded-bl-[20px]";
+const narrowRadius = "rounded-tl-[20px] rounded-br-[20px]";
+---
+
+<section class="bg-bg py-20 md:py-28">
+  <div class="mx-auto max-w-[940px] px-5 sm:px-6">
+    <!-- Encabezado -->
+    <div class="flex flex-col items-center text-center">
+      <Badge variant="primary">{problem.eyebrow}</Badge>
+
+      <h2
+        class="mt-6 max-w-[681px] text-3xl font-semibold tracking-[-0.04em] text-balance text-ink md:text-[40px] md:leading-[52px]"
+      >
+        {problem.title}
+      </h2>
+
+      <p
+        class="mt-6 max-w-[940px] text-base tracking-[-0.04em] text-ink-secondary md:text-xl md:leading-[26px]"
+      >
+        {problem.intro}<span class="text-primary">{problem.introAccent}</span>
+      </p>
+    </div>
+
+    <!-- Grilla bento -->
+    <div class="mx-auto mt-12 flex max-w-[710px] flex-col gap-2.5">
+      <div class="grid grid-cols-1 gap-2.5 md:grid-cols-[479fr_220fr]">
+        <ProblemCard card={problem.cards[0]} radius={wideRadius} iconAlign="left" />
+        <ProblemCard card={problem.cards[1]} radius={narrowRadius} iconAlign="right" />
+      </div>
+
+      <div class="grid grid-cols-1 gap-2.5 md:grid-cols-[220fr_479fr]">
+        <ProblemCard card={problem.cards[2]} radius={narrowRadius} iconAlign="left" />
+        <ProblemCard card={problem.cards[3]} radius={wideRadius} iconAlign="right" />
+      </div>
+    </div>
+  </div>
+</section>

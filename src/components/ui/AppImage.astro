@@ -1,0 +1,83 @@
+---
+/**
+ * Imagen con placeholder por slug. Estándar del proyecto para TODAS las imágenes
+ * de contenido (las que viven en src/assets/images/).
+ *
+ * Cómo funciona:
+ * - `name` es el slug = ruta del archivo bajo src/assets/images/ SIN extensión.
+ *   Ejemplos: name="logo"  -> src/assets/images/logo.(svg|png|jpg|webp|avif)
+ *             name="clients/infihuila" -> src/assets/images/clients/infihuila.png
+ * - Si el archivo existe, se renderiza optimizado con astro:assets.
+ * - Si no existe, se muestra un placeholder con borde punteado. El atributo
+ *   `title` indica qué archivo agregar. Al soltar el archivo con ese nombre en la
+ *   carpeta, se reemplaza automáticamente (HMR en dev, o en el siguiente build).
+ *
+ * Extensiones soportadas: svg, png, jpg, jpeg, webp, avif.
+ */
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  /** Slug: ruta bajo src/assets/images/ sin extensión (p. ej. "logo" o "clients/infihuila"). */
+  name: string;
+  /** Texto alternativo. Vacío ("") solo si la imagen es puramente decorativa. */
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  loading?: "lazy" | "eager";
+}
+
+const {
+  name,
+  alt,
+  width,
+  height,
+  class: className,
+  loading = "lazy",
+} = Astro.props;
+
+// Vite exige un patrón literal: se cargan todas las imágenes y se busca por slug.
+const modules = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/images/**/*.{png,jpg,jpeg,webp,avif,svg}",
+);
+
+const matchKey = Object.keys(modules).find((path) => {
+  const relativeWithoutExt = path
+    .replace("/src/assets/images/", "")
+    .replace(/\.[^.]+$/, "");
+  return relativeWithoutExt === name;
+});
+
+const image = matchKey ? (await modules[matchKey]!()).default : null;
+const expectedFile = `src/assets/images/${name}.(svg|png|jpg|webp)`;
+const sizeStyle =
+  width && height ? `width:${width}px;height:${height}px` : undefined;
+---
+
+{
+  image ? (
+    <Image
+      src={image}
+      alt={alt}
+      width={width}
+      height={height}
+      class={className}
+      loading={loading}
+    />
+  ) : (
+    <span
+      class:list={[
+        "inline-flex items-center justify-center rounded-[5px] border border-dashed border-border bg-primary-subtle text-ink-muted",
+        className,
+      ]}
+      style={sizeStyle}
+      role="img"
+      aria-label={alt}
+      title={`Falta la imagen: ${expectedFile}`}
+    >
+      <Icon name="lucide:image" class="size-1/2 max-h-6 max-w-6" aria-hidden="true" />
+    </span>
+  )
+}

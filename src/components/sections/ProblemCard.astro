@@ -1,0 +1,48 @@
+---
+/**
+ * Tarjeta de la sección "problema". El ícono se alinea a la izquierda o a la
+ * derecha según la columna (en móvil siempre a la izquierda). El radio asimétrico
+ * (esquinas alternadas) llega por prop desde la sección.
+ */
+import { Icon } from "astro-icon/components";
+import { cn } from "@lib/utils";
+
+interface CardData {
+  icon: string;
+  title: string;
+  body: string;
+}
+
+interface Props {
+  card: CardData;
+  /** Clases de border-radius asimétrico (varían entre tarjeta ancha y angosta). */
+  radius: string;
+  iconAlign: "left" | "right";
+}
+
+const { card, radius, iconAlign } = Astro.props;
+---
+
+<article class={cn("flex h-full flex-col bg-surface p-6 shadow-card", radius)}>
+  <div
+    class={cn(
+      "flex",
+      iconAlign === "right" ? "justify-start md:justify-end" : "justify-start",
+    )}
+  >
+    <span
+      class="flex h-11 w-[47px] items-center justify-center rounded-[10px] bg-primary-subtle"
+    >
+      <Icon name={card.icon} class="size-6 text-primary" aria-hidden="true" />
+    </span>
+  </div>
+
+  <h3 class="mt-4 text-xl font-medium tracking-[-0.04em] text-ink">
+    {card.title}
+  </h3>
+  <p
+    class="mt-2 text-base tracking-[-0.04em] text-ink-secondary md:leading-[21px]"
+  >
+    {card.body}
+  </p>
+</article>

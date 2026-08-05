@@ -1,0 +1,67 @@
+---
+/**
+ * Botón/enlace de acción con flecha en círculo. Primitivo reutilizable (header,
+ * hero, CTABanner…). Evita duplicar el patrón (regla DRY 6.2).
+ *
+ * Variantes:
+ * - primary: fondo azul (bg-primary), círculo blanco, flecha primary.
+ * - ghost:   sin fondo, texto/círculo/flecha claros (para sobre imágenes oscuras).
+ *
+ * Mapeo Figma: texto Inter 12/600 → Geist (font-sans). El botón secundario del
+ * hero usa #F5F7FA → mapeado a white.
+ */
+import { Icon } from "astro-icon/components";
+import { cn } from "@lib/utils";
+
+interface Props {
+  href: string;
+  label: string;
+  variant?: "primary" | "ghost";
+  class?: string;
+  /** Muestra la flecha en círculo (por defecto sí). */
+  arrow?: boolean;
+}
+
+const {
+  href,
+  label,
+  variant = "primary",
+  class: className,
+  arrow = true,
+} = Astro.props;
+
+const base =
+  "inline-flex h-[38px] items-center gap-3 rounded-[5px] pr-1.5 pl-4 text-sm font-semibold tracking-[-0.02em] transition-colors";
+
+const variantClasses: Record<NonNullable<Props["variant"]>, string> = {
+  primary: "bg-primary text-white hover:bg-primary-hover",
+  ghost: "text-white hover:bg-white/10",
+};
+
+const circleClasses: Record<NonNullable<Props["variant"]>, string> = {
+  primary: "bg-white",
+  ghost: "border-[0.5px] border-white",
+};
+
+const arrowClasses: Record<NonNullable<Props["variant"]>, string> = {
+  primary: "text-primary",
+  ghost: "text-white",
+};
+---
+
+<a href={href} class={cn(base, variantClasses[variant], className)}>
+  <span>{label}</span>
+  {
+    arrow && (
+      <span
+        class:list={[
+          "flex size-5 items-center justify-center rounded-full",
+          circleClasses[variant],
+        ]}
+        aria-hidden="true"
+      >
+        <Icon name="lucide:arrow-right" class:list={["size-3", arrowClasses[variant]]} />
+      </span>
+    )
+  }
+</a>
