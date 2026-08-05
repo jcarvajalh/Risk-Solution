@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TODO: reemplazar por el dominio de producción real (coincide con `site` en astro.config.mjs).
+Sitemap: https://risksolution.example/sitemap-index.xml

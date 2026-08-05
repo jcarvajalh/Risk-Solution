@@ -1,0 +1,29 @@
+# build output
+dist/
+.output/
+
+# generado por astro
+.astro/
+
+# dependencias
+node_modules/
+
+# variables de entorno (NUNCA subir secretos — sección 7 del CLAUDE.md)
+.env
+.env.production
+.env.*.local
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# sistema operativo / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# cloudflare
+.wrangler/

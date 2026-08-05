@@ -1,0 +1,30 @@
+/*
+ * Hoja de estilos global. Orden importante:
+ * 1) tokens (@theme + @import "tailwindcss") 2) fuentes 3) animaciones 4) base.
+ */
+@import "./theme.css";
+@import "./fonts.css";
+@import "./animations.css";
+
+/* Reset y base mínimos. Tailwind Preflight ya normaliza; aquí solo lo propio. */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Foco visible accesible: nunca eliminar el outline sin sustituto (sección 9). */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
