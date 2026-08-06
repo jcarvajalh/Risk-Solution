@@ -225,6 +225,25 @@ export const testimonialsSection = {
 };
 
 /**
+ * CTABanner — bloque de conversión antes del footer. Copy tomado de Figma.
+ * Son los valores POR DEFECTO: el componente acepta props para montarlo con
+ * otro copy en otras páginas sin duplicarlo (sección 6.2).
+ *
+ * TODO: en Figma la descripción dice "y mira el comité de riesgo recibe el
+ * reporte en minutos", a la que le falta el "cómo". Se corrigió; confirmar.
+ * TODO: confirmar el destino del CTA (mismo caso que headerCta).
+ */
+export const ctaBanner = {
+  // El título se parte en dos para forzar el salto después de "a", como en
+  // Figma. En móvil el salto se desactiva y el texto fluye solo.
+  titleLead: "Lleva toda tu gestión de riesgo a",
+  titleTrail: "un solo tablero.",
+  description:
+    "Agenda una demo y mira cómo el comité de riesgo recibe el reporte en minutos",
+  cta: { label: "Hablar con un experto", href: "/contacto" },
+};
+
+/**
  * Footer. Copy tomado de Figma. El CTA reutiliza `headerCta` de navigation.ts:
  * es la misma acción, no se duplica.
  */

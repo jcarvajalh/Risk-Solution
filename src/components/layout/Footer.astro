@@ -36,8 +36,12 @@ const phoneHref = contact.phone
 
 /* Figma 24px */
 const fluidBrand = "text-[clamp(1.25rem,1.67vw,1.625rem)]";
-/* Figma 31px (padding vertical del footer) */
-const fluidPadY = "py-[clamp(1.5rem,2.15vw,2rem)]";
+/*
+ * Arriba, los 64px del token compartido con las secciones (`--spacing-section-y`),
+ * para que el footer siga el mismo ritmo vertical del sitio. Abajo se conservan
+ * los ~31px del frame de Figma.
+ */
+const fluidPadY = "pt-section-y pb-[clamp(1.5rem,2.15vw,2rem)]";
 /* Figma 55px (contenido → línea divisoria) */
 const fluidDividerGap = "mt-[clamp(2rem,3.8vw,3.4375rem)]";
 /* Figma 23px (línea → barra inferior, y título de columna → enlaces) */
