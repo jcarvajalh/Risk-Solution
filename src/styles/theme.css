@@ -30,4 +30,13 @@
   /* Sombras. Derivado de Figma (tarjetas). TODO: confirmar. */
   --shadow-card:
     0 4px 4px rgba(0, 0, 0, 0.02), 0 4px 4px rgba(0, 0, 0, 0.05);
+
+  /*
+   * Padding vertical estándar de sección. Genera la utilidad `py-section-y`.
+   * 64px es el TOPE, no un valor de paso: a partir de 1441px se queda fijo ahí
+   * y nunca crece más. Por debajo encoge hasta 40px en móvil, donde 64px se
+   * comerían demasiada altura. Al vivir aquí, cambiar el ritmo vertical del
+   * sitio es tocar un solo valor.
+   */
+  --spacing-section-y: clamp(2.5rem, 4.44vw, 4rem);
 }

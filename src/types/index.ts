@@ -15,6 +15,21 @@ export interface NavLink {
   external?: boolean;
 }
 
+/** Columna de enlaces del footer: un título y su lista de enlaces. */
+export interface FooterNavGroup {
+  title: string;
+  links: NavLink[];
+}
+
+/** Red social del footer. */
+export interface SocialLink {
+  label: string;
+  /** Nombre del ícono en iconify (colección lucide). */
+  icon: string;
+  /** Sin URL confirmada el Footer no pinta el ícono: mejor un hueco que un enlace roto. */
+  href?: string;
+}
+
 /** Metadatos SEO por página. */
 export interface SeoMeta {
   title: string;

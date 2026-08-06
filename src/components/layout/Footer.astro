@@ -1,0 +1,219 @@
+---
+/**
+ * Footer del sitio. Componente RECICLABLE (6.2): se construye una vez y se monta
+ * en el slot "footer" del BaseLayout en todas las páginas. Los enlaces salen de
+ * navigation.ts y el copy de site.ts; nada hardcodeado en el marcado (6.1).
+ *
+ * Mapeo Figma (referencia, no copia literal):
+ * - Layout con flex/grid, sin position:absolute ni alturas fijas. El contenido
+ *   se alinea al mismo ancho que la tarjeta de FAQSection (1064px) para que el
+ *   sitio tenga una sola columna de lectura; en Figma el footer mide 1280px.
+ *   En móvil la marca y las columnas se apilan.
+ * - Fondo #F7F7F7 → bg-bg. Títulos #1F1F1F → text-ink. Texto #555555 →
+ *   ink-secondary. Botón #155EEF radio 5px → primitivo Button (variant primary),
+ *   que ya reproduce el 159×38 con círculo y flecha.
+ * - El copyright viene en 'Inter' en el export; se usa Geist (regla 4.1). El año
+ *   se calcula, no se escribe fijo.
+ * - La línea divisoria del export es 0.5px de #555555, que a tamaño real se ve
+ *   como un gris claro: se mapea al token semántico `border`.
+ * - DESVIACIÓN: en Figma el bloque superior arranca 108px a la derecha del borde
+ *   del contenedor, mientras la línea y el copyright ocupan los 1280px completos,
+ *   así que el logo queda desalineado con el copyright. Aquí todo se alinea al
+ *   mismo contenedor. Si el escalón era intencional, avísame y lo repongo.
+ */
+import { Icon } from "astro-icon/components";
+import { footerNav, legalNav, socialNav, headerCta } from "@config/navigation";
+import { footer, contact } from "@config/site";
+import AppImage from "@components/ui/AppImage.astro";
+import Button from "@components/ui/Button.astro";
+
+const year = new Date().getFullYear();
+
+/* Enlace tel: sin espacios ni separadores. */
+const phoneHref = contact.phone
+  ? `tel:${contact.phone.replace(/[^+\d]/g, "")}`
+  : undefined;
+
+/* Figma 24px */
+const fluidBrand = "text-[clamp(1.25rem,1.67vw,1.625rem)]";
+/* Figma 31px (padding vertical del footer) */
+const fluidPadY = "py-[clamp(1.5rem,2.15vw,2rem)]";
+/* Figma 55px (contenido → línea divisoria) */
+const fluidDividerGap = "mt-[clamp(2rem,3.8vw,3.4375rem)]";
+/* Figma 23px (línea → barra inferior, y título de columna → enlaces) */
+const fluidBarGap = "pt-[clamp(1rem,1.6vw,1.4375rem)]";
+const fluidColGap = "mt-[clamp(1rem,1.6vw,1.4375rem)]";
+/* Figma 30px (botón → datos de contacto) */
+const fluidContactGap = "mt-[clamp(1.25rem,2.08vw,1.875rem)]";
+---
+
+<footer class:list={["bg-bg", fluidPadY]}>
+  <div class="mx-auto w-full max-w-[1064px] px-5 sm:px-6">
+    <!-- Bloque superior: marca + columnas de enlaces -->
+    <div
+      class="flex flex-col gap-y-12 lg:flex-row lg:justify-between lg:gap-x-16"
+    >
+      <!-- Marca -->
+      <div class="max-w-[280px]">
+        <a
+          href="/"
+          class="inline-flex items-center gap-3"
+          aria-label="Risk Solution — Ir al inicio"
+        >
+          <AppImage
+            name="logo-footer"
+            alt=""
+            width={41}
+            height={36}
+            class="h-9 w-auto object-contain"
+          />
+          <span
+            class:list={[
+              "leading-[1.29] font-semibold tracking-[-0.02em] text-ink",
+              fluidBrand,
+            ]}
+          >
+            Risk solution
+          </span>
+        </a>
+
+        <p
+          class="mt-3.5 text-sm leading-[1.64] tracking-[-0.02em] text-ink-secondary"
+        >
+          {footer.description}
+        </p>
+
+        <Button href={headerCta.href} label={headerCta.label} class="mt-4" />
+
+        {
+          (contact.phone || contact.email) && (
+            <address
+              class:list={[
+                "flex flex-col text-sm leading-[1.29] tracking-[-0.02em] text-ink-secondary not-italic",
+                fluidContactGap,
+              ]}
+            >
+              {contact.phone && (
+                <a
+                  href={phoneHref}
+                  class="transition-colors hover:text-primary"
+                >
+                  {contact.phone}
+                </a>
+              )}
+              {contact.email && (
+                <a
+                  href={`mailto:${contact.email}`}
+                  class="transition-colors hover:text-primary"
+                >
+                  {contact.email}
+                </a>
+              )}
+            </address>
+          )
+        }
+      </div>
+
+      <!-- Columnas de enlaces -->
+      {/*
+       * Columnas de ancho natural (no 1fr): con columnas iguales el hueco entre
+       * los textos cambia según lo largo que sea cada enlace. Así el gap es el
+       * mismo entre las tres, y como el grupo va pegado a la derecha por el
+       * justify-between del contenedor, la última columna termina justo en el
+       * borde de la sección.
+       */}
+      <nav
+        aria-label="Enlaces del pie de página"
+        class="grid grid-cols-2 gap-x-10 gap-y-10 sm:flex sm:gap-x-[clamp(2.5rem,4.2vw,3.75rem)]"
+      >
+        {
+          footerNav.map((group) => (
+            <div>
+              <h2 class="text-base leading-[1.31] font-semibold tracking-[-0.02em] text-ink">
+                {group.title}
+              </h2>
+
+              <ul class:list={["flex flex-col", fluidColGap]}>
+                {group.links.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      class="text-sm leading-[1.64] tracking-[-0.02em] text-ink-secondary transition-colors hover:text-primary"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </nav>
+    </div>
+
+    <!-- Barra inferior -->
+    <div
+      class:list={[
+        "border-t-[0.5px] border-border",
+        fluidDividerGap,
+        fluidBarGap,
+      ]}
+    >
+      <div
+        class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between"
+      >
+        <p class="text-xs leading-[1.25] tracking-[-0.02em] text-ink-secondary">
+          © {year} {footer.copyrightHolder}. Todos los derechos reservados.
+        </p>
+
+        <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
+          <nav aria-label="Enlaces legales">
+            <ul class="flex flex-wrap gap-x-8 gap-y-1">
+              {
+                legalNav.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      class="text-xs leading-[1.92] tracking-[-0.02em] text-ink-secondary transition-colors hover:text-primary"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+
+          <ul class="flex items-center gap-3">
+            {
+              socialNav.map((social) => (
+                <li class="text-ink opacity-50 transition-opacity hover:opacity-100">
+                  {social.href ? (
+                    <a
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${social.label} (se abre en una pestaña nueva)`}
+                      class="block"
+                    >
+                      <Icon name={social.icon} class="size-[27px]" aria-hidden="true" />
+                    </a>
+                  ) : (
+                    /* Sin URL confirmada se pinta el ícono pero no se enlaza:
+                       igual que el diseño, sin enlaces muertos. */
+                    <Icon
+                      name={social.icon}
+                      class="size-[27px]"
+                      role="img"
+                      aria-label={social.label}
+                    />
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

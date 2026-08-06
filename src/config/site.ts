@@ -224,10 +224,23 @@ export const testimonialsSection = {
   title: "Lo que dicen nuestros clientes",
 };
 
-/** Datos de contacto. TODO: confirmar valores reales (pendiente 5 del CLAUDE.md). */
+/**
+ * Footer. Copy tomado de Figma. El CTA reutiliza `headerCta` de navigation.ts:
+ * es la misma acción, no se duplica.
+ */
+export const footer = {
+  description:
+    "Infraestructura de gestión integral de riesgos financieros para entidades reguladas en Colombia.",
+  copyrightHolder: "Solution Systems",
+};
+
+/**
+ * Datos de contacto. Teléfono y correo salen del footer de Figma.
+ * TODO: confirmar dirección y horario (pendiente 5 del CLAUDE.md).
+ */
 export const contact: ContactInfo = {
   address: undefined, // TODO
-  phone: undefined, // TODO
-  email: undefined, // TODO
+  phone: "+57 301 813 5745",
+  email: "contacto@e-solutionsystems.net",
   hours: undefined, // TODO
 };
