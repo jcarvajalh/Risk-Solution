@@ -6,6 +6,7 @@
  * Variantes:
  * - primary: fondo azul (bg-primary), círculo blanco, flecha primary.
  * - ghost:   sin fondo, texto/círculo/flecha claros (para sobre imágenes oscuras).
+ * - light:   fondo blanco, texto/círculo primary, flecha blanca (para sobre fondos de color).
  *
  * Mapeo Figma: texto Inter 12/600 → Geist (font-sans). El botón secundario del
  * hero usa #F5F7FA → mapeado a white.
@@ -16,7 +17,7 @@ import { cn } from "@lib/utils";
 interface Props {
   href: string;
   label: string;
-  variant?: "primary" | "ghost";
+  variant?: "primary" | "ghost" | "light";
   class?: string;
   /** Muestra la flecha en círculo (por defecto sí). */
   arrow?: boolean;
@@ -36,16 +37,19 @@ const base =
 const variantClasses: Record<NonNullable<Props["variant"]>, string> = {
   primary: "bg-primary text-white hover:bg-primary-hover",
   ghost: "text-white hover:bg-white/10",
+  light: "bg-white text-primary hover:bg-white/90",
 };
 
 const circleClasses: Record<NonNullable<Props["variant"]>, string> = {
   primary: "bg-white",
   ghost: "border-[0.5px] border-white",
+  light: "bg-primary",
 };
 
 const arrowClasses: Record<NonNullable<Props["variant"]>, string> = {
   primary: "text-primary",
   ghost: "text-white",
+  light: "text-white",
 };
 ---
 

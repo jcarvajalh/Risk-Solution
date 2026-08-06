@@ -154,8 +154,65 @@ export const ecosystem = {
   ],
 };
 
+/**
+ * Sección "Beneficios" (banda azul). Copy de Figma (real, no placeholder).
+ * Los `number` (01–04) NO se renderizan: en Figma están en #155EEF, el mismo
+ * color del fondo (invisibles). Se conservan por si se decide mostrarlos.
+ */
+export const benefits = {
+  eyebrow: "BENEFICIOS",
+  title: "¿Por qué elegir nuestra infraestructura?",
+  subtitle: "Construido y diseñado para la decisión ejecutiva.",
+  cta: { label: "Solicitar Demo", href: "/contacto" },
+  items: [
+    {
+      number: "01",
+      title: "IA integrada",
+      description:
+        "Scoring automático, RPA para extracción web y análisis predictivo dentro del flujo de otorgamiento.",
+    },
+    {
+      number: "02",
+      title: "Cumplimiento normativo",
+      description:
+        "Normativa colombiana embebida en cada módulo: Ley 358, 617, 819, SARLAFT y exigencias de la Superfinanciera.",
+    },
+    {
+      number: "03",
+      title: "Visualización ejecutiva",
+      description:
+        "Dashboards listos para presentar al comité de riesgo y a la junta directiva, sin preparación adicional.",
+    },
+    {
+      number: "04",
+      title: "Integración RPA",
+      description:
+        "Automatización de procesos y extracción de datos de fuentes externas, sin digitación manual.",
+    },
+  ],
+};
+
 /** Clientes reales CONFIRMADOS. No agregar otros sin confirmación (sección 2). */
 export const clients = ["InfiHuila", "Infi Caldas", "Infi Manizales"] as const;
+
+/**
+ * Sección "Entidades que confían en Risk" (logos de clientes).
+ * Los logos van por slug bajo src/assets/images/clients/ (placeholder por ahora).
+ * NOTA: "CONFIAN" va sin tilde como en Figma; lo correcto sería "CONFÍAN".
+ */
+export const clientsSection = {
+  eyebrow: "ENTIDADES QUE CONFÍAN EN RISK",
+  logos: [
+    { name: "Infi Caldas", slug: "clients/infi-caldas", width: 168, height: 125 },
+    { name: "InfiHuila", slug: "clients/infihuila", width: 197, height: 115 },
+    {
+      name: "Infi Manizales",
+      slug: "clients/infi-manizales",
+      width: 146,
+      height: 142,
+    },
+  ],
+};
 
 /** Datos de contacto. TODO: confirmar valores reales (pendiente 5 del CLAUDE.md). */
 export const contact: ContactInfo = {
