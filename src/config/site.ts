@@ -154,13 +154,112 @@ export const ecosystem = {
   ],
 };
 
+/**
+ * Sección "Beneficios" (banda azul). Copy de Figma (real, no placeholder).
+ * Los `number` (01–04) NO se renderizan: en Figma están en #155EEF, el mismo
+ * color del fondo (invisibles). Se conservan por si se decide mostrarlos.
+ */
+export const benefits = {
+  eyebrow: "BENEFICIOS",
+  title: "¿Por qué elegir nuestra infraestructura?",
+  subtitle: "Construido y diseñado para la decisión ejecutiva.",
+  cta: { label: "Solicitar Demo", href: "/contacto" },
+  items: [
+    {
+      number: "01",
+      title: "IA integrada",
+      description:
+        "Scoring automático, RPA para extracción web y análisis predictivo dentro del flujo de otorgamiento.",
+    },
+    {
+      number: "02",
+      title: "Cumplimiento normativo",
+      description:
+        "Normativa colombiana embebida en cada módulo: Ley 358, 617, 819, SARLAFT y exigencias de la Superfinanciera.",
+    },
+    {
+      number: "03",
+      title: "Visualización ejecutiva",
+      description:
+        "Dashboards listos para presentar al comité de riesgo y a la junta directiva, sin preparación adicional.",
+    },
+    {
+      number: "04",
+      title: "Integración RPA",
+      description:
+        "Automatización de procesos y extracción de datos de fuentes externas, sin digitación manual.",
+    },
+  ],
+};
+
 /** Clientes reales CONFIRMADOS. No agregar otros sin confirmación (sección 2). */
 export const clients = ["InfiHuila", "Infi Caldas", "Infi Manizales"] as const;
 
-/** Datos de contacto. TODO: confirmar valores reales (pendiente 5 del CLAUDE.md). */
+/**
+ * Sección "Entidades que confían en Risk" (logos de clientes).
+ * Los logos van por slug bajo src/assets/images/clients/ (placeholder por ahora).
+ * NOTA: "CONFIAN" va sin tilde como en Figma; lo correcto sería "CONFÍAN".
+ */
+export const clientsSection = {
+  eyebrow: "ENTIDADES QUE CONFÍAN EN RISK",
+  logos: [
+    { name: "Infi Caldas", slug: "clients/infi-caldas", width: 168, height: 125 },
+    { name: "InfiHuila", slug: "clients/infihuila", width: 197, height: 115 },
+    {
+      name: "Infi Manizales",
+      slug: "clients/infi-manizales",
+      width: 146,
+      height: 142,
+    },
+  ],
+};
+
+/**
+ * Sección "Lo que dicen nuestros clientes" (testimonios). Copy tomado de Figma.
+ * Solo el encabezado vive aquí: los testimonios son contenido que crece y será
+ * editable, así que van en la content collection `testimonials` (sección 6.3).
+ */
+export const testimonialsSection = {
+  eyebrow: "TESTIMONIOS",
+  title: "Lo que dicen nuestros clientes",
+};
+
+/**
+ * CTABanner — bloque de conversión antes del footer. Copy tomado de Figma.
+ * Son los valores POR DEFECTO: el componente acepta props para montarlo con
+ * otro copy en otras páginas sin duplicarlo (sección 6.2).
+ *
+ * TODO: en Figma la descripción dice "y mira el comité de riesgo recibe el
+ * reporte en minutos", a la que le falta el "cómo". Se corrigió; confirmar.
+ * TODO: confirmar el destino del CTA (mismo caso que headerCta).
+ */
+export const ctaBanner = {
+  // El título se parte en dos para forzar el salto después de "a", como en
+  // Figma. En móvil el salto se desactiva y el texto fluye solo.
+  titleLead: "Lleva toda tu gestión de riesgo a",
+  titleTrail: "un solo tablero.",
+  description:
+    "Agenda una demo y mira cómo el comité de riesgo recibe el reporte en minutos",
+  cta: { label: "Hablar con un experto", href: "/contacto" },
+};
+
+/**
+ * Footer. Copy tomado de Figma. El CTA reutiliza `headerCta` de navigation.ts:
+ * es la misma acción, no se duplica.
+ */
+export const footer = {
+  description:
+    "Infraestructura de gestión integral de riesgos financieros para entidades reguladas en Colombia.",
+  copyrightHolder: "Solution Systems",
+};
+
+/**
+ * Datos de contacto. Teléfono y correo salen del footer de Figma.
+ * TODO: confirmar dirección y horario (pendiente 5 del CLAUDE.md).
+ */
 export const contact: ContactInfo = {
   address: undefined, // TODO
-  phone: undefined, // TODO
-  email: undefined, // TODO
+  phone: "+57 301 813 5745",
+  email: "contacto@e-solutionsystems.net",
   hours: undefined, // TODO
 };

@@ -1,0 +1,41 @@
+---
+/**
+ * Sección "Entidades que confían en Risk" — franja de logos de clientes.
+ * Los logos se muestran en escala de grises y pasan a color al hover, con
+ * transición suave (respeta prefers-reduced-motion vía el reset global).
+ * Lee su contenido de site.ts (patrón de datos 6.3).
+ *
+ * Mapeo Figma (referencia, no copia literal):
+ * - Fondo #FFFFFF → bg-surface. Badge/eyebrow #155EEF → Badge variante primary.
+ * - Logos = imágenes por slug (placeholder hasta agregarlas).
+ */
+import { clientsSection } from "@config/site";
+import Badge from "@components/ui/Badge.astro";
+import AppImage from "@components/ui/AppImage.astro";
+---
+
+<section class="bg-surface py-section-y">
+  <div class="mx-auto max-w-[811px] px-5 sm:px-6">
+    <div class="flex justify-center">
+      <Badge variant="primary">{clientsSection.eyebrow}</Badge>
+    </div>
+
+    <ul
+      class="mt-12 flex flex-wrap items-center justify-center gap-x-12 gap-y-8 md:mt-14 md:justify-between md:gap-8"
+    >
+      {
+        clientsSection.logos.map((logo) => (
+          <li>
+            <AppImage
+              name={logo.slug}
+              alt={logo.name}
+              width={logo.width}
+              height={logo.height}
+              class="h-20 w-auto object-contain grayscale transition duration-300 ease-out hover:grayscale-0 md:h-28"
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

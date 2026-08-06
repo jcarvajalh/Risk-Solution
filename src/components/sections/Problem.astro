@@ -12,7 +12,6 @@
  * - Sombra → token shadow-card.
  */
 import { problem } from "@config/site";
-import Badge from "@components/ui/Badge.astro";
 import ProblemCard from "@components/sections/ProblemCard.astro";
 
 const wideRadius = "rounded-tr-[20px] rounded-bl-[20px]";
@@ -23,10 +22,8 @@ const narrowRadius = "rounded-tl-[20px] rounded-br-[20px]";
   <div class="mx-auto w-full max-w-[940px] px-5 sm:px-6">
     <!-- Encabezado -->
     <div class="flex flex-col items-center text-center">
-      <Badge variant="primary">{problem.eyebrow}</Badge>
-
       <h2
-        class="mt-6 max-w-[681px] text-3xl font-semibold tracking-[-0.04em] text-balance text-ink md:text-[40px] md:leading-[52px]"
+        class="max-w-[681px] text-3xl font-semibold tracking-[-0.04em] text-balance text-ink md:text-[40px] md:leading-[52px]"
       >
         {problem.title}
       </h2>

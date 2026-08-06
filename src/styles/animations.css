@@ -39,4 +39,42 @@
   color: var(--rs-accent);
 }
 
+/*
+ * Acordeón de FAQs. Apertura y cierre animados sin una línea de JS:
+ * ::details-content permite transicionar el contenido de <details>, e
+ * interpolate-size habilita la animación hacia block-size:auto, es decir el alto
+ * real del contenido (nada de max-height inventado que recorte respuestas largas).
+ *
+ * interpolate-size va en .rs-faq y no en :root porque se hereda: así el cambio
+ * queda acotado al acordeón y no altera el resto del sitio.
+ *
+ * Que solo haya una pregunta abierta a la vez también es nativo: lo da el
+ * atributo `name` compartido entre los <details> (acordeón exclusivo).
+ *
+ * Soporte: Chrome/Edge 131+, Safari 18.4+. Donde no esté, el acordeón funciona
+ * igual pero abre de golpe — degradación aceptable, no rompe nada.
+ */
+.rs-faq {
+  interpolate-size: allow-keywords;
+}
+
+.rs-faq::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition:
+    block-size 300ms ease,
+    content-visibility 300ms ease allow-discrete;
+}
+
+.rs-faq[open]::details-content {
+  block-size: auto;
+}
+
+/* El reset global de arriba usa `*`, que no alcanza a los pseudo ::details-content. */
+@media (prefers-reduced-motion: reduce) {
+  .rs-faq::details-content {
+    transition-duration: 0.01ms;
+  }
+}
+
 /* TODO: añadir más keyframes y clases rs-* conforme se construyan las secciones. */

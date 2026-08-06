@@ -1,0 +1,105 @@
+---
+/**
+ * FAQSection — acordeón de preguntas frecuentes. Componente RECICLABLE (6.2):
+ * se construye una sola vez y se reutiliza en varias páginas; qué preguntas
+ * muestra lo decide la prop `group`, que apunta al campo `group` de la colección
+ * `faqs`. Nunca duplicar este componente para cambiar su contenido.
+ *
+ * Interactividad: <details> + <summary> nativos, sin JS (regla 6.4: los
+ * acordeones simples no son candidatos a isla React). El `name` compartido hace
+ * que solo una pregunta esté abierta a la vez, y la transición suave la pone
+ * .rs-faq en animations.css.
+ *
+ * Mapeo Figma (referencia, no copia literal):
+ * - Layout con flex, sin position:absolute ni alturas fijas. Tarjeta de 1064px
+ *   centrada sobre el fondo de sección; en móvil ocupa el ancho disponible.
+ * - Fondo de sección #F7F7F7 → bg-bg. Tarjeta #FFFFFF radio 20px → bg-surface
+ *   rounded-[20px]. Pregunta #000000 → text-ink. Respuesta #555555 →
+ *   ink-secondary.
+ * - Las flechas del export (líneas de 1px rotadas) son un chevron: se usa
+ *   lucide:chevron-right, que gira 90° al abrir.
+ * - Escala desktop: el valor de Figma (medido a 1440px) queda en el tramo medio
+ *   de cada clamp(). El diseño no lleva título de sección, así que la sección se
+ *   nombra con aria-label para no dejarla sin etiqueta accesible.
+ */
+import { getCollection } from "astro:content";
+import { Icon } from "astro-icon/components";
+import { faqPage } from "@lib/structured-data";
+
+interface Props {
+  /** Valor del campo `group` en la colección `faqs` (p. ej. "home"). */
+  group: string;
+  /** Etiqueta accesible de la sección. No se pinta: el diseño no lleva título. */
+  label?: string;
+  /** Ancla para enlazar la sección (el footer apunta a /#faqs). */
+  id?: string;
+}
+
+const { group, label = "Preguntas frecuentes", id = "faqs" } = Astro.props;
+
+const faqs = (
+  await getCollection("faqs", (entry) => entry.data.group === group)
+).sort((a, b) => a.data.order - b.data.order);
+
+/*
+ * JSON-LD FAQPage (sección 8). Lo emite el propio componente porque es quien
+ * tiene los datos; si algún día una página monta dos FAQSection, hay que dejar
+ * el schema en una sola de las dos.
+ */
+const jsonLd = faqPage(
+  faqs.map(({ data }) => ({ question: data.question, answer: data.answer })),
+);
+
+/* Figma 39px (horizontal) y 14px (vertical) de la tarjeta */
+const fluidCardPad =
+  "px-[clamp(1.25rem,2.71vw,2.4375rem)] py-[clamp(0.75rem,0.97vw,1rem)]";
+/* Figma 48px entre preguntas */
+const fluidRowGap = "space-y-[clamp(1.5rem,3.33vw,3rem)]";
+/* Figma 28px */
+const fluidQuestion = "text-[clamp(1.25rem,1.94vw,1.875rem)]";
+---
+
+<section id={id} class="bg-bg py-section-y" aria-label={label}>
+  <div class="mx-auto w-full max-w-[1064px] px-5 sm:px-6">
+    <div class:list={["rounded-[20px] bg-surface", fluidCardPad, fluidRowGap]}>
+      {
+        faqs.map((faq) => (
+          <details class="rs-faq group" name={`faq-${group}`}>
+            {/*
+             * El gap del chevron y la sangría de la respuesta se quedan fijos en
+             * 15px y 31px (16px de ícono + 15px de gap): son los que alinean la
+             * respuesta con la pregunta, y hacerlos fluidos los desincronizaría.
+             */}
+            <summary class="flex cursor-pointer list-none items-center gap-[15px] py-3 [&::-webkit-details-marker]:hidden">
+              <Icon
+                name="lucide:chevron-right"
+                class="size-4 shrink-0 text-ink transition-transform duration-300 group-open:rotate-90"
+                aria-hidden="true"
+              />
+              <h3
+                class:list={[
+                  "font-semibold leading-[1.3] tracking-[-0.04em] text-ink",
+                  fluidQuestion,
+                ]}
+              >
+                {faq.data.question}
+              </h3>
+            </summary>
+
+            <div>
+              <p class="max-w-[875px] pl-[31px] text-base leading-[1.31] tracking-[-0.04em] text-ink-secondary">
+                {faq.data.answer}
+              </p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(jsonLd)}
+/>
