@@ -71,6 +71,15 @@ const testimonials = defineCollection({
     role: z.string(),
     company: z.string(),
     quote: z.string(),
+    /** Slug del logo de la entidad bajo src/assets/images/ (p. ej. "clients/infi-manizales"). */
+    logo: z.string().optional(),
+    /**
+     * Alto del logo en px medido a 1440px (Figma). Cada entidad tiene su propia
+     * proporción, así que el alto se define por testimonio; el ancho sale solo.
+     */
+    logoHeight: z.number().default(77),
+    /** Slug de la foto del autor bajo src/assets/images/ (p. ej. "team/ricardo-calderon"). */
+    avatar: z.string().optional(),
     order: z.number().default(0),
   }),
 });

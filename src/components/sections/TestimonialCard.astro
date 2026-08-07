@@ -1,0 +1,86 @@
+---
+/**
+ * Un testimonio: logo de la entidad, cita y autoría (foto, entidad y cargo).
+ * Semántica <figure> + <blockquote> + <figcaption>, que es la correcta para una
+ * cita con atribución.
+ *
+ * La autoría se ancla abajo con mt-auto para que las dos columnas la alineen
+ * aunque las citas tengan distinto largo (como en Figma).
+ */
+import AppImage from "@components/ui/AppImage.astro";
+
+interface Testimonial {
+  author: string;
+  role: string;
+  company: string;
+  quote: string;
+  logo?: string;
+  logoHeight: number;
+  avatar?: string;
+}
+
+interface Props {
+  testimonial: Testimonial;
+}
+
+const { testimonial } = Astro.props;
+
+/*
+ * Banda de logo de 77px (el logo más alto del diseño). Cada logo tiene su
+ * propia proporción, así que se centra dentro de la banda en lugar de estirarse:
+ * la banda mantiene alineadas las dos columnas, y la cita de ambas arranca a la
+ * misma altura.
+ */
+const fluidLogoBand = "h-[clamp(3rem,5.35vw,4.8125rem)]";
+
+/*
+ * Alto del logo. Va en style inline porque el valor viene del contenido y
+ * Tailwind no puede generar clases en runtime. Escala con la misma proporción
+ * que la banda (62% del valor de Figma en móvil, 100% de 1440 en adelante).
+ */
+const { logoHeight } = testimonial;
+const logoHeightStyle = `height:clamp(${(logoHeight * 0.623).toFixed(1)}px,${(logoHeight * 0.0695).toFixed(2)}vw,${logoHeight}px)`;
+---
+
+<figure class="flex h-full flex-col">
+  {
+    testimonial.logo && (
+      <div class:list={["flex items-center", fluidLogoBand]}>
+        <div class="flex items-center" style={logoHeightStyle}>
+          <AppImage
+            name={testimonial.logo}
+            alt={`Logo de ${testimonial.company}`}
+            class="h-full w-auto object-contain"
+          />
+        </div>
+      </div>
+    )
+  }
+
+  <blockquote
+    class="mt-6 text-sm leading-6 font-medium tracking-[-0.04em] text-ink-secondary"
+  >
+    <p>{testimonial.quote}</p>
+  </blockquote>
+
+  <figcaption class="mt-auto flex items-center gap-3 pt-5">
+    {
+      testimonial.avatar && (
+        <AppImage
+          name={testimonial.avatar}
+          alt=""
+          class="size-13 shrink-0 rounded-full object-cover"
+        />
+      )
+    }
+
+    <div>
+      <p class="text-sm leading-6 font-medium tracking-[-0.04em] text-ink">
+        {testimonial.company}
+      </p>
+      <p class="text-xs leading-6 tracking-[-0.04em] text-ink-secondary">
+        {testimonial.author}. {testimonial.role}
+      </p>
+    </div>
+  </figcaption>
+</figure>

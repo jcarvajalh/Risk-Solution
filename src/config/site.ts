@@ -214,6 +214,16 @@ export const clientsSection = {
   ],
 };
 
+/**
+ * Sección "Lo que dicen nuestros clientes" (testimonios). Copy tomado de Figma.
+ * Solo el encabezado vive aquí: los testimonios son contenido que crece y será
+ * editable, así que van en la content collection `testimonials` (sección 6.3).
+ */
+export const testimonialsSection = {
+  eyebrow: "TESTIMONIOS",
+  title: "Lo que dicen nuestros clientes",
+};
+
 /** Datos de contacto. TODO: confirmar valores reales (pendiente 5 del CLAUDE.md). */
 export const contact: ContactInfo = {
   address: undefined, // TODO
