@@ -1,0 +1,54 @@
+---
+/**
+ * Hero de la página "Nosotros": título, descripción y una fila de estadísticas.
+ * Sección de página (patrón 6.3): se monta sin props y lee de site.ts.
+ *
+ * Mapeo Figma (referencia, no copia literal — flex/grid, sin position absolute,
+ * mobile-first, tipografía y espaciado fluidos):
+ * - Fondo #FFFFFF → bg-surface (queda al ras del header sólido, también blanco).
+ * - Título 64/600 #000 → text-ink, clamp centrado en 64px @1440; envuelve a 2
+ *   líneas con text-balance.
+ * - Descripción 20/400 #555 → text-ink-secondary, medida ~783px.
+ * - Estadísticas: número 40/400 'JetBrains Mono' → Geist + tabular-nums
+ *   (regla 4.1: Geist es la única familia, sin monoespaciada); etiqueta 16/400
+ *   #555 → text-ink-secondary. 4 en fila a ≥sm; 2×2 en móvil.
+ */
+import { aboutHero } from "@config/site";
+
+const { title, description, stats } = aboutHero;
+---
+
+<section class="bg-surface">
+  <div
+    class="mx-auto flex max-w-[956px] flex-col items-center px-5 py-[clamp(3rem,4.5vw,4.0625rem)] text-center sm:px-6"
+  >
+    <h1
+      class="text-[clamp(2.375rem,1.8rem_+_2.44vw,3.75rem)] leading-[1.3] font-semibold tracking-[-0.04em] text-balance text-ink"
+    >
+      {title}
+    </h1>
+  
+    <p
+      class="mt-[clamp(2rem,4vw,3.625rem)] max-w-[783px] text-[clamp(1.0625rem,0.6rem_+_0.72vw,1.25rem)] leading-[1.5] tracking-[-0.04em] text-pretty text-ink-secondary"
+    >
+      {description}
+    </p>
+
+    <dl
+      class="mt-[clamp(2.5rem,4.6vw,4.125rem)] grid grid-cols-2 gap-x-[clamp(1.5rem,3vw,3rem)] gap-y-8 sm:grid-cols-4"
+    >
+      {
+        stats.map((stat: { value: string; label: string }) => (
+          <div class="flex flex-col items-center gap-1.5">
+            <dd class="order-1 text-[clamp(1.75rem,1.4rem_+_1.2vw,2.5rem)] leading-tight tracking-[-0.02em] tabular-nums text-ink">
+              {stat.value}
+            </dd>
+            <dt class="order-2 text-base leading-[1.19] tracking-[-0.02em] text-ink-secondary">
+              {stat.label}
+            </dt>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

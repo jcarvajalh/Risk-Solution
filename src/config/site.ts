@@ -244,6 +244,36 @@ export const ctaBanner = {
 };
 
 /**
+ * Página "Nosotros" — hero: título, descripción y fila de estadísticas. Copy y
+ * cifras tomados del frame de Figma.
+ * TODO: las cifras son afirmaciones verificables (sección 8: cifras reales, no
+ * adjetivos). Confirmar 2014 (lanzamiento), 7 módulos, +10 años y 100% enfoque.
+ */
+export const aboutHero = {
+  title: "Construimos infraestructura de riesgo financiero",
+  description:
+    "Desde 2014 desarrollamos software especializado para la gestión de riesgos en cooperativas, institutos de financiamiento, bancos y fondos.",
+  stats: [
+    { value: "2014", label: "Año de lanzamiento" },
+    { value: "7", label: "Módulos interconectados" },
+    { value: "+10", label: "Años de experiencia" },
+    { value: "100%", label: "Enfoque sector financiero" },
+  ],
+};
+
+/**
+ * Página "Nosotros" — tarjeta de propósito (misión + visión) sobre fondo gris.
+ *
+ * TODO: en Figma este texto es PLACEHOLDER — repite dos veces "Ser la plataforma
+ * de referencia…" y la última frase queda cortada. Aquí se transcribe la versión
+ * coherente (sin la repetición ni el corte). Confirmar el copy final de
+ * misión/visión antes de publicar.
+ */
+export const aboutStatement = {
+  text: "Dotar a cada entidad financiera de herramientas precisas para anticipar el riesgo y decidir con datos, no con intuición. Ser la plataforma de referencia en gestión integral de riesgos para las entidades financieras de Colombia y la región.",
+};
+
+/**
  * Footer. Copy tomado de Figma. El CTA reutiliza `headerCta` de navigation.ts:
  * es la misma acción, no se duplica.
  */

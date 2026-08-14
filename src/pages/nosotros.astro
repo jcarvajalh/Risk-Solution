@@ -1,0 +1,26 @@
+---
+/**
+ * Página "Nosotros". Header en variante sólida (igual que las páginas de módulo)
+ * + hero (AboutHero) + Footer. Las siguientes secciones se añadirán después.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/layout/Header.astro";
+import AboutHero from "@components/sections/AboutHero.astro";
+import AboutStatement from "@components/sections/AboutStatement.astro";
+import Footer from "@components/layout/Footer.astro";
+
+const seo = {
+  title: "Nosotros — Risk Solution",
+  description:
+    "Desde 2014 construimos software especializado en gestión de riesgo financiero para cooperativas, institutos de financiamiento, bancos y fondos en Colombia.",
+};
+---
+
+<BaseLayout seo={seo}>
+  <Header slot="header" variant="solid" />
+
+  <AboutHero />
+  <AboutStatement />
+
+  <Footer slot="footer" />
+</BaseLayout>

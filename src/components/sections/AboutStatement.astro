@@ -1,0 +1,31 @@
+---
+/**
+ * Página "Nosotros" — tarjeta de propósito: un texto (misión + visión) centrado
+ * dentro de una tarjeta blanca sobre fondo gris. Sección de página (patrón 6.3):
+ * se monta sin props y lee de site.ts.
+ *
+ * Mapeo Figma (referencia, no copia literal — flex, sin position absolute ni
+ * alturas fijas, mobile-first, tipografía y espaciado fluidos):
+ * - Fondo de sección #F7F7F7 → bg-bg. Tarjeta #FFFFFF radio 20px → bg-surface
+ *   rounded-[20px]. Texto 20/500 #1F1F1F → text-ink, centrado, medida ~1062px.
+ * - Espacio superior/inferior de la sección: 60px (pedido) → py-[60px].
+ * - El alto de la tarjeta lo dan su padding y el contenido, no un valor fijo.
+ */
+import { aboutStatement } from "@config/site";
+
+const { text } = aboutStatement;
+---
+
+<section class="bg-bg py-[60px]">
+  <div class="mx-auto w-full max-w-[1278px] px-5 sm:px-6">
+    <div
+      class="rounded-[20px] bg-surface px-[clamp(1.5rem,7.5vw,6.75rem)] py-[clamp(3rem,9.2vw,8.3125rem)]"
+    >
+      <p
+        class="mx-auto max-w-[1062px] text-center text-[clamp(1.0625rem,0.6rem_+_0.72vw,1.25rem)] leading-[1.75] font-medium tracking-[-0.04em] text-pretty text-ink"
+      >
+        {text}
+      </p>
+    </div>
+  </div>
+</section>
