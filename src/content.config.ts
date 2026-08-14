@@ -16,11 +16,50 @@ const modules = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/modules" }),
   schema: z.object({
     title: z.string(),
-    summary: z.string(),
+    // Resumen corto para el listado /modulos. Opcional hasta confirmar ese copy.
+    summary: z.string().optional(),
+    // Párrafo del encabezado (hero) de la página de módulo.
+    description: z.string(),
+    // Chips/etiquetas del hero (borde punteado).
+    highlights: z.array(z.string()).default([]),
+    // Vista previa del dashboard del módulo: KPIs + tarjetas de gráfico
+    // (los gráficos son imágenes). Opcional: si falta, no se renderiza la sección.
+    dashboard: z
+      .object({
+        kpis: z.array(
+          z.object({
+            label: z.string(),
+            value: z.string(),
+            // Color del valor. default → text-ink; primary/danger → tokens.
+            tone: z.enum(["default", "primary", "danger"]).default("default"),
+          }),
+        ),
+        charts: z.array(
+          z.object({
+            title: z.string(),
+            // Slug de la imagen del gráfico bajo src/assets/images/ (AppImage).
+            image: z.string(),
+          }),
+        ),
+      })
+      .optional(),
+    // Sección "Beneficios": título + lista de beneficios (el número 01/02/03 se
+    // deriva del orden). Opcional: si falta, no se renderiza la sección.
+    benefits: z
+      .object({
+        title: z.string(),
+        items: z.array(
+          z.object({
+            title: z.string(),
+            description: z.string(),
+          }),
+        ),
+      })
+      .optional(),
     // Orden de aparición en el listado /modulos.
     order: z.number().default(0),
     draft: z.boolean().default(false),
-    // TODO: añadir campos reales del detalle de módulo (features, capturas, etc.).
+    // TODO: añadir el resto de campos del detalle de módulo (features, capturas, etc.).
   }),
 });
 

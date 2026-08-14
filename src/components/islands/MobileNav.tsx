@@ -13,8 +13,15 @@ import { mainNav, headerCta } from "@config/navigation";
  * TODO: el diseño móvil no está en el frame de Figma; valores con tokens del
  * sistema, confirmar en Figma.
  */
-export default function MobileNav() {
+interface Props {
+  /** Igual que el Header: define el color del botón hamburguesa. El panel
+   *  flotante es siempre una tarjeta blanca con texto oscuro. */
+  variant?: "transparent" | "solid";
+}
+
+export default function MobileNav({ variant = "transparent" }: Props) {
   const [open, setOpen] = useState(false);
+  const triggerColor = variant === "solid" ? "text-ink" : "text-white";
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -32,7 +39,7 @@ export default function MobileNav() {
         aria-expanded={open}
         aria-controls="mobile-menu"
         aria-label={open ? "Cerrar menú" : "Abrir menú"}
-        className="relative z-50 inline-flex size-10 items-center justify-center text-white"
+        className={`relative z-50 inline-flex size-10 items-center justify-center ${triggerColor}`}
       >
         {open ? (
           <svg
@@ -83,14 +90,37 @@ export default function MobileNav() {
           >
             <nav aria-label="Navegación móvil" className="flex flex-col gap-1">
               {mainNav.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-lg px-3 py-3 text-base font-medium tracking-[-0.02em] text-ink transition-colors hover:bg-primary-subtle"
-                >
-                  {item.label}
-                </a>
+                <div key={item.href}>
+                  {item.menuOnly ? (
+                    <span className="block px-3 py-3 text-base font-medium tracking-[-0.02em] text-ink">
+                      {item.label}
+                    </span>
+                  ) : (
+                    <a
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className="block rounded-lg px-3 py-3 text-base font-medium tracking-[-0.02em] text-ink transition-colors hover:bg-primary-subtle"
+                    >
+                      {item.label}
+                    </a>
+                  )}
+
+                  {item.children && item.children.length > 0 && (
+                    <ul className="mb-1 ml-3 flex flex-col border-l border-border pl-3">
+                      {item.children.map((child) => (
+                        <li key={child.label}>
+                          <a
+                            href={child.href}
+                            onClick={() => setOpen(false)}
+                            className="block rounded-lg px-3 py-2 text-sm font-medium tracking-[-0.02em] text-ink-secondary transition-colors hover:bg-primary-subtle hover:text-primary"
+                          >
+                            {child.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               ))}
 
               <a

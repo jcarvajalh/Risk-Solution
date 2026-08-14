@@ -25,7 +25,12 @@
   --color-ink-muted: #6b6b6b; /* TODO: confirmar en Figma — metadatos, captions */
   --color-border: #e5e5e5; /* TODO: confirmar en Figma */
 
-  /* TODO: colores semánticos (éxito/error/advertencia) — pedir a Figma antes de definir. */
+  /*
+   * Colores semánticos. PROVISIONAL: tomado del dashboard de módulo en Figma
+   * (valor negativo/error, p. ej. "Deudores vencidos"). TODO: confirmar el set
+   * completo (éxito/error/advertencia) con Figma antes de darlo por definitivo.
+   */
+  --color-danger: #d34646; /* TODO: confirmar en Figma */
 
   /* Sombras. Derivado de Figma (tarjetas). TODO: confirmar. */
   --shadow-card:

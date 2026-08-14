@@ -11,6 +11,11 @@ export interface NavLink {
   children?: NavLink[];
   /** Marca el ítem como CTA (p. ej. Contacto como botón). */
   isCta?: boolean;
+  /**
+   * El ítem solo abre su menú desplegable; no navega (no es enlace). El `href`
+   * se mantiene por si más adelante se quiere reactivar. Usado por "Módulos".
+   */
+  menuOnly?: boolean;
   /** Enlace externo: fuerza rel="noopener noreferrer" y target opcional. */
   external?: boolean;
 }

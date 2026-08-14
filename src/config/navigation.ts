@@ -5,14 +5,33 @@ import type { FooterNavGroup, NavLink, SocialLink } from "@/types/index";
  * hardcodean enlaces en el marcado (sección 6.1 del CLAUDE.md).
  */
 
+/**
+ * Los 7 módulos del producto. FUENTE ÚNICA: el dropdown de "Módulos" del Header y
+ * la columna "Módulos" del Footer los recorren desde aquí (no se duplican).
+ *
+ * TODO (pendiente 1 del CLAUDE.md): los NOMBRES están confirmados por diseño; los
+ * SLUGS de las rutas son derivación en kebab-case y siguen SIN confirmar por el
+ * cliente. Deben coincidir con los nombres de archivo de la colección `modules`
+ * (src/content/modules/*.md). Si cambia un slug, actualizar ambos sitios.
+ */
+export const moduleLinks: NavLink[] = [
+  { label: "Riesgo de crédito", href: "/modulos/riesgo-de-credito" },
+  { label: "Otorgamiento de crédito", href: "/modulos/otorgamiento-de-credito" },
+  { label: "Riesgo de liquidez", href: "/modulos/riesgo-de-liquidez" },
+  { label: "Business Intelligence", href: "/modulos/business-intelligence" },
+  { label: "Riesgo de mercado", href: "/modulos/riesgo-de-mercado" },
+  { label: "Riesgo operacional", href: "/modulos/riesgo-operacional" },
+  { label: "SARLAFT", href: "/modulos/sarlaft" },
+];
+
 export const mainNav: NavLink[] = [
   { label: "Inicio", href: "/" },
   {
     label: "Módulos",
     href: "/modulos",
-    // TODO: añadir los 7 módulos como children cuando se confirmen nombres y
-    // slugs (pendiente 1 del CLAUDE.md). No inventar.
-    children: [],
+    // Solo abre el menú; no navega (cada módulo se alcanza desde el desplegable).
+    menuOnly: true,
+    children: moduleLinks,
   },
   { label: "Nosotros", href: "/nosotros" },
   {
@@ -50,15 +69,7 @@ export const headerCta: NavLink = {
 export const footerNav: FooterNavGroup[] = [
   {
     title: "Módulos",
-    links: [
-      { label: "Riesgo de crédito", href: "/modulos" },
-      { label: "Otorgamiento de crédito", href: "/modulos" },
-      { label: "Riesgo de liquidez", href: "/modulos" },
-      { label: "Business Intelligence", href: "/modulos" },
-      { label: "Riesgo de mercado", href: "/modulos" },
-      { label: "Riesgo operacional", href: "/modulos" },
-      { label: "SARLAFT", href: "/modulos" },
-    ],
+    links: moduleLinks,
   },
   {
     title: "Empresa",

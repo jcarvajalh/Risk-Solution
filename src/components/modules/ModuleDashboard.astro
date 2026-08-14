@@ -1,0 +1,95 @@
+---
+/**
+ * Vista previa del dashboard del módulo: fila de KPIs + rejilla 2×2 de tarjetas
+ * de gráfico. Los gráficos son imágenes (AppImage con placeholder hasta tener las
+ * capturas reales). Los datos llegan desde la colección `modules`
+ * (module.data.dashboard) vía ModuleLayout. Recibe props (excepción del patrón
+ * 6.3, contenido por módulo).
+ *
+ * Mapeo Figma (referencia, no copia literal — flex/grid, sin position absolute,
+ * mobile-first, tipografía y espaciado fluidos):
+ * - Tarjetas: bg #FFFFFF → bg-surface; radio 20px; borde sutil → border-border;
+ *   sombra → token `shadow-card` (elevación única de tarjetas del sitio; algo más
+ *   suave que el export de Figma, a propósito, para no duplicar sombras).
+ * - KPI: label 12/400 #555 → text-ink-secondary; valor 28/400 → text-ink /
+ *   text-primary / text-danger según `tone`.
+ * - Números en 'JetBrains Mono' en Figma → Geist con `tabular-nums` (regla 4.1:
+ *   Geist es la única familia, sin monoespaciada). Los dígitos igual se alinean.
+ * - Título de gráfico 16/500 #000 → text-ink.
+ * - KPIs: 5 en fila a ≥lg, 3 en sm, 2 en móvil. Gráficos: 2×2 a ≥lg, 1 col en móvil.
+ */
+import AppImage from "@components/ui/AppImage.astro";
+
+interface Kpi {
+  label: string;
+  value: string;
+  tone?: "default" | "primary" | "danger";
+}
+interface Chart {
+  title: string;
+  image: string;
+}
+interface Props {
+  kpis: Kpi[];
+  charts: Chart[];
+}
+
+const { kpis, charts } = Astro.props;
+
+const card = "rounded-[20px] border border-border bg-surface shadow-card";
+
+const toneClass: Record<NonNullable<Kpi["tone"]>, string> = {
+  default: "text-ink",
+  primary: "text-primary",
+  danger: "text-danger",
+};
+---
+
+<section class="bg-bg">
+  <div
+    class="mx-auto w-full max-w-[1105px] px-5 py-[clamp(2.5rem,4.7vw,4.25rem)] sm:px-6"
+  >
+    <!-- KPIs -->
+    <ul
+      class="grid grid-cols-2 gap-[clamp(0.75rem,1.8vw,1.625rem)] sm:grid-cols-3 lg:grid-cols-5"
+    >
+      {
+        kpis.map((kpi) => (
+          <li class:list={["flex flex-col gap-1.5 px-5 py-4", card]}>
+            <p class="text-xs leading-4 tracking-[-0.04em] text-ink-secondary">
+              {kpi.label}
+            </p>
+            <p
+              class:list={[
+                "text-[clamp(1.5rem,1.2rem_+_0.6vw,1.75rem)] leading-none tracking-[-0.02em] tabular-nums",
+                toneClass[kpi.tone ?? "default"],
+              ]}
+            >
+              {kpi.value}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Gráficos -->
+    <ul
+      class="mt-[clamp(2rem,5.4vw,4.875rem)] grid grid-cols-1 gap-[clamp(1rem,2.2vw,2rem)] lg:grid-cols-2"
+    >
+      {
+        charts.map((chart) => (
+          <li class:list={["flex flex-col p-[clamp(1.25rem,2.5vw,2.25rem)]", card]}>
+            <h2 class="text-base leading-[1.3] font-medium tracking-[-0.04em] text-ink">
+              {chart.title}
+            </h2>
+            <AppImage
+              name={chart.image}
+              alt={`Gráfico: ${chart.title}`}
+              class="mt-[clamp(0.75rem,1.5vw,1.375rem)] aspect-[466/206] w-full rounded-lg object-contain"
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

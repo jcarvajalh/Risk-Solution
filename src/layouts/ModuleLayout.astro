@@ -1,0 +1,62 @@
+---
+/**
+ * Plantilla común de las 7 páginas de módulo (/modulos/[slug]). Monta el Header
+ * en variante sólida (página interior), el encabezado del módulo (ModuleHero) y
+ * el Footer. Deja un <slot /> para las secciones siguientes del módulo, que se
+ * irán añadiendo conforme se confirmen en Figma (pendiente 4 del CLAUDE.md).
+ *
+ * Los datos vienen de la colección `modules` vía la prop `module`.
+ */
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/layout/Header.astro";
+import Footer from "@components/layout/Footer.astro";
+import ModuleHero from "@components/modules/ModuleHero.astro";
+import ModuleDashboard from "@components/modules/ModuleDashboard.astro";
+import ModuleBenefits from "@components/modules/ModuleBenefits.astro";
+import FAQSection from "@components/sections/FAQSection.astro";
+import CTABanner from "@components/sections/CTABanner.astro";
+
+interface Props {
+  module: CollectionEntry<"modules">;
+}
+
+const { module } = Astro.props;
+const { title, description, highlights, dashboard, benefits } = module.data;
+
+const seo = {
+  title: `${title} — Risk Solution`,
+  // TODO: la descripción del hero supera los 160 caracteres recomendados para la
+  // meta description (sección 8). Confirmar un texto de 140–160 con CTA.
+  description,
+};
+---
+
+<BaseLayout seo={seo}>
+  <Header slot="header" variant="solid" />
+
+  <ModuleHero
+    title={title}
+    description={description}
+    highlights={highlights}
+  />
+
+  {
+    dashboard && (
+      <ModuleDashboard kpis={dashboard.kpis} charts={dashboard.charts} />
+    )
+  }
+
+  {benefits && <ModuleBenefits title={benefits.title} items={benefits.items} />}
+
+  {/* TODO: FAQs específicas del módulo. Por ahora reutiliza el grupo "home" como
+      placeholder (no hay FAQs de módulo). Cuando existan, crear su grupo y
+      pasarlo aquí. Padding vertical de 68px pedido para esta página. */}
+  <FAQSection group="home" paddingClass="py-[68px]" />
+
+  <slot />
+
+  <CTABanner variant="inverted" />
+
+  <Footer slot="footer" />
+</BaseLayout>
