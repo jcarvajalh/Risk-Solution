@@ -74,16 +74,30 @@ const faqs = defineCollection({
   }),
 });
 
-// Blog (editable a futuro con Keystatic; por ahora archivos locales).
+/*
+ * Blog. Esquema pensado como CONTRATO de datos de la tarjeta del listado, para
+ * que el CMS a medida (a construir después) sepa exactamente qué campos alimentar.
+ * Por ahora son archivos locales; la migración al CMS es cambio de capa de
+ * autoría, no de esquema.
+ */
 const blog = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
   schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    publishDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    author: z.string(),
+    // — Campos que muestra la TARJETA del listado —
+    /** Imagen de portada: slug bajo src/assets/images/ (p. ej. "blog/articulo-1"). */
     image: z.string().optional(),
+    /** Fecha de publicación (se muestra como "Julio 14 2026"). */
+    publishDate: z.coerce.date(),
+    /** Título de la tarjeta. */
+    title: z.string(),
+    /** Meta descripción CORTA (resumen/excerpt que se ve en la tarjeta). */
+    description: z.string(),
+    /** Tipo, para el filtro Todo/Blog/Guías. */
+    type: z.enum(["blog", "guia"]).default("blog"),
+
+    // — Campos adicionales (detalle del artículo / administración) —
+    author: z.string(),
+    updatedDate: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),

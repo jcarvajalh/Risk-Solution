@@ -332,6 +332,29 @@ export const teamSection = {
 };
 
 /**
+ * Página "Blog" — encabezado del listado de artículos y guías.
+ *
+ * TODO: en Figma la descripción es LA MISMA de la página Nosotros (placeholder mal
+ * puesto). Reemplazar por un subtítulo propio del blog.
+ */
+export const blogHero = {
+  titleLine1: "Artículos y guías",
+  titleLine2: "de tu interés",
+  description:
+    "Desde 2014 desarrollamos software especializado para la gestión de riesgos en cooperativas, institutos de financiamiento, bancos y fondos.",
+};
+
+/**
+ * Página "Contacto" — encabezado. El eyebrow va con tilde correcta ("Contáctanos";
+ * en Figma aparece sin tilde). El título va en 2 líneas fijas (salto tras "nosotros").
+ */
+export const contactHero = {
+  eyebrow: "Contáctanos",
+  titleLine1: "Ponte en contacto con nosotros",
+  titleLine2: "y dinos cómo podemos ayudarte.",
+};
+
+/**
  * Footer. Copy tomado de Figma. El CTA reutiliza `headerCta` de navigation.ts:
  * es la misma acción, no se duplica.
  */
@@ -346,7 +369,7 @@ export const footer = {
  * TODO: confirmar dirección y horario (pendiente 5 del CLAUDE.md).
  */
 export const contact: ContactInfo = {
-  address: undefined, // TODO
+  address: "Calle. 22 Nte. #6AN-24", // TODO (pendiente 5): confirmar dirección real
   phone: "+57 301 813 5745",
   email: "contacto@e-solutionsystems.net",
   hours: undefined, // TODO

@@ -1,0 +1,34 @@
+---
+/**
+ * Bloque principal de contacto: mapa (izquierda) + formulario (derecha, isla).
+ * Solo el formulario es interactivo (isla React); el resto es estático.
+ *
+ * Mapeo Figma: dos columnas de ~522px con ~20px de separación. En móvil se
+ * apilan. El mapa se estira a la altura del formulario (grid stretch).
+ *
+ * TODO (mapa): placeholder por ahora. Reemplazar por:
+ *  (a) un iframe de Google Maps embed —el CSP de _headers ya permite
+ *      www.google.com—, o (b) una imagen estática en src/assets/images/contacto/.
+ *  La dirección aún está sin confirmar (pendiente 5).
+ */
+import AppImage from "@components/ui/AppImage.astro";
+import ContactForm from "./ContactForm";
+---
+
+<section class="bg-bg py-[clamp(2.5rem,5vw,4.5rem)]">
+  <div
+    class="mx-auto grid w-full max-w-[1064px] grid-cols-1 gap-5 px-5 sm:px-6 lg:grid-cols-2"
+  >
+    <!-- Mapa (placeholder) -->
+    <div class="min-h-[300px] overflow-hidden rounded-[10px]">
+      <AppImage
+        name="contacto/mapa"
+        alt="Ubicación de la oficina en el mapa"
+        class="h-full min-h-[300px] w-full object-cover"
+      />
+    </div>
+
+    <!-- Formulario (isla) -->
+    <ContactForm client:visible />
+  </div>
+</section>

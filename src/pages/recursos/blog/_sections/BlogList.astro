@@ -1,0 +1,85 @@
+---
+/**
+ * Listado del blog: filtros (Todo/Blog/Guías) + grilla de tarjetas. Lee de la
+ * colección `blog`. El filtro es progresivo: sin JS se ven todas las tarjetas
+ * (con "Todo" activo); un script liviano alterna la visibilidad por tipo. El
+ * estilo activo/inactivo de los botones sale de la variante aria-pressed de
+ * Tailwind (el script solo cambia el atributo).
+ *
+ * Mapeo Figma: píldoras 24/500 radio 20px (activa #155EEF/blanco, inactiva blanco
+ * con borde) → bg-primary / bg-surface + border-ink/20. Grilla de 3 columnas
+ * (2 en sm, 1 en móvil).
+ */
+import { getCollection } from "astro:content";
+import BlogCard from "./BlogCard.astro";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
+);
+
+const filters = [
+  { label: "Todo", value: "todo" },
+  { label: "Blog", value: "blog" },
+  { label: "Guías", value: "guia" },
+];
+---
+
+<section class="bg-bg pt-[clamp(2.5rem,5.7vw,5.125rem)]">
+  <div
+    class="mx-auto w-full max-w-[1080px] px-5 sm:px-6"
+    data-blog-filter
+  >
+    <!-- Filtros -->
+    <div class="flex flex-wrap gap-[clamp(1rem,2vw,1.875rem)]">
+      {
+        filters.map((f, i) => (
+          <button
+            type="button"
+            data-filter={f.value}
+            aria-pressed={i === 0 ? "true" : "false"}
+            class="inline-flex h-[34px] w-[130px] cursor-pointer items-center justify-center rounded-full border border-ink/20 bg-surface text-[clamp(1.125rem,0.96rem_+_0.6vw,1.5rem)] font-medium tracking-[-0.04em] text-ink-secondary transition-colors aria-pressed:border-transparent aria-pressed:bg-primary aria-pressed:text-white"
+          >
+            {f.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <!-- Grilla -->
+    <ul
+      class="mt-[clamp(2rem,3.6vw,3.25rem)] grid grid-cols-1 gap-[clamp(1.25rem,2.2vw,2rem)] sm:grid-cols-2 lg:grid-cols-3"
+    >
+      {
+        posts.map((post) => (
+          <li data-type={post.data.type}>
+            <BlogCard post={post} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-blog-filter]");
+  if (root) {
+    const buttons = Array.from(
+      root.querySelectorAll<HTMLButtonElement>("[data-filter]"),
+    );
+    const items = Array.from(
+      root.querySelectorAll<HTMLElement>("li[data-type]"),
+    );
+
+    for (const btn of buttons) {
+      btn.addEventListener("click", () => {
+        const filter = btn.dataset.filter;
+        for (const b of buttons)
+          b.setAttribute("aria-pressed", String(b === btn));
+        for (const item of items) {
+          const show = filter === "todo" || item.dataset.type === filter;
+          item.classList.toggle("hidden", !show);
+        }
+      });
+    }
+  }
+</script>
