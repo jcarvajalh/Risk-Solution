@@ -5,8 +5,12 @@
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Header from "@components/layout/Header.astro";
-import AboutHero from "@components/sections/AboutHero.astro";
-import AboutStatement from "@components/sections/AboutStatement.astro";
+import AboutHero from "./_sections/AboutHero.astro";
+import AboutStatement from "./_sections/AboutStatement.astro";
+import AboutProcess from "./_sections/AboutProcess.astro";
+import AboutTeam from "./_sections/AboutTeam.astro";
+import FAQSection from "@components/sections/FAQSection.astro";
+import CTABanner from "@components/sections/CTABanner.astro";
 import Footer from "@components/layout/Footer.astro";
 
 const seo = {
@@ -21,6 +25,10 @@ const seo = {
 
   <AboutHero />
   <AboutStatement />
+  <AboutProcess />
+  <AboutTeam />
+  <FAQSection group="home" paddingClass="py-[68px]" />
+  <CTABanner variant="inverted" />
 
   <Footer slot="footer" />
 </BaseLayout>

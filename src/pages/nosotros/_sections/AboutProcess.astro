@@ -1,0 +1,67 @@
+---
+/**
+ * Página "Nosotros" — "Cómo trabajamos": eyebrow (píldora) + línea horizontal
+ * full-width + 4 pasos numerados (01–04) con divisor vertical. Sección de página
+ * (patrón 6.3): se monta sin props y lee de site.ts.
+ *
+ * Mapeo Figma (referencia, no copia literal — flex/grid, sin position absolute,
+ * mobile-first, tipografía y espaciado fluidos):
+ * - Fondo #F7F7F7 → bg-bg. Eyebrow "CÓMO TRABAJAMOS" (JetBrains Mono en Figma) →
+ *   primitivo Badge (variant primary), que ya usa Geist y mayúsculas (regla 4.1).
+ * - Líneas divisoras rgba(0,0,0,0.2) → border-ink/20 (la horizontal a todo el
+ *   ancho; una vertical a la izquierda de cada paso, en la zona del número).
+ * - Número 96/700 #155EEF (ya Geist) → text-primary, clamp centrado en 96px @1440.
+ * - Título de paso 18/500 #000 → text-ink. Descripción 15/400 #555 →
+ *   text-ink-secondary, medida ~217px. 4 columnas a ≥lg; 2 en sm; 1 en móvil.
+ */
+import Badge from "@components/ui/Badge.astro";
+import { aboutProcess } from "@config/site";
+
+interface Step {
+  title: string;
+  description: string;
+}
+
+const { eyebrow, steps } = aboutProcess;
+---
+
+<section
+  class="bg-bg pt-[clamp(1.5rem,2.5vw,2.25rem)] pb-[clamp(3rem,6vw,5.5rem)]"
+  aria-labelledby="como-trabajamos"
+>
+  <!-- Eyebrow (título de sección semántico, píldora visual) -->
+  <h2 id="como-trabajamos" class="flex justify-center px-5 sm:px-6">
+    <Badge variant="primary">{eyebrow}</Badge>
+  </h2>
+
+  <!-- Línea horizontal a todo el ancho -->
+  <div class="mt-[clamp(2rem,3.5vw,3.1875rem)] border-t border-ink/20"></div>
+
+  <!-- Pasos -->
+  <div class="mx-auto w-full max-w-[1280px] px-5 sm:px-6">
+    <ol class="grid list-none grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        steps.map((step: Step, i: number) => (
+          <li class="flex flex-col">
+            {/* Zona del número: el divisor vertical vive aquí (no baja hasta la
+                descripción, como en Figma). min-h para dar longitud al divisor. */}
+            <div class="flex min-h-[clamp(8rem,12.7vw,11.4375rem)] items-end border-l border-ink/20 pl-[clamp(1rem,1.6vw,1.5rem)]">
+              <span class="text-[clamp(3rem,2.04rem_+_4.4vw,6rem)] leading-none font-bold tracking-[-0.04em] text-primary">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+            </div>
+
+            <div class="mt-[clamp(0.75rem,1vw,1rem)] pl-[clamp(1rem,1.6vw,1.5rem)]">
+              <h3 class="text-[clamp(1rem,0.95rem_+_0.2vw,1.125rem)] leading-[1.28] font-medium tracking-[-0.04em] text-ink">
+                {step.title}
+              </h3>
+              <p class="mt-2 max-w-[217px] text-[clamp(0.875rem,0.8rem_+_0.15vw,0.9375rem)] leading-[1.33] tracking-[-0.02em] text-ink-secondary">
+                {step.description}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

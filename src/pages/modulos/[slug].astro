@@ -5,7 +5,7 @@
  * que tengan archivo de contenido (no se inventan las 7 de golpe).
  */
 import { getCollection } from "astro:content";
-import ModuleLayout from "@layouts/ModuleLayout.astro";
+import ModuleLayout from "./_ModuleLayout.astro";
 
 export async function getStaticPaths() {
   const modules = await getCollection("modules", ({ data }) => !data.draft);

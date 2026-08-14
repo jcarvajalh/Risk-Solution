@@ -274,6 +274,64 @@ export const aboutStatement = {
 };
 
 /**
+ * Página "Nosotros" — "Cómo trabajamos": 4 pasos del proceso. El número (01–04)
+ * se deriva del orden.
+ *
+ * TODO: las descripciones son PLACEHOLDER — en Figma es el mismo texto repetido en
+ * los 4 pasos y no corresponde al título. Confirmar la descripción real de cada paso.
+ */
+export const aboutProcess = {
+  eyebrow: "Cómo trabajamos",
+  steps: [
+    {
+      title: "Agenda una reunión",
+      description:
+        "Fundación de Solution Systems, enfocada en soluciones para el sector financiero.",
+    },
+    {
+      title: "Levantamiento de info",
+      description:
+        "Fundación de Solution Systems, enfocada en soluciones para el sector financiero.",
+    },
+    {
+      title: "Capacitación",
+      description:
+        "Fundación de Solution Systems, enfocada en soluciones para el sector financiero.",
+    },
+    {
+      title: "Implementación",
+      description:
+        "Fundación de Solution Systems, enfocada en soluciones para el sector financiero.",
+    },
+  ],
+};
+
+/**
+ * Página "Nosotros" — "El equipo": encabezado + carrusel de personas.
+ *
+ * TODO: confirmar que estos son los integrantes reales (los nombres vienen de
+ * Figma con casing inconsistente; aquí normalizados). Las fotos son placeholder
+ * (stock de Unsplash en Figma): subir las reales a src/assets/images/team/ con el
+ * slug indicado en cada `photo`.
+ */
+export const teamSection = {
+  eyebrow: "El equipo",
+  // El título va en 2 líneas fijas (salto tras "personas"), como en Figma.
+  titleLine1: "Conoce las personas",
+  titleLine2: "detrás de",
+  titleHighlight: "Risk",
+  description:
+    "Equipo de Solution Systems, enfocados en soluciones para el sector financiero.",
+  members: [
+    { name: "Jorge Pérez", role: "Gerente", photo: "team/jorge-perez" },
+    { name: "Diego Cabal", role: "Ingeniero", photo: "team/diego-cabal" },
+    { name: "Wilmar Aspiazu", role: "Ingeniero", photo: "team/wilmar-aspiazu" },
+    { name: "Juan Camilo", role: "Ingeniero", photo: "team/juan-camilo" },
+    { name: "Jhon Freddy", role: "Ingeniero", photo: "team/jhon-freddy" },
+  ],
+};
+
+/**
  * Footer. Copy tomado de Figma. El CTA reutiliza `headerCta` de navigation.ts:
  * es la misma acción, no se duplica.
  */
