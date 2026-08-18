@@ -1,44 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { contactFormSchema, type ContactFormData } from "@lib/schemas";
+import { contactFormSchema } from "@lib/schemas";
 
 /**
  * Formulario de contacto. Isla React justificada (regla 6.4: formulario con
- * estado, validación y envío). Sin backend propio:
- *  - Validación en cliente con Zod (@lib/schemas) + honeypot anti-bots.
- *  - reCAPTCHA v2 "invisible": se ejecuta al enviar y devuelve un token.
- *  - Envío por la API REST de EmailJS (sin SDK → cero dependencias nuevas).
+ * estado, validación y envío).
  *
- * Para activarlo solo hay que registrar las 4 variables PUBLIC_ (ver .env.example)
- * y configurar el Service/Template de EmailJS con reCAPTCHA. El CSP de _headers ya
- * permite www.google.com, www.gstatic.com y api.emailjs.com.
+ * Envío SIMULADO (sin backend por ahora): al enviar se validan los campos con
+ * Zod (@lib/schemas) + honeypot anti-bots, se muestra ~1s de animación
+ * "Enviando…" y luego se reemplaza el formulario por el mensaje de éxito con un
+ * chulo verde. Al recargar la página el formulario vuelve a su estado normal.
+ *
+ * TODO: reconectar el envío real por EmailJS + reCAPTCHA cuando se configuren las
+ * variables PUBLIC_ (ver .env.example). El CSP de _headers ya lo permite.
  */
-
-interface Grecaptcha {
-  render: (
-    el: HTMLElement,
-    opts: {
-      sitekey: string;
-      size: "invisible";
-      badge?: "bottomright" | "bottomleft" | "inline";
-      callback: (token: string) => void;
-      "expired-callback"?: () => void;
-      "error-callback"?: () => void;
-    },
-  ) => number;
-  execute: (id?: number) => void;
-  reset: (id?: number) => void;
-}
-
-declare global {
-  interface Window {
-    grecaptcha?: Grecaptcha;
-  }
-}
-
-const SERVICE_ID = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
-const TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
-const PUBLIC_KEY = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
-const SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
 
 type Values = {
   nombre: string;
@@ -47,6 +21,7 @@ type Values = {
   telefono: string;
   empresa: string;
   mensaje: string;
+  acceptsPrivacyPolicy: boolean;
   website: string;
 };
 
@@ -57,10 +32,11 @@ const initialValues: Values = {
   telefono: "",
   empresa: "",
   mensaje: "",
+  acceptsPrivacyPolicy: false,
   website: "",
 };
 
-type Status = "idle" | "submitting" | "success" | "error";
+type Status = "idle" | "submitting" | "success";
 type FieldErrors = Partial<Record<keyof Values, string>>;
 
 const textFields = [
@@ -72,110 +48,42 @@ const textFields = [
 ] as const;
 
 const labelClass =
-  "mb-1.5 block text-[clamp(1rem,0.95rem_+_0.2vw,1.125rem)] font-medium tracking-[-0.04em] text-ink";
+  "mb-1.5 block text-[14px] font-medium tracking-[-0.04em] text-ink";
 const inputClass =
-  "w-full rounded-[5px] border border-ink/20 bg-bg px-3 py-2 text-[15px] tracking-[-0.02em] text-ink transition-colors placeholder:text-ink-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 aria-[invalid=true]:border-danger";
+  "w-full rounded-[5px] border border-ink/20 bg-bg px-3 py-2 text-[14px] tracking-[-0.02em] text-ink transition-colors placeholder:text-ink-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 aria-[invalid=true]:border-danger";
 
 export default function ContactForm() {
   const [values, setValues] = useState<Values>(initialValues);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<Status>("idle");
 
-  const widgetIdRef = useRef<number | null>(null);
-  const recaptchaElRef = useRef<HTMLDivElement>(null);
-  const pendingRef = useRef<ContactFormData | null>(null);
+  const timeoutRef = useRef<number | null>(null);
 
-  // Carga y renderiza el widget invisible de reCAPTCHA.
-  useEffect(() => {
-    if (!SITE_KEY) return;
-
-    const renderWidget = () => {
-      if (
-        widgetIdRef.current !== null ||
-        !recaptchaElRef.current ||
-        !window.grecaptcha?.render
-      )
-        return;
-      widgetIdRef.current = window.grecaptcha.render(recaptchaElRef.current, {
-        sitekey: SITE_KEY,
-        size: "invisible",
-        badge: "bottomright",
-        callback: (token: string) => {
-          const data = pendingRef.current;
-          if (data) void send(data, token);
-        },
-        "error-callback": () => setStatus("error"),
-      });
-    };
-
-    if (window.grecaptcha?.render) {
-      renderWidget();
-      return;
-    }
-    if (!document.getElementById("recaptcha-api")) {
-      const s = document.createElement("script");
-      s.id = "recaptcha-api";
-      s.src = "https://www.google.com/recaptcha/api.js?render=explicit";
-      s.async = true;
-      s.defer = true;
-      document.head.appendChild(s);
-    }
-    const interval = window.setInterval(() => {
-      if (window.grecaptcha?.render) {
-        window.clearInterval(interval);
-        renderWidget();
-      }
-    }, 200);
-    return () => window.clearInterval(interval);
-  }, []);
+  useEffect(
+    () => () => {
+      if (timeoutRef.current !== null) window.clearTimeout(timeoutRef.current);
+    },
+    [],
+  );
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const name = e.target.name as keyof Values;
-    const value = e.target.value;
+    const value =
+      e.target instanceof HTMLInputElement && e.target.type === "checkbox"
+        ? e.target.checked
+        : e.target.value;
     setValues((v) => ({ ...v, [name]: value }));
     setErrors((prev) => (prev[name] ? { ...prev, [name]: undefined } : prev));
   };
 
-  async function send(data: ContactFormData, token: string) {
-    try {
-      const res = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          service_id: SERVICE_ID,
-          template_id: TEMPLATE_ID,
-          user_id: PUBLIC_KEY,
-          "g-recaptcha-response": token,
-          template_params: {
-            from_name: `${data.nombre} ${data.apellido}`.trim(),
-            nombre: data.nombre,
-            apellido: data.apellido,
-            email: data.email,
-            telefono: data.telefono,
-            empresa: data.empresa || "—",
-            mensaje: data.mensaje,
-          },
-        }),
-      });
-      if (!res.ok) throw new Error(await res.text());
-      setStatus("success");
-      setValues(initialValues);
-    } catch {
-      setStatus("error");
-    } finally {
-      window.grecaptcha?.reset(widgetIdRef.current ?? undefined);
-      pendingRef.current = null;
-    }
-  }
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus("idle");
+    if (status === "submitting") return;
     setErrors({});
 
-    // Honeypot: si viene lleno es un bot → fingimos éxito y no enviamos.
+    // Honeypot: si viene lleno es un bot → fingimos éxito y no procesamos.
     if (values.website) {
       setStatus("success");
       return;
@@ -192,33 +100,38 @@ export default function ContactForm() {
       return;
     }
 
-    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY || !SITE_KEY) {
-      // Falta configuración (variables PUBLIC_ / reCAPTCHA).
-      setStatus("error");
-      return;
-    }
-
-    pendingRef.current = parsed.data;
+    // Envío simulado: 1s de animación "Enviando…" y luego éxito.
     setStatus("submitting");
-    if (window.grecaptcha && widgetIdRef.current !== null) {
-      window.grecaptcha.execute(widgetIdRef.current);
-    } else {
-      setStatus("error");
-    }
+    timeoutRef.current = window.setTimeout(() => {
+      setStatus("success");
+    }, 1000);
   };
 
   if (status === "success") {
     return (
       <div
-        className="flex min-h-[300px] flex-col items-center justify-center rounded-[10px] bg-surface p-[clamp(1.25rem,2vw,1.8125rem)] text-center shadow-[0_1px_4px_rgba(0,0,0,0.15)]"
+        className="flex min-h-[280px] flex-col items-center justify-center rounded-[10px] bg-surface p-[clamp(1rem,1.6vw,1.5rem)] text-center shadow-[0_1px_4px_rgba(0,0,0,0.15)]"
         role="status"
       >
-        <h2 className="text-[clamp(1.25rem,1.1rem_+_0.4vw,1.5rem)] font-semibold tracking-[-0.04em] text-ink">
-          ¡Gracias por escribirnos!
+        <span className="flex size-14 items-center justify-center rounded-full bg-success/10 text-success">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="size-8"
+            aria-hidden="true"
+          >
+            <path d="M20 6 9 17l-5-5" />
+          </svg>
+        </span>
+        <h2 className="mt-4 text-[clamp(1.25rem,1.1rem_+_0.4vw,1.5rem)] font-semibold tracking-[-0.04em] text-ink">
+          Mensaje enviado
         </h2>
         <p className="mt-2 max-w-[380px] text-[15px] leading-[1.4] tracking-[-0.02em] text-ink-secondary">
-          Recibimos tu mensaje y te responderemos muy pronto al correo que nos
-          dejaste.
+          Nos pondremos en contacto con usted.
         </p>
       </div>
     );
@@ -228,7 +141,7 @@ export default function ContactForm() {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="rounded-[10px] bg-surface p-[clamp(1.25rem,2vw,1.8125rem)] shadow-[0_1px_4px_rgba(0,0,0,0.15)]"
+      className="rounded-[10px] bg-surface p-[clamp(1rem,1.6vw,1.5rem)] shadow-[0_1px_4px_rgba(0,0,0,0.15)]"
     >
       <div className="grid grid-cols-2 gap-x-4 gap-y-[clamp(1rem,1.6vw,1.375rem)]">
         {textFields.map((f) => (
@@ -293,34 +206,67 @@ export default function ContactForm() {
         />
       </div>
 
-      {status === "error" && (
-        <p className="mt-4 text-[14px] text-danger" role="alert">
-          No pudimos enviar tu mensaje. Revisa los datos e inténtalo de nuevo, o
-          escríbenos directamente a nuestro correo.
-        </p>
-      )}
-
       <div className="mt-[clamp(1.25rem,2vw,1.75rem)] flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="max-w-[323px] text-[14px] leading-[1.3] tracking-[-0.04em] text-ink-secondary">
-          Al enviar este formulario, acepta nuestra{" "}
-          <a
-            href="/politica-de-privacidad"
-            className="text-primary underline underline-offset-2"
-          >
-            Política de privacidad.
-          </a>
-        </p>
+        <div>
+          <label htmlFor="acceptsPrivacyPolicy" className="flex items-start gap-2.5">
+            <input
+              id="acceptsPrivacyPolicy"
+              name="acceptsPrivacyPolicy"
+              type="checkbox"
+              checked={values.acceptsPrivacyPolicy}
+              onChange={handleChange}
+              aria-invalid={errors.acceptsPrivacyPolicy ? true : undefined}
+              aria-describedby={
+                errors.acceptsPrivacyPolicy ? "acceptsPrivacyPolicy-error" : undefined
+              }
+              className="mt-0.5 size-4 shrink-0 cursor-pointer accent-primary"
+            />
+            <span className="text-[14px] leading-[1.3] tracking-[-0.04em] text-ink-secondary">
+              Acepto la{" "}
+              <a
+                href="/politica-de-privacidad"
+                className="text-primary underline underline-offset-2"
+              >
+                política de privacidad
+              </a>
+              .
+            </span>
+          </label>
+          {errors.acceptsPrivacyPolicy && (
+            <p
+              id="acceptsPrivacyPolicy-error"
+              className="mt-1 text-[13px] text-danger"
+            >
+              {errors.acceptsPrivacyPolicy}
+            </p>
+          )}
+        </div>
 
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="inline-flex h-[37px] shrink-0 cursor-pointer items-center justify-center rounded-[10px] bg-primary px-6 text-sm font-semibold tracking-[-0.02em] text-white transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex h-[37px] shrink-0 cursor-pointer items-center justify-center gap-2 rounded-[10px] bg-primary px-6 text-[14px] font-semibold tracking-[-0.02em] text-white transition-colors hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-80"
         >
-          {status === "submitting" ? "Enviando…" : "Enviar mensaje"}
+          {status === "submitting" ? (
+            <>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.5}
+                strokeLinecap="round"
+                className="size-4 animate-spin"
+                aria-hidden="true"
+              >
+                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+              </svg>
+              Enviando…
+            </>
+          ) : (
+            "Enviar mensaje"
+          )}
         </button>
       </div>
-
-      <div ref={recaptchaElRef} />
     </form>
   );
 }

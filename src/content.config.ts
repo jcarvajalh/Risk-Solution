@@ -103,15 +103,26 @@ const blog = defineCollection({
   }),
 });
 
-// Casos de éxito. Solo clientes confirmados (sección 2 del CLAUDE.md).
+// Casos de éxito. El cuerpo (markdown) es el artículo tipo revista; la portada y
+// la galería son slugs de imagen bajo src/assets/images/ (AppImage).
 const caseStudies = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/case-studies" }),
   schema: z.object({
     title: z.string(),
     client: z.string(),
+    /** Resumen para la tarjeta y el encabezado del detalle. */
     description: z.string(),
     publishDate: z.coerce.date(),
+    /** Portada de la tarjeta del listado (slug bajo src/assets/images/). */
     image: z.string().optional(),
+    /** Logo de la entidad (slug bajo src/assets/images/, p. ej. "clients/infihuila"). */
+    logo: z.string().optional(),
+    /** Sector de la entidad (metadato del encabezado). */
+    sector: z.string().optional(),
+    /** Ubicación de la entidad (metadato del encabezado). */
+    location: z.string().optional(),
+    /** Imágenes del detalle tipo revista (~4 slugs bajo src/assets/images/). */
+    gallery: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),
 });

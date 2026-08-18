@@ -24,20 +24,20 @@ const filters = [
 ];
 ---
 
-<section class="bg-bg pt-[clamp(2.5rem,5.7vw,5.125rem)]">
+<section class="bg-bg pt-[clamp(1.5rem,2.8vw,2.5rem)]">
   <div
     class="mx-auto w-full max-w-[1080px] px-5 sm:px-6"
     data-blog-filter
   >
     <!-- Filtros -->
-    <div class="flex flex-wrap gap-[clamp(1rem,2vw,1.875rem)]">
+    <div class="flex flex-wrap gap-2">
       {
         filters.map((f, i) => (
           <button
             type="button"
             data-filter={f.value}
             aria-pressed={i === 0 ? "true" : "false"}
-            class="inline-flex h-[34px] w-[130px] cursor-pointer items-center justify-center rounded-full border border-ink/20 bg-surface text-[clamp(1.125rem,0.96rem_+_0.6vw,1.5rem)] font-medium tracking-[-0.04em] text-ink-secondary transition-colors aria-pressed:border-transparent aria-pressed:bg-primary aria-pressed:text-white"
+            class="inline-flex h-8 cursor-pointer items-center justify-center rounded-full border border-ink/15 bg-surface px-4 text-[13px] font-medium tracking-[-0.02em] text-ink-secondary transition-colors hover:border-ink/25 aria-pressed:border-transparent aria-pressed:bg-primary aria-pressed:text-white"
           >
             {f.label}
           </button>

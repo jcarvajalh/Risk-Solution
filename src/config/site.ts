@@ -345,13 +345,25 @@ export const blogHero = {
 };
 
 /**
- * Página "Contacto" — encabezado. El eyebrow va con tilde correcta ("Contáctanos";
- * en Figma aparece sin tilde). El título va en 2 líneas fijas (salto tras "nosotros").
+ * Página "Casos de éxito" — encabezado del listado. Mismo patrón visual que el
+ * blog (título en 2 líneas + descripción centrada).
+ *
+ * TODO (pendiente 6 del CLAUDE.md): descripción provisional. Confirmar el copy
+ * real; no inventar cifras ni resultados de clientes.
+ */
+export const caseStudiesHero = {
+  titleLine1: "Casos de éxito",
+  titleLine2: "de nuestros clientes",
+  description:
+    "Entidades financieras que gestionan su riesgo con Risk Solution. Conoce cómo institutos de financiamiento y cooperativas fortalecen su cumplimiento normativo.",
+};
+
+/**
+ * Página "Contacto" — encabezado. Solo el título (sin eyebrow): va en un único
+ * renglón en desktop (contenedor sin ancho máximo) y se ajusta en móvil.
  */
 export const contactHero = {
-  eyebrow: "Contáctanos",
-  titleLine1: "Ponte en contacto con nosotros",
-  titleLine2: "y dinos cómo podemos ayudarte.",
+  title: "Ponte en contacto con nosotros y dinos cómo podemos ayudarte.",
 };
 
 /**

@@ -5,6 +5,7 @@
 @import "./theme.css";
 @import "./fonts.css";
 @import "./animations.css";
+@import "./article.css";
 
 /* Reset y base mínimos. Tailwind Preflight ya normaliza; aquí solo lo propio. */
 @layer base {

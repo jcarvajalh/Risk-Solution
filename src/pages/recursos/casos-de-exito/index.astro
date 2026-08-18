@@ -1,0 +1,31 @@
+---
+/**
+ * Página de Casos de éxito (/recursos/casos-de-exito): listado de casos de
+ * clientes. Header sólido + encabezado + listado + FAQs + CTA + Footer. Mismo
+ * esqueleto que la página de blog (patrón de /recursos).
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/layout/Header.astro";
+import CaseStudiesHero from "./_sections/CaseStudiesHero.astro";
+import CaseStudiesList from "./_sections/CaseStudiesList.astro";
+import FAQSection from "@components/sections/FAQSection.astro";
+import CTABanner from "@components/sections/CTABanner.astro";
+import Footer from "@components/layout/Footer.astro";
+
+const seo = {
+  title: "Casos de éxito — Risk Solution",
+  description:
+    "Casos de éxito de entidades financieras que gestionan su riesgo con Risk Solution: institutos de financiamiento y cooperativas en Colombia.",
+};
+---
+
+<BaseLayout seo={seo}>
+  <Header slot="header" variant="solid" />
+
+  <CaseStudiesHero />
+  <CaseStudiesList />
+  <FAQSection group="home" />
+  <CTABanner />
+
+  <Footer slot="footer" />
+</BaseLayout>

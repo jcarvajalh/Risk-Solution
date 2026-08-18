@@ -1,0 +1,150 @@
+---
+/**
+ * Detalle de una entrada de blog/guía (/recursos/blog/[slug]). El slug es el
+ * nombre del archivo en la colección `blog`. Diseño ESTILO BLOG: columna única de
+ * lectura alineada a la izquierda, badge de tipo, titular, metadatos (autor,
+ * fecha, tiempo de lectura), imagen de portada y cuerpo del artículo
+ * (markdown vía .rs-article, sin capitular). Cierra con el CTA de conversión.
+ */
+import { getCollection, render } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/layout/Header.astro";
+import Footer from "@components/layout/Footer.astro";
+import AppImage from "@components/ui/AppImage.astro";
+import CTABanner from "@components/sections/CTABanner.astro";
+import { Icon } from "astro-icon/components";
+import { breadcrumbList } from "@lib/structured-data";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { title, description, publishDate, updatedDate, image, type, author, tags } =
+  post.data;
+
+const { Content } = await render(post);
+
+const meses = [
+  "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
+];
+const fmt = (d: Date) =>
+  `${meses[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+
+// Tiempo de lectura estimado a partir del cuerpo (~200 palabras/minuto).
+const words = post.body?.trim().split(/\s+/).filter(Boolean).length ?? 0;
+const readingMinutes = Math.max(1, Math.round(words / 200));
+
+const typeLabel = type === "guia" ? "Guía" : "Blog";
+
+const seo = {
+  title: `${title} — Risk Solution`,
+  description,
+};
+
+const breadcrumb = breadcrumbList([
+  { name: "Inicio", url: "/" },
+  { name: "Blog", url: "/recursos/blog" },
+  { name: title, url: `/recursos/blog/${post.id}` },
+]);
+
+const articleLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  author: { "@type": "Organization", name: author },
+  datePublished: publishDate.toISOString(),
+  ...(updatedDate ? { dateModified: updatedDate.toISOString() } : {}),
+};
+---
+
+<BaseLayout seo={seo}>
+  <Header slot="header" variant="solid" />
+
+  <article class="bg-bg pb-[clamp(3rem,6vw,5.5rem)]">
+    <div class="mx-auto w-full max-w-[720px] px-5 sm:px-6">
+      <!-- Volver -->
+      <a
+        href="/recursos/blog"
+        class="mt-[clamp(1.5rem,3vw,2.5rem)] inline-flex items-center gap-1.5 text-sm font-medium tracking-[-0.02em] text-ink-secondary transition-colors hover:text-primary"
+      >
+        <Icon name="lucide:arrow-left" class="size-4" aria-hidden="true" />
+        Blog
+      </a>
+
+      <!-- Encabezado estilo blog (alineado a la izquierda) -->
+      <header class="mt-[clamp(1.5rem,3vw,2.5rem)]">
+        <span
+          class="inline-flex items-center rounded-full bg-primary-subtle px-3 py-1 text-xs font-semibold tracking-[-0.02em] text-primary"
+        >
+          {typeLabel}
+        </span>
+
+        <h1
+          class="mt-4 text-[clamp(1.75rem,1.3rem_+_2vw,3rem)] leading-[1.15] font-semibold tracking-[-0.04em] text-balance text-ink"
+        >
+          {title}
+        </h1>
+
+        <div
+          class="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm tracking-[-0.02em] text-ink-muted"
+        >
+          <span class="font-medium text-ink-secondary">{author}</span>
+          <span aria-hidden="true">·</span>
+          <time datetime={publishDate.toISOString()}>{fmt(publishDate)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{readingMinutes} min de lectura</span>
+        </div>
+      </header>
+    </div>
+
+    <!-- Portada -->
+    {
+      image && (
+        <div class="mx-auto mt-[clamp(1.75rem,3.5vw,2.75rem)] w-full max-w-[860px] px-5 sm:px-6">
+          <div class="overflow-hidden rounded-[14px]">
+            <AppImage
+              name={image}
+              alt={title}
+              class="aspect-[16/9] w-full object-cover"
+              loading="eager"
+            />
+          </div>
+        </div>
+      )
+    }
+
+    <!-- Cuerpo -->
+    <div
+      class="rs-article mx-auto mt-[clamp(2rem,4vw,3rem)] w-full max-w-[720px] px-5 sm:px-6"
+    >
+      <Content />
+    </div>
+
+    <!-- Etiquetas -->
+    {
+      tags.length > 0 && (
+        <div class="mx-auto mt-[clamp(2rem,4vw,3rem)] flex w-full max-w-[720px] flex-wrap gap-2 px-5 sm:px-6">
+          {tags.map((tag) => (
+            <span class="inline-flex items-center rounded-full border border-ink/15 px-3 py-1 text-xs tracking-[-0.02em] text-ink-secondary">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )
+    }
+  </article>
+
+  <CTABanner />
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+<script type="application/ld+json" is:inline set:html={JSON.stringify(articleLd)} />

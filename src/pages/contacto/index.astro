@@ -1,13 +1,15 @@
 ---
 /**
- * Página de Contacto (/contacto). Header sólido + encabezado + tarjetas de
- * contacto + mapa/formulario + Footer.
+ * Página de Contacto (/contacto). Header sólido + encabezado + mapa/formulario +
+ * tarjetas de contacto + FAQs + CTA + Footer.
  */
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Header from "@components/layout/Header.astro";
 import ContactHero from "./_sections/ContactHero.astro";
 import ContactInfo from "./_sections/ContactInfo.astro";
 import ContactFormSection from "./_sections/ContactFormSection.astro";
+import FAQSection from "@components/sections/FAQSection.astro";
+import CTABanner from "@components/sections/CTABanner.astro";
 import Footer from "@components/layout/Footer.astro";
 
 const seo = {
@@ -21,8 +23,10 @@ const seo = {
   <Header slot="header" variant="solid" />
 
   <ContactHero />
-  <ContactInfo />
   <ContactFormSection />
+  <ContactInfo />
+  <FAQSection group="home" paddingClass="pt-0 pb-[clamp(1.5rem,2.8vw,2.5rem)]" />
+  <CTABanner />
 
   <Footer slot="footer" />
 </BaseLayout>

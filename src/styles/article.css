@@ -1,0 +1,90 @@
+/*
+ * Estilos del cuerpo de artículo (casos de éxito, y a futuro el blog). El
+ * contenido lo genera Astro a partir del markdown, así que no lleva clases de
+ * Tailwind; se estila aquí por descendencia bajo `.rs-article`. Todo color pasa
+ * por token (regla 4.2). El drop cap y el pull quote son el toque "revista".
+ */
+.rs-article {
+  color: var(--color-ink-secondary);
+  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  line-height: 1.75;
+  letter-spacing: -0.01em;
+}
+
+.rs-article > * + * {
+  margin-top: 1.25rem;
+}
+
+.rs-article h2 {
+  margin-top: 2.75rem;
+  color: var(--color-ink);
+  font-size: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.rs-article h3 {
+  margin-top: 2rem;
+  color: var(--color-ink);
+  font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.rs-article a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rs-article strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.rs-article ul {
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.rs-article ul li + li {
+  margin-top: 0.5rem;
+}
+
+.rs-article ul li::marker {
+  color: var(--color-primary);
+}
+
+/* Pull quote tipo revista: barra azul + texto destacado. */
+.rs-article blockquote {
+  margin-top: 2rem;
+  border-left: 3px solid var(--color-primary);
+  padding-left: clamp(1rem, 2vw, 1.5rem);
+  color: var(--color-ink);
+  font-size: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+/*
+ * Capitular (drop cap) en el primer párrafo. Es el toque "revista": se activa
+ * solo con el modificador .rs-article--lead (lo usa el detalle de casos de
+ * éxito). El blog usa la prosa base, sin capitular.
+ */
+.rs-article--lead > p:first-of-type::first-letter {
+  float: left;
+  margin-right: 0.08em;
+  color: var(--color-primary);
+  font-size: 3.4em;
+  font-weight: 600;
+  line-height: 0.72;
+}
+
+@media (max-width: 640px) {
+  .rs-article--lead > p:first-of-type::first-letter {
+    font-size: 2.8em;
+  }
+}

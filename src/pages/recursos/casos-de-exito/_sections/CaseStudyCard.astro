@@ -1,0 +1,47 @@
+---
+/**
+ * Tarjeta de caso de éxito del listado. Recibe una entrada de la colección
+ * `case-studies`. Colocada con su página. Reutiliza el tratamiento visual de la
+ * tarjeta del blog (BlogCard): imagen de portada + meta + título + resumen.
+ *
+ * Toda la tarjeta es un enlace al detalle del caso (/recursos/casos-de-exito/
+ * [slug]). A diferencia del blog, la línea meta muestra el CLIENTE (entidad).
+ */
+import type { CollectionEntry } from "astro:content";
+import AppImage from "@components/ui/AppImage.astro";
+
+interface Props {
+  study: CollectionEntry<"case-studies">;
+}
+
+const { study } = Astro.props;
+const { title, client, description, image } = study.data;
+const href = `/recursos/casos-de-exito/${study.id}`;
+---
+
+<a
+  href={href}
+  class="group flex flex-col rounded-[10px] bg-surface p-3 transition-shadow hover:shadow-card focus-visible:shadow-card"
+>
+  <div class="aspect-[291/174] w-full overflow-hidden rounded-[10px]">
+    <AppImage
+      name={image ?? "case-studies/sin-imagen"}
+      alt={`Caso de éxito: ${client}`}
+      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+    />
+  </div>
+
+  <p class="mt-2.5 text-sm font-medium tracking-[-0.04em] text-primary">
+    {client}
+  </p>
+  <h2
+    class="mt-1 text-[clamp(1.25rem,1.1rem_+_0.4vw,1.5rem)] leading-[1.3] font-medium tracking-[-0.04em] text-ink group-hover:text-primary"
+  >
+    {title}
+  </h2>
+  <p
+    class="mt-2 line-clamp-3 text-[15px] leading-[1.33] tracking-[-0.02em] text-ink-secondary"
+  >
+    {description}
+  </p>
+</a>

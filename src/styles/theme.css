@@ -31,6 +31,7 @@
    * completo (éxito/error/advertencia) con Figma antes de darlo por definitivo.
    */
   --color-danger: #d34646; /* TODO: confirmar en Figma */
+  --color-success: #16a34a; /* TODO: confirmar en Figma — confirmación de envíos, chulo verde */
 
   /* Sombras. Derivado de Figma (tarjetas). TODO: confirmar. */
   --shadow-card:

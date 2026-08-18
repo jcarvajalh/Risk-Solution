@@ -36,30 +36,30 @@ const items = [
 ].filter((item) => item.value);
 ---
 
-<section class="bg-bg pt-[clamp(2.5rem,5vw,4.5rem)]">
+<section class="bg-bg pb-[clamp(1.5rem,2.8vw,2.5rem)]">
   <div class="mx-auto w-full max-w-[1064px] px-5 sm:px-6">
     <ul
-      class="grid grid-cols-1 gap-[clamp(1rem,1.4vw,1.25rem)] sm:grid-cols-3"
+      class="grid grid-cols-1 gap-[clamp(0.75rem,1.2vw,1rem)] sm:grid-cols-3"
     >
       {
         items.map((item) => (
-          <li class="flex items-center gap-3 rounded-[10px] bg-surface p-2">
-            <span class="flex size-[clamp(2.75rem,3.8vw,3.4375rem)] shrink-0 items-center justify-center rounded-full bg-primary text-white">
-              <Icon name={item.icon} class="size-[clamp(1.125rem,1.5vw,1.375rem)]" aria-hidden="true" />
+          <li class="flex items-center gap-2.5 rounded-[10px] bg-surface p-2">
+            <span class="flex size-[clamp(2.25rem,2.6vw,2.5rem)] shrink-0 items-center justify-center rounded-full bg-primary text-white">
+              <Icon name={item.icon} class="size-[clamp(0.9375rem,1.1vw,1.125rem)]" aria-hidden="true" />
             </span>
             <div class="min-w-0">
-              <p class="text-[15px] tracking-[-0.02em] text-ink-secondary">
+              <p class="text-[13px] tracking-[-0.02em] text-ink-secondary">
                 {item.label}
               </p>
               {item.href ? (
                 <a
                   href={item.href}
-                  class="block text-lg font-medium tracking-[-0.02em] break-words text-ink transition-colors hover:text-primary"
+                  class="block text-[15px] font-medium tracking-[-0.02em] break-words text-ink transition-colors hover:text-primary"
                 >
                   {item.value}
                 </a>
               ) : (
-                <p class="text-lg font-medium tracking-[-0.02em] break-words text-ink">
+                <p class="text-[15px] font-medium tracking-[-0.02em] break-words text-ink">
                   {item.value}
                 </p>
               )}

@@ -1,29 +1,24 @@
 ---
 /**
- * Encabezado de la página de contacto: eyebrow (píldora gris) + título en 2
- * líneas. Sección de página (patrón 6.3): lee de site.ts.
+ * Encabezado de la página de contacto: solo el título "Ponte en contacto…".
+ * Sección de página (patrón 6.3): lee de site.ts.
  *
- * Mapeo Figma: eyebrow "Contáctanos" 24/500 #555 con borde rgba(0,0,0,0.2) →
- * border-ink/20 + text-ink-secondary (no es el Badge primary, este es gris).
- * Título 48/400 #000 → text-ink (peso normal), clamp centrado.
+ * Mapeo Figma (1440px): sin eyebrow y sin padding superior. Título 30/400 #000
+ * → text-ink (peso normal) a 30px, en un único renglón (contenedor sin ancho
+ * máximo). En móvil escala hacia abajo y puede envolver. El espacio inferior
+ * (~40px en desktop) es la separación hacia el formulario.
  */
 import { contactHero } from "@config/site";
 
-const { eyebrow, titleLine1, titleLine2 } = contactHero;
+const { title } = contactHero;
 ---
 
-<section class="bg-bg pt-[clamp(2rem,3.5vw,3.25rem)]">
-  <div class="mx-auto w-full max-w-[1064px] px-5 text-center sm:px-6">
-    <span
-      class="inline-flex items-center rounded-full border border-ink/20 bg-surface px-6 py-1 text-[clamp(1.125rem,0.96rem_+_0.6vw,1.5rem)] font-medium tracking-[-0.04em] text-ink-secondary"
-    >
-      {eyebrow}
-    </span>
-
+<section class="bg-bg pt-[clamp(1.5rem,2.8vw,2.5rem)] pb-[clamp(1.5rem,2.8vw,2.5rem)]">
+  <div class="mx-auto w-full px-5 text-center sm:px-6">
     <h1
-      class="mx-auto mt-[clamp(1.5rem,2.8vw,2.5rem)] max-w-[956px] text-[clamp(1.8rem,1.38rem_+_1.8vw,3rem)] leading-[1.29] font-normal tracking-[-0.04em] text-ink"
+      class="text-[clamp(1.375rem,3.2vw,1.875rem)] leading-[1.29] font-normal tracking-[-0.04em] text-ink"
     >
-      {titleLine1}<br />{titleLine2}
+      {title}
     </h1>
   </div>
 </section>
