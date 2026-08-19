@@ -1,18 +1,15 @@
 ---
-# TODO (pendiente 1 del CLAUDE.md): SLUG "sarlaft" derivado en kebab-case del nombre
-# confirmado, pero SIN confirmar por ti. Si el oficial es otro, renombra el archivo.
-# TODO (pendiente 4): descripción, tags, dashboard y beneficios son PLACEHOLDER
-# (copiados de "riesgo de crédito" por indicación tuya). Reemplazar por el
-# contenido real. Los KPIs son ILUSTRATIVOS (no datos de cliente) y las imágenes
-# de gráfico aún no existen (AppImage muestra placeholder).
+# Definición oficial, tags y beneficios: contenido.md. Slug confirmado.
+# TODO: el `dashboard` sigue mostrando KPIs/gráficos de cartera de crédito
+# (placeholder heredado); no corresponden a este módulo. Reemplazar por el
+# tablero real de SARLAFT cuando esté disponible.
 title: "SARLAFT"
-description: "Administración del riesgo de crédito de principio a fin: monitorea la calidad de la cartera, anticipa la pérdida esperada y controla la concentración por sector y por línea."
+description: "Sistema de Administración del Riesgo de Lavado de Activos y Financiación del Terrorismo. Es un modelo obligatorio en muchas entidades de Colombia, especialmente financieras, para prevenir que la organización sea utilizada para mover dinero ilegal o financiar actividades ilícitas."
 highlights:
-  - "Pérdida esperada"
-  - "Análisis de cosechas"
-  - "Cobertura"
-  - "Calidad de cartera"
-  - "Concentración por sector"
+  - "Vinculación de clientes, proveedores, contratistas y empleados"
+  - "Consulta en listas restrictivas (OFAC, ONU, etc.)"
+  - "Informes de gestión"
+  - "Seguimiento a PEP (personas políticamente expuestas)"
 dashboard:
   kpis:
     - label: "Cartera bruta"
@@ -39,11 +36,11 @@ dashboard:
 benefits:
   title: "Beneficios para tu comité de riesgo"
   items:
-    - title: "Anticipa el deterioro"
-      description: "El análisis de cosechas y la pérdida esperada permiten detectar deterioro de la cartera antes de que impacte los estados financieros."
-    - title: "Controla la concentración"
-      description: "Visualiza la exposición por sector, línea y deudor para mantener los límites definidos por la junta directiva."
-    - title: "Reporta sin esfuerzo"
-      description: "Tableros listos para el comité de riesgo y los reportes regulatorios, sin hojas de cálculo intermedias."
+    - title: "Cumple sin fricción"
+      description: "Automatiza un requisito obligatorio para entidades financieras en Colombia, sin procesos manuales."
+    - title: "Detecta riesgo antes de vincular"
+      description: "La consulta automática en listas restrictivas se hace antes de formalizar cualquier vinculación."
+    - title: "Seguimiento continuo a PEP"
+      description: "Monitorea de forma permanente a las personas políticamente expuestas relacionadas con la entidad."
 order: 7
 ---

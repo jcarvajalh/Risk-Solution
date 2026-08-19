@@ -569,16 +569,16 @@ Actualiza esta sección conforme avancemos.
 - [x] Tokens de diseño en `theme.css` (paleta base confirmada; derivados pendientes de Figma)
 - [x] Geist servida localmente (`.woff2` 400/500/600/700 en `public/fonts/geist/`)
 - [x] `public/_headers`
-- [ ] `BaseLayout.astro` (esqueleto inicial creado; completar con Figma)
-- [ ] Header + Footer
-- [ ] Home
-- [ ] Listado de módulos + `ModuleLayout` + 7 páginas
-- [ ] Nosotros
-- [ ] Recursos (hub)
-- [ ] Blog (estructura; CMS después)
-- [ ] Casos de éxito
-- [ ] Contacto (formulario + EmailJS + reCAPTCHA)
-- [ ] 404
+- [x] `BaseLayout.astro` (esqueleto inicial creado; completar con Figma)
+- [x] Header + Footer
+- [x] Home
+- [x] Listado de módulos + `ModuleLayout` + 7 páginas
+- [x] Nosotros
+- [x] Recursos (hub)
+- [x] Blog (estructura; CMS después)
+- [x] Casos de éxito
+- [x] Contacto (formulario + EmailJS + reCAPTCHA)
+- [x] 404
 - [ ] Auditoría de accesibilidad y rendimiento
 - [ ] Integración de Keystatic
 - [ ] Despliegue en Cloudflare Pages

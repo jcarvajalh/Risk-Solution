@@ -1,18 +1,15 @@
 ---
-# TODO (pendiente 1 del CLAUDE.md): SLUG "riesgo-operacional" derivado en kebab-case del nombre
-# confirmado, pero SIN confirmar por ti. Si el oficial es otro, renombra el archivo.
-# TODO (pendiente 4): descripción, tags, dashboard y beneficios son PLACEHOLDER
-# (copiados de "riesgo de crédito" por indicación tuya). Reemplazar por el
-# contenido real. Los KPIs son ILUSTRATIVOS (no datos de cliente) y las imágenes
-# de gráfico aún no existen (AppImage muestra placeholder).
+# Definición oficial, tags y beneficios: contenido.md. Slug confirmado.
+# TODO: el `dashboard` sigue mostrando KPIs/gráficos de cartera de crédito
+# (placeholder heredado); no corresponden a este módulo. Reemplazar por el
+# tablero real de riesgo operacional cuando esté disponible.
 title: "Riesgo operacional"
-description: "Administración del riesgo de crédito de principio a fin: monitorea la calidad de la cartera, anticipa la pérdida esperada y controla la concentración por sector y por línea."
+description: "Mide la posibilidad de que la entidad sufra pérdidas debido a fallos en sus procesos internos, errores humanos, problemas tecnológicos o eventos externos."
 highlights:
-  - "Pérdida esperada"
-  - "Análisis de cosechas"
-  - "Cobertura"
-  - "Calidad de cartera"
-  - "Concentración por sector"
+  - "Mapa de procesos"
+  - "Mapa de riesgos"
+  - "Matrices de riesgos"
+  - "Registro de eventos de riesgo"
 dashboard:
   kpis:
     - label: "Cartera bruta"
@@ -39,11 +36,11 @@ dashboard:
 benefits:
   title: "Beneficios para tu comité de riesgo"
   items:
-    - title: "Anticipa el deterioro"
-      description: "El análisis de cosechas y la pérdida esperada permiten detectar deterioro de la cartera antes de que impacte los estados financieros."
-    - title: "Controla la concentración"
-      description: "Visualiza la exposición por sector, línea y deudor para mantener los límites definidos por la junta directiva."
-    - title: "Reporta sin esfuerzo"
-      description: "Tableros listos para el comité de riesgo y los reportes regulatorios, sin hojas de cálculo intermedias."
+    - title: "Visualiza dónde está el riesgo"
+      description: "El mapa de procesos y el mapa de riesgos muestran en qué punto de la operación se concentran las mayores exposiciones."
+    - title: "Estandariza el registro de eventos"
+      description: "Cada evento de riesgo queda documentado en un solo lugar, trazable para auditoría."
+    - title: "Prioriza con matrices claras"
+      description: "Las matrices de riesgo ayudan a priorizar qué procesos intervenir primero."
 order: 6
 ---

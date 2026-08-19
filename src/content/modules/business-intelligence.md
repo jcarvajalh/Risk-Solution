@@ -1,18 +1,16 @@
 ---
-# TODO (pendiente 1 del CLAUDE.md): SLUG "business-intelligence" derivado en kebab-case del nombre
-# confirmado, pero SIN confirmar por ti. Si el oficial es otro, renombra el archivo.
-# TODO (pendiente 4): descripción, tags, dashboard y beneficios son PLACEHOLDER
-# (copiados de "riesgo de crédito" por indicación tuya). Reemplazar por el
-# contenido real. Los KPIs son ILUSTRATIVOS (no datos de cliente) y las imágenes
-# de gráfico aún no existen (AppImage muestra placeholder).
+# Definición oficial, tags y beneficios: contenido.md. Slug confirmado.
+# TODO: el `dashboard` sigue mostrando KPIs/gráficos de cartera de crédito
+# (placeholder heredado); no corresponden a este módulo. Reemplazar por el
+# tablero real de BI cuando esté disponible.
 title: "Business Intelligence"
-description: "Administración del riesgo de crédito de principio a fin: monitorea la calidad de la cartera, anticipa la pérdida esperada y controla la concentración por sector y por línea."
+description: "Recopila los principales datos de la organización y, mediante un proceso de análisis, los presenta de forma gráfica y entendible para facilitar la toma de decisiones."
 highlights:
-  - "Pérdida esperada"
-  - "Análisis de cosechas"
-  - "Cobertura"
-  - "Calidad de cartera"
-  - "Concentración por sector"
+  - "Informe de gestión"
+  - "Relación de solvencia"
+  - "Patrimonio técnico"
+  - "ROE / ROA"
+  - "Flujo de efectivo"
 dashboard:
   kpis:
     - label: "Cartera bruta"
@@ -39,11 +37,11 @@ dashboard:
 benefits:
   title: "Beneficios para tu comité de riesgo"
   items:
-    - title: "Anticipa el deterioro"
-      description: "El análisis de cosechas y la pérdida esperada permiten detectar deterioro de la cartera antes de que impacte los estados financieros."
-    - title: "Controla la concentración"
-      description: "Visualiza la exposición por sector, línea y deudor para mantener los límites definidos por la junta directiva."
-    - title: "Reporta sin esfuerzo"
-      description: "Tableros listos para el comité de riesgo y los reportes regulatorios, sin hojas de cálculo intermedias."
+    - title: "Una sola fuente de verdad ejecutiva"
+      description: "Convierte datos dispersos de toda la organización en un informe de gestión único y actualizado."
+    - title: "Mide la rentabilidad de un vistazo"
+      description: "ROE, ROA y patrimonio técnico disponibles sin construir el cálculo manualmente cada mes."
+    - title: "Anticipa el flujo de caja"
+      description: "El flujo de efectivo proyectado apoya decisiones financieras antes del cierre contable."
 order: 4
 ---

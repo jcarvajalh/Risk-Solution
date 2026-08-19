@@ -1,16 +1,15 @@
 ---
-# TODO (pendiente 1 del CLAUDE.md): el SLUG "riesgo-de-credito" (= nombre de este
-# archivo) es una derivación en kebab-case del nombre confirmado por diseño, pero
-# NO está confirmado por ti. Si el slug oficial es otro, renombra el archivo.
-# Contenido (título, descripción y chips) tomado literal del frame de Figma.
+# Definición oficial, tags y beneficios: contenido.md (presentación "Solution
+# Riesgos — Junio 2026"). Slug "riesgo-de-credito" confirmado.
 title: "Riesgo de crédito"
-description: "Administración del riesgo de crédito de principio a fin: monitorea la calidad de la cartera, anticipa la pérdida esperada y controla la concentración por sector y por línea."
+description: "Genera los indicadores que permiten medir la probabilidad de pérdida por incumplimiento en los pagos de cualquier tipo de deuda por parte del deudor."
 highlights:
   - "Pérdida esperada"
   - "Análisis de cosechas"
-  - "Cobertura"
+  - "Cartera total"
   - "Calidad de cartera"
-  - "Concentración por sector"
+  - "Cobertura de cartera"
+  - "Concentración de cartera"
 # Vista previa del dashboard. TODO: los KPIs son cifras ILUSTRATIVAS del mockup de
 # Figma (no datos reales de ningún cliente). Los `image` apuntan a capturas que
 # aún NO existen: AppImage mostrará un placeholder hasta que las sueltes en

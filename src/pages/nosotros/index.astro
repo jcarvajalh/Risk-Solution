@@ -8,7 +8,9 @@ import Header from "@components/layout/Header.astro";
 import AboutHero from "./_sections/AboutHero.astro";
 import AboutStatement from "./_sections/AboutStatement.astro";
 import AboutProcess from "./_sections/AboutProcess.astro";
-import AboutTeam from "./_sections/AboutTeam.astro";
+// AboutTeam inactivada por ahora (contenido.md). Reactivar cuando se confirmen
+// integrantes y fotos reales.
+// import AboutTeam from "./_sections/AboutTeam.astro";
 import FAQSection from "@components/sections/FAQSection.astro";
 import CTABanner from "@components/sections/CTABanner.astro";
 import Footer from "@components/layout/Footer.astro";
@@ -26,7 +28,7 @@ const seo = {
   <AboutHero />
   <AboutStatement />
   <AboutProcess />
-  <AboutTeam />
+  {/* <AboutTeam /> — inactivada por ahora (contenido.md) */}
   <FAQSection group="home" paddingClass="py-[68px]" />
   <CTABanner variant="inverted" />
 
