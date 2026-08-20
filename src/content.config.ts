@@ -1,6 +1,7 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "zod";
+import { cmsBlogLoader } from "./lib/cms-blog-loader";
 
 /*
  * Esquemas Zod de las content collections (Content Layer API de Astro).
@@ -75,13 +76,13 @@ const faqs = defineCollection({
 });
 
 /*
- * Blog. Esquema pensado como CONTRATO de datos de la tarjeta del listado, para
- * que el CMS a medida (a construir después) sepa exactamente qué campos alimentar.
- * Por ahora son archivos locales; la migración al CMS es cambio de capa de
- * autoría, no de esquema.
+ * Blog. Esquema pensado como CONTRATO de datos de la tarjeta del listado.
+ * La fuente de datos es el CMS a medida (repo aparte, Cloudflare Workers): el
+ * loader trae los posts publicados desde su API (GET /api/posts). El esquema NO
+ * cambia respecto a los archivos locales; solo cambia la capa de autoría.
  */
 const blog = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
+  loader: cmsBlogLoader(),
   schema: z.object({
     // — Campos que muestra la TARJETA del listado —
     /** Imagen de portada: slug bajo src/assets/images/ (p. ej. "blog/articulo-1"). */

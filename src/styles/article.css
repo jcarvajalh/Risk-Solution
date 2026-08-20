@@ -33,6 +33,32 @@
   letter-spacing: -0.02em;
 }
 
+/* Niveles adicionales del editor del CMS (encabezado, sección, subsección). */
+.rs-article h4 {
+  margin-top: 1.75rem;
+  color: var(--color-ink);
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.rs-article h5 {
+  margin-top: 1.5rem;
+  color: var(--color-ink-secondary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rs-article h6 {
+  margin-top: 1.25rem;
+  color: var(--color-ink-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .rs-article a {
   color: var(--color-primary);
   text-decoration: underline;
@@ -55,6 +81,42 @@
 
 .rs-article ul li::marker {
   color: var(--color-primary);
+}
+
+/* Listas numeradas (editor del CMS). Numeración en el azul de la marca. */
+.rs-article ol {
+  padding-left: 1.25rem;
+  list-style: decimal;
+}
+
+.rs-article ol li + li {
+  margin-top: 0.5rem;
+}
+
+.rs-article ol li::marker {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Tablas (editor del CMS). */
+.rs-article table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+
+.rs-article th,
+.rs-article td {
+  border: 1px solid var(--color-border);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.rs-article th {
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  font-weight: 600;
 }
 
 /* Pull quote tipo revista: barra azul + texto destacado. */
