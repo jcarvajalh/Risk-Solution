@@ -38,6 +38,10 @@ const {
   loading = "lazy",
 } = Astro.props;
 
+// Imágenes remotas (p. ej. las que sirve el CMS desde R2): se pasan tal cual a un
+// <img>. Las imágenes locales por slug siguen el flujo optimizado de abajo.
+const isRemote = /^https?:\/\//.test(name);
+
 // Vite exige un patrón literal: se cargan todas las imágenes y se busca por slug.
 const modules = import.meta.glob<{ default: ImageMetadata }>(
   "/src/assets/images/**/*.{png,jpg,jpeg,webp,avif,svg}",
@@ -57,7 +61,17 @@ const sizeStyle =
 ---
 
 {
-  image ? (
+  isRemote ? (
+    <Image
+      src={name}
+      alt={alt}
+      class={className}
+      loading={loading}
+      {...(width && height
+        ? { width, height }
+        : { inferSize: true })}
+    />
+  ) : image ? (
     <Image
       src={image}
       alt={alt}

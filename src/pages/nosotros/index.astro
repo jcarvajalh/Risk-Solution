@@ -1,0 +1,36 @@
+---
+/**
+ * Página "Nosotros". Header en variante sólida (igual que las páginas de módulo)
+ * + hero (AboutHero) + Footer. Las siguientes secciones se añadirán después.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/layout/Header.astro";
+import AboutHero from "./_sections/AboutHero.astro";
+import AboutStatement from "./_sections/AboutStatement.astro";
+import AboutProcess from "./_sections/AboutProcess.astro";
+// AboutTeam inactivada por ahora (contenido.md). Reactivar cuando se confirmen
+// integrantes y fotos reales.
+// import AboutTeam from "./_sections/AboutTeam.astro";
+import FAQSection from "@components/sections/FAQSection.astro";
+import CTABanner from "@components/sections/CTABanner.astro";
+import Footer from "@components/layout/Footer.astro";
+
+const seo = {
+  title: "Nosotros — Risk Solution",
+  description:
+    "Desde 2014 construimos software especializado en gestión de riesgo financiero para cooperativas, institutos de financiamiento, bancos y fondos en Colombia.",
+};
+---
+
+<BaseLayout seo={seo}>
+  <Header slot="header" variant="solid" />
+
+  <AboutHero />
+  <AboutStatement />
+  <AboutProcess />
+  {/* <AboutTeam /> — inactivada por ahora (contenido.md) */}
+  <FAQSection group="home" paddingClass="py-[68px]" />
+  <CTABanner variant="inverted" />
+
+  <Footer slot="footer" />
+</BaseLayout>

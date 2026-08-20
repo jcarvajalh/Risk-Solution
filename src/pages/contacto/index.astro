@@ -1,0 +1,32 @@
+---
+/**
+ * Página de Contacto (/contacto). Header sólido + encabezado + mapa/formulario +
+ * tarjetas de contacto + FAQs + CTA + Footer.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/layout/Header.astro";
+import ContactHero from "./_sections/ContactHero.astro";
+import ContactInfo from "./_sections/ContactInfo.astro";
+import ContactFormSection from "./_sections/ContactFormSection.astro";
+import FAQSection from "@components/sections/FAQSection.astro";
+import CTABanner from "@components/sections/CTABanner.astro";
+import Footer from "@components/layout/Footer.astro";
+
+const seo = {
+  title: "Contacto — Risk Solution",
+  description:
+    "Ponte en contacto con el equipo de Risk Solution. Escríbenos y te ayudamos con la gestión de riesgo financiero de tu entidad.",
+};
+---
+
+<BaseLayout seo={seo}>
+  <Header slot="header" variant="solid" />
+
+  <ContactHero />
+  <ContactFormSection />
+  <ContactInfo />
+  <FAQSection group="home" paddingClass="pt-0 pb-[clamp(1.5rem,2.8vw,2.5rem)]" />
+  <CTABanner />
+
+  <Footer slot="footer" />
+</BaseLayout>

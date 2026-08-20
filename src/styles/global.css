@@ -5,12 +5,20 @@
 @import "./theme.css";
 @import "./fonts.css";
 @import "./animations.css";
+@import "./article.css";
 
 /* Reset y base mínimos. Tailwind Preflight ya normaliza; aquí solo lo propio. */
 @layer base {
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    /*
+     * Reserva siempre el hueco de la barra de scroll. Sin esto, las páginas
+     * cortas (sin scroll) quedan ~15px más anchas que las largas (con scroll) y
+     * el contenido centrado —Header incluido— se desplaza al navegar entre unas
+     * y otras. Con `stable`, el ancho de contenido es constante en todo el sitio.
+     */
+    scrollbar-gutter: stable;
   }
 
   body {

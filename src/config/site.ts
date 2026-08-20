@@ -26,48 +26,43 @@ export const hero = {
   titleLead: "Gestión integral de riesgos ",
   titleAccent: "financieros.",
   description:
-    "Centraliza crédito, liquidez, mercado, operacional, SARLAFT, otorgamiento y Business Intelligence en un solo lugar. Con tableros listos para usar y datos siempre actualizados.",
+    "Centraliza crédito, liquidez, mercado, operacional, SARLAFT, otorgamiento y Business Intelligence en un solo lugar, con tableros listos para usar y datos siempre actualizados.",
   backgroundImage: "hero",
   primaryCta: { label: "Solicitar Demo", href: "/contacto" },
   secondaryCta: { label: "Explorar módulos", href: "/modulos" },
 };
 
 /**
- * Sección "El costo de no saberlo a tiempo" (problema). Copy tomado de Figma.
- * Los íconos son equivalentes lucide de los PNG del diseño.
- * TODO: el body de 3 de las 4 tarjetas es placeholder repetido en Figma
- * ("Consolidar todos los riesgos toma días, no minutos."). Falta el copy real.
+ * Sección "El costo de no saberlo a tiempo" (problema). Copy real tomado de
+ * contenido.md. Los íconos son equivalentes lucide de los PNG del diseño.
  */
 export const problem = {
   eyebrow: "EL COSTO DE NO SABERLO A TIEMPO",
   title:
     "La información de riesgo vive dispersa. Las decisiones no pueden esperar.",
   intro:
-    "Crédito, liquidez, mercado y operacional viven en hojas de Excel separadas, actualizadas por personas distintas, momentos distintos. Para el comité de riesgo o la junta, armar un solo reporte confiable toma días de trabajo manual — ",
+    "Crédito, liquidez, mercado y operacional viven en hojas de Excel separadas, actualizadas por personas distintas, en momentos distintos. Para el comité de riesgo o la junta, armar un solo reporte confiable toma días de trabajo manual — ",
   introAccent: "justo cuando más se necesita rapidez.",
   cards: [
     {
       icon: "lucide:file-text",
       title: "Reportes manuales",
-      // TODO: copy placeholder (Figma).
-      body: "Consolidar todos los riesgos toma días, no minutos. Consolidar todos los riesgos toma días, no minutos. Consolidar todos los riesgos toma días, no minutos.",
+      body: "Consolidar cifras de distintas áreas en un solo informe toma días de trabajo dedicado, en lugar de minutos.",
     },
     {
       icon: "lucide:hourglass",
       title: "Cumplimiento bajo presión",
-      // TODO: copy placeholder (Figma).
-      body: "Consolidar todos los riesgos toma días, no minutos.",
+      body: "Preparar los reportes regulatorios a último momento aumenta el riesgo de errores frente a la Superfinanciera.",
     },
     {
       icon: "lucide:network",
       title: "Datos dispersos",
-      body: "Cada área tiene su propio Excel; nadie ve la foto completa.",
+      body: "Cada área tiene su propio Excel; nadie tiene la foto completa del riesgo de la entidad.",
     },
     {
       icon: "lucide:circle-ellipsis",
       title: "Visibilidad tardía",
-      // TODO: copy placeholder (Figma).
-      body: "Consolidar todos los riesgos toma días, no minutos. Consolidar todos los riesgos toma días, no minutos. Consolidar todos los riesgos toma días, no minutos.",
+      body: "Cuando el riesgo se detecta en el reporte mensual, ya es tarde para actuar sobre él.",
     },
   ],
 };
@@ -75,11 +70,12 @@ export const problem = {
 /**
  * Sección "El ecosistema Risk" — carrusel de módulos. Copy y colores de Figma.
  *
- * TODO IMPORTANTE:
- * - Faltan 4 de los 7 módulos (nombre, acento, ícono, descripción, imagen, slug).
+ * Descripciones cortas reales de los 7 módulos (contenido.md, basado en la
+ * presentación "Solution Riesgos — Junio 2026").
+ *
+ * TODO:
  * - Los `accent` son PROVISIONALES (de Figma). Tokenizar al confirmar la paleta
  *   de módulos. Ojo contraste: #DDBF00 sobre blanco no cumple WCAG AA.
- * - Los `href` apuntan a /modulos hasta confirmar los slugs (pendiente 1).
  * - Los íconos son equivalentes lucide de los PNG del diseño.
  * - Las imágenes de gráfico van por slug bajo src/assets/images/modules/.
  */
@@ -95,61 +91,63 @@ export const ecosystem = {
       accent: "#155EEF",
       icon: "lucide:triangle-alert",
       description:
-        "Pérdida esperada, análisis de cosechas, calidad y concentración de cartera.",
+        "Mide la probabilidad de pérdida por incumplimiento: pérdida esperada, análisis de cosechas y gestión de cartera.",
       chartImage: "modules/riesgo-de-credito",
-      href: "/modulos",
+      href: "/modulos/riesgo-de-credito",
+    },
+    {
+      name: "Otorgamiento de crédito",
+      accent: "#4F46E5", // TODO Figma
+      icon: "lucide:file-check", // TODO Figma
+      description:
+        "Analiza con IA si una persona natural o jurídica es candidata a un crédito, con scoring automático y RPA.",
+      chartImage: "modules/otorgamiento-de-credito",
+      href: "/modulos/otorgamiento-de-credito",
+    },
+    {
+      name: "Riesgo de liquidez",
+      accent: "#0E7490", // TODO Figma
+      icon: "lucide:droplets", // TODO Figma
+      description:
+        "Mide la capacidad de la entidad para cubrir sus obligaciones frente a terceros, con escenarios de tensión.",
+      chartImage: "modules/riesgo-de-liquidez",
+      href: "/modulos/riesgo-de-liquidez",
     },
     {
       name: "Business Intelligence",
       accent: "#00970F",
       icon: "lucide:bar-chart-3",
       description:
-        "Informe de gestión diario, solvencia, ROE/ROA y flujo de efectivo.",
+        "Convierte los datos clave de la organización en indicadores gráficos para la toma de decisiones.",
       chartImage: "modules/business-intelligence",
-      href: "/modulos",
-    },
-    {
-      name: "Riesgo operacional",
-      accent: "#DDBF00",
-      icon: "lucide:workflow",
-      // TODO: revisar copy, ¿"matrices de eventos"?
-      description: "Mapas de procesos, matrices eventos.",
-      chartImage: "modules/riesgo-operacional",
-      href: "/modulos",
-    },
-    // --- Módulos deducidos del copy del hero (nombres confirmados). ---
-    // TODO: color, ícono y descripción PROVISIONALES; reemplazar con los de Figma.
-    {
-      name: "Riesgo de liquidez",
-      accent: "#0E7490", // TODO Figma
-      icon: "lucide:droplets", // TODO Figma
-      description: "Brechas de liquidez, indicadores regulatorios y proyección de flujos de caja.", // TODO copy
-      chartImage: "modules/riesgo-de-liquidez",
-      href: "/modulos",
+      href: "/modulos/business-intelligence",
     },
     {
       name: "Riesgo de mercado",
       accent: "#7C3AED", // TODO Figma
       icon: "lucide:trending-up", // TODO Figma
-      description: "Valor en riesgo (VaR), sensibilidades y exposición por factor de mercado.", // TODO copy
+      description:
+        "Mide la probabilidad de variación en precio y posición de los activos de la entidad.",
       chartImage: "modules/riesgo-de-mercado",
-      href: "/modulos",
+      href: "/modulos/riesgo-de-mercado",
+    },
+    {
+      name: "Riesgo operacional",
+      accent: "#DDBF00",
+      icon: "lucide:workflow",
+      description:
+        "Identifica pérdidas por fallos en procesos internos, errores humanos o eventos externos.",
+      chartImage: "modules/riesgo-operacional",
+      href: "/modulos/riesgo-operacional",
     },
     {
       name: "SARLAFT",
       accent: "#DC2626", // TODO Figma
       icon: "lucide:shield-check", // TODO Figma
-      description: "Segmentación, señales de alerta y reportes ROS/UIAF.", // TODO copy
+      description:
+        "Sistema de prevención de lavado de activos y financiación del terrorismo, con consulta a listas restrictivas.",
       chartImage: "modules/sarlaft",
-      href: "/modulos",
-    },
-    {
-      name: "Otorgamiento",
-      accent: "#4F46E5", // TODO Figma
-      icon: "lucide:file-check", // TODO Figma
-      description: "Originación, scoring y decisión de crédito en un solo flujo.", // TODO copy
-      chartImage: "modules/otorgamiento",
-      href: "/modulos",
+      href: "/modulos/sarlaft",
     },
   ],
 };
@@ -225,12 +223,10 @@ export const testimonialsSection = {
 };
 
 /**
- * CTABanner — bloque de conversión antes del footer. Copy tomado de Figma.
+ * CTABanner — bloque de conversión antes del footer. Copy real (contenido.md).
  * Son los valores POR DEFECTO: el componente acepta props para montarlo con
  * otro copy en otras páginas sin duplicarlo (sección 6.2).
  *
- * TODO: en Figma la descripción dice "y mira el comité de riesgo recibe el
- * reporte en minutos", a la que le falta el "cómo". Se corrigió; confirmar.
  * TODO: confirmar el destino del CTA (mismo caso que headerCta).
  */
 export const ctaBanner = {
@@ -239,8 +235,120 @@ export const ctaBanner = {
   titleLead: "Lleva toda tu gestión de riesgo a",
   titleTrail: "un solo tablero.",
   description:
-    "Agenda una demo y mira cómo el comité de riesgo recibe el reporte en minutos",
+    "Agenda una demo y mira cómo el comité de riesgo recibe el reporte en minutos.",
   cta: { label: "Hablar con un experto", href: "/contacto" },
+};
+
+/**
+ * Página "Nosotros" — hero: título, descripción y fila de estadísticas. Copy y
+ * cifras confirmados en contenido.md.
+ */
+export const aboutHero = {
+  title: "Construimos infraestructura de riesgo financiero",
+  description:
+    "Desde 2014 desarrollamos software especializado para la gestión de riesgos en entidades del sector financiero.",
+  stats: [
+    { value: "2014", label: "Año de lanzamiento" },
+    { value: "7", label: "Módulos interconectados" },
+    { value: "+10", label: "Años de experiencia" },
+    { value: "100%", label: "Enfoque sector financiero" },
+  ],
+};
+
+/**
+ * Página "Nosotros" — tarjeta de propósito (misión + visión) sobre fondo gris.
+ * Copy real (contenido.md): un único párrafo de misión + visión.
+ */
+export const aboutStatement = {
+  text: "Dotar a cada entidad financiera de herramientas precisas para anticipar el riesgo y decidir con datos, no con intuición. Ser la plataforma de referencia en gestión integral de riesgos para las entidades financieras de Colombia y la región.",
+};
+
+/**
+ * Página "Nosotros" — "Cómo trabajamos": 4 pasos del proceso. El número (01–04)
+ * se deriva del orden. Copy real (contenido.md).
+ */
+export const aboutProcess = {
+  eyebrow: "Cómo trabajamos",
+  steps: [
+    {
+      title: "Agenda una reunión",
+      description:
+        "Conversamos sobre los riesgos y procesos actuales de tu entidad para entender tus necesidades específicas.",
+    },
+    {
+      title: "Levantamiento de info",
+      description:
+        "Relevamos tus fuentes de datos, estructura de cartera y procesos de reporte existentes.",
+    },
+    {
+      title: "Capacitación",
+      description:
+        "Formamos a tu equipo de riesgo en el uso de la plataforma y en la interpretación de cada tablero.",
+    },
+    {
+      title: "Implementación",
+      description:
+        "Configuramos los módulos contratados y ponemos en marcha el flujo de datos en producción.",
+    },
+  ],
+};
+
+/**
+ * Página "Nosotros" — "El equipo": encabezado + carrusel de personas.
+ *
+ * TODO: confirmar que estos son los integrantes reales (los nombres vienen de
+ * Figma con casing inconsistente; aquí normalizados). Las fotos son placeholder
+ * (stock de Unsplash en Figma): subir las reales a src/assets/images/team/ con el
+ * slug indicado en cada `photo`.
+ */
+export const teamSection = {
+  eyebrow: "El equipo",
+  // El título va en 2 líneas fijas (salto tras "personas"), como en Figma.
+  titleLine1: "Conoce las personas",
+  titleLine2: "detrás de",
+  titleHighlight: "Risk",
+  description:
+    "Equipo de Solution Systems, enfocados en soluciones para el sector financiero.",
+  members: [
+    { name: "Jorge Pérez", role: "Gerente", photo: "team/jorge-perez" },
+    { name: "Diego Cabal", role: "Ingeniero", photo: "team/diego-cabal" },
+    { name: "Wilmar Aspiazu", role: "Ingeniero", photo: "team/wilmar-aspiazu" },
+    { name: "Juan Camilo", role: "Ingeniero", photo: "team/juan-camilo" },
+    { name: "Jhon Freddy", role: "Ingeniero", photo: "team/jhon-freddy" },
+  ],
+};
+
+/**
+ * Página "Blog" — encabezado del listado de artículos y guías. Copy real
+ * (contenido.md): subtítulo propio del blog.
+ */
+export const blogHero = {
+  titleLine1: "Artículos y guías",
+  titleLine2: "de tu interés",
+  description:
+    "Contenido especializado sobre gestión de riesgos financieros para cooperativas, institutos de financiamiento, bancos y fondos.",
+};
+
+/**
+ * Página "Casos de éxito" — encabezado del listado. Mismo patrón visual que el
+ * blog (título en 2 líneas + descripción centrada).
+ *
+ * TODO (pendiente 6 del CLAUDE.md): descripción provisional. Confirmar el copy
+ * real; no inventar cifras ni resultados de clientes.
+ */
+export const caseStudiesHero = {
+  titleLine1: "Casos de éxito",
+  titleLine2: "de nuestros clientes",
+  description:
+    "Entidades financieras que gestionan su riesgo con Risk Solution. Conoce cómo institutos de financiamiento y cooperativas fortalecen su cumplimiento normativo.",
+};
+
+/**
+ * Página "Contacto" — encabezado. Solo el título (sin eyebrow): va en un único
+ * renglón en desktop (contenedor sin ancho máximo) y se ajusta en móvil.
+ */
+export const contactHero = {
+  title: "Ponte en contacto con nosotros y dinos cómo podemos ayudarte.",
 };
 
 /**
@@ -254,11 +362,13 @@ export const footer = {
 };
 
 /**
- * Datos de contacto. Teléfono y correo salen del footer de Figma.
- * TODO: confirmar dirección y horario (pendiente 5 del CLAUDE.md).
+ * Datos de contacto confirmados en contenido.md. Correo, teléfono y dirección
+ * son la única fuente de verdad; el footer los reutiliza desde aquí (por eso no
+ * existe la inconsistencia de correo que había en el mock).
+ * TODO: confirmar horario de atención (pendiente 5 del CLAUDE.md).
  */
 export const contact: ContactInfo = {
-  address: undefined, // TODO
+  address: "Calle 22 Nte. #6AN-24",
   phone: "+57 301 813 5745",
   email: "contacto@e-solutionsystems.net",
   hours: undefined, // TODO

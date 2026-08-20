@@ -1,0 +1,72 @@
+---
+/**
+ * Tres tarjetas de contacto (correo, teléfono, oficina). Sección de página
+ * (patrón 6.3): lee los datos de `contact` en site.ts.
+ *
+ * Mapeo Figma: tarjeta #FFFFFF radio 10px → bg-surface; círculo 55px #155EEF con
+ * ícono blanco (los PNG de Figma → íconos lucide); label 15/400 #555 →
+ * text-ink-secondary; valor 18/500 #000 → text-ink. 3 columnas (1 en móvil).
+ */
+import { Icon } from "astro-icon/components";
+import { contact } from "@config/site";
+
+const phoneHref = contact.phone
+  ? `tel:${contact.phone.replace(/[^+\d]/g, "")}`
+  : undefined;
+
+const items = [
+  {
+    icon: "lucide:mail",
+    label: "Correo electrónico",
+    value: contact.email,
+    href: contact.email ? `mailto:${contact.email}` : undefined,
+  },
+  {
+    icon: "lucide:phone",
+    label: "Teléfono",
+    value: contact.phone,
+    href: phoneHref,
+  },
+  {
+    icon: "lucide:map-pin",
+    label: "Oficina",
+    value: contact.address,
+    href: undefined,
+  },
+].filter((item) => item.value);
+---
+
+<section class="bg-bg pb-[clamp(1.5rem,2.8vw,2.5rem)]">
+  <div class="mx-auto w-full max-w-[1064px] px-5 sm:px-6">
+    <ul
+      class="grid grid-cols-1 gap-[clamp(0.75rem,1.2vw,1rem)] sm:grid-cols-3"
+    >
+      {
+        items.map((item) => (
+          <li class="flex items-center gap-2.5 rounded-[10px] bg-surface p-2">
+            <span class="flex size-[clamp(2.25rem,2.6vw,2.5rem)] shrink-0 items-center justify-center rounded-full bg-primary text-white">
+              <Icon name={item.icon} class="size-[clamp(0.9375rem,1.1vw,1.125rem)]" aria-hidden="true" />
+            </span>
+            <div class="min-w-0">
+              <p class="text-[13px] tracking-[-0.02em] text-ink-secondary">
+                {item.label}
+              </p>
+              {item.href ? (
+                <a
+                  href={item.href}
+                  class="block text-[15px] font-medium tracking-[-0.02em] break-words text-ink transition-colors hover:text-primary"
+                >
+                  {item.value}
+                </a>
+              ) : (
+                <p class="text-[15px] font-medium tracking-[-0.02em] break-words text-ink">
+                  {item.value}
+                </p>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

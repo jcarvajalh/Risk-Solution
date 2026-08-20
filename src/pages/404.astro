@@ -1,0 +1,61 @@
+---
+/**
+ * Página 404 (no encontrado). Header sólido + bloque centrado que ocupa el alto
+ * disponible + Footer. Ofrece rutas de salida (inicio y contacto) para no dejar
+ * al usuario en un callejón sin salida.
+ *
+ * SEO: se marca noindex (una 404 no debe indexarse).
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/layout/Header.astro";
+import Footer from "@components/layout/Footer.astro";
+import Button from "@components/ui/Button.astro";
+
+const seo = {
+  title: "Página no encontrada — Risk Solution",
+  description:
+    "La página que buscas no existe o se movió. Vuelve al inicio o escríbenos y te ayudamos.",
+  noindex: true,
+};
+---
+
+<BaseLayout seo={seo}>
+  <Header slot="header" variant="solid" />
+
+  <section
+    class="flex min-h-[70vh] items-center bg-bg py-[clamp(3rem,8vw,6rem)]"
+  >
+    <div class="mx-auto w-full max-w-[720px] px-5 text-center sm:px-6">
+      <p
+        class="text-[clamp(4.5rem,10vw,8rem)] leading-none font-bold tracking-[-0.06em] text-primary"
+      >
+        404
+      </p>
+
+      <h1
+        class="mt-4 text-[clamp(1.5rem,1.2rem_+_1.5vw,2.25rem)] leading-[1.2] font-semibold tracking-[-0.04em] text-balance text-ink"
+      >
+        No encontramos esta página
+      </h1>
+
+      <p
+        class="mx-auto mt-4 max-w-[520px] text-[clamp(1rem,0.95rem_+_0.3vw,1.125rem)] leading-[1.5] tracking-[-0.02em] text-pretty text-ink-secondary"
+      >
+        Es posible que el enlace esté roto o que la página se haya movido. Vuelve
+        al inicio o escríbenos y te ayudamos a encontrar lo que buscas.
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <Button href="/" label="Volver al inicio" variant="primary" />
+        <a
+          href="/contacto"
+          class="inline-flex h-[38px] items-center rounded-[5px] border border-ink/20 px-4 text-sm font-semibold tracking-[-0.02em] text-ink transition-colors hover:border-primary hover:text-primary"
+        >
+          Ir a contacto
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

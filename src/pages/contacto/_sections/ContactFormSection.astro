@@ -1,0 +1,35 @@
+---
+/**
+ * Bloque principal de contacto: mapa (izquierda) + formulario (derecha, isla).
+ * Solo el formulario es interactivo (isla React); el resto es estático.
+ *
+ * Mapeo Figma: dos columnas de ~522px con ~20px de separación. En móvil se
+ * apilan. El mapa se estira a la altura del formulario (grid stretch).
+ *
+ * Mapa: iframe de Google Maps embed (Edificio Santa Mónica Central, Cali). El
+ * CSP de _headers ya permite frame-src https://www.google.com. Carga diferida
+ * (loading="lazy") por rendimiento (sección 10).
+ * TODO: confirmar la dirección real de la oficina (pendiente 5).
+ */
+import ContactForm from "./ContactForm";
+---
+
+<section class="bg-bg pb-[clamp(1.5rem,2.8vw,2.5rem)]">
+  <div
+    class="mx-auto grid w-full max-w-[1064px] grid-cols-1 gap-5 px-5 sm:px-6 lg:grid-cols-2"
+  >
+    <!-- Mapa -->
+    <div class="min-h-[300px] overflow-hidden rounded-[10px]">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15930.061203503694!2d-76.52783217879342!3d3.4671973851379447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a72c86700101%3A0xb331b8055147f04e!2sEdificio%20Santa%20M%C3%B3nica%20Central!5e0!3m2!1ses-419!2sco!4v1787087832676!5m2!1ses-419!2sco"
+        title="Ubicación de la oficina en Google Maps"
+        class="h-full min-h-[300px] w-full border-0"
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen></iframe>
+    </div>
+
+    <!-- Formulario (isla) -->
+    <ContactForm client:visible />
+  </div>
+</section>

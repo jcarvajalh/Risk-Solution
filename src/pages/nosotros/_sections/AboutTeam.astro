@@ -1,0 +1,88 @@
+---
+/**
+ * Página "Nosotros" — "El equipo": encabezado (eyebrow + título + descripción) y
+ * un carrusel manual e infinito de personas (isla React). Sección de página
+ * (patrón 6.3): lee de site.ts. Solo el carrusel es isla; el encabezado es
+ * estático (0 KB JS).
+ *
+ * Mapeo Figma (referencia, no copia literal — flex/grid, sin position absolute,
+ * mobile-first, tipografía y espaciado fluidos):
+ * - Sección #FFFFFF con borde superior/inferior rgba(0,0,0,0.2) → bg-surface +
+ *   border-ink/20. Eyebrow (JetBrains Mono) → Badge (Geist). Título 40/700 #1F1F1F
+ *   → text-ink, con "Risk" en text-primary. Descripción 26/400 #555 →
+ *   text-ink-secondary. Tarjetas: foto (radio 10px, sombra shadow-card), nombre
+ *   20/500 → text-ink, rol → text-ink-secondary (peso 300 de Figma no existe en
+ *   el set; se usa 400 + color de apoyo).
+ *
+ * Las fotos se resuelven aquí (astro:assets) y se pasan ya optimizadas a la isla;
+ * si no existe el archivo, se pasa null y la isla pinta un placeholder.
+ */
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import Badge from "@components/ui/Badge.astro";
+import { teamSection } from "@config/site";
+import TeamCarousel from "./TeamCarousel";
+
+const { eyebrow, titleLine1, titleLine2, titleHighlight, description, members } =
+  teamSection;
+
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/images/team/**/*.{png,jpg,jpeg,webp,avif}",
+);
+
+async function resolvePhoto(slug: string): Promise<string | null> {
+  const key = Object.keys(imageModules).find(
+    (path) =>
+      path.replace("/src/assets/images/", "").replace(/\.[^.]+$/, "") === slug,
+  );
+  if (!key) return null;
+  const img = (await imageModules[key]!()).default;
+  const optimized = await getImage({
+    src: img,
+    width: 456,
+    height: 510,
+    format: "webp",
+  });
+  return optimized.src;
+}
+
+const resolvedMembers = await Promise.all(
+  members.map(async (m) => ({
+    name: m.name,
+    role: m.role,
+    src: await resolvePhoto(m.photo),
+  })),
+);
+---
+
+<section
+  class="border-y border-ink/20 bg-surface py-[clamp(3rem,5.5vw,5rem)]"
+  aria-labelledby="el-equipo"
+>
+  <div class="mx-auto w-full max-w-[1280px] px-5 sm:px-6">
+    <Badge variant="primary">{eyebrow}</Badge>
+
+    <div
+      class="mt-6 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-16"
+    >
+      <h2
+        id="el-equipo"
+        class="text-[clamp(1.75rem,1.486rem_+_1.13vw,2.75rem)] leading-[1.2] font-bold tracking-[-0.02em] whitespace-nowrap text-ink"
+      >
+        {titleLine1}<br />{titleLine2}{" "}<span class="text-primary">{titleHighlight}</span>
+      </h2>
+
+      <p
+        class="max-w-[517px] text-[clamp(1.0625rem,0.815rem_+_0.9vw,1.625rem)] leading-[1.3] tracking-[-0.02em] text-pretty text-ink-secondary"
+      >
+        {description}
+      </p>
+    </div>
+  </div>
+
+  {/* Carrusel full-bleed: fuera del contenedor. La propia pista se alinea con el
+      contenido mediante su padding-left. */}
+  <div class="mt-[clamp(2rem,3.5vw,3rem)]">
+    <TeamCarousel members={resolvedMembers} client:visible />
+  </div>
+</section>

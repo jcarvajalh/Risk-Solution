@@ -1,0 +1,21 @@
+---
+/**
+ * Página de detalle de un módulo (/modulos/[slug]). El slug es el nombre del
+ * archivo en la colección `modules`. Solo se generan las páginas de los módulos
+ * que tengan archivo de contenido (no se inventan las 7 de golpe).
+ */
+import { getCollection } from "astro:content";
+import ModuleLayout from "./_ModuleLayout.astro";
+
+export async function getStaticPaths() {
+  const modules = await getCollection("modules", ({ data }) => !data.draft);
+  return modules.map((module) => ({
+    params: { slug: module.id },
+    props: { module },
+  }));
+}
+
+const { module } = Astro.props;
+---
+
+<ModuleLayout module={module} />

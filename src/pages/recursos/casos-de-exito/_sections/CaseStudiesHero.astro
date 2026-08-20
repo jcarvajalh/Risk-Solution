@@ -1,0 +1,26 @@
+---
+/**
+ * Encabezado de la página de casos de éxito: título (2 líneas) + descripción,
+ * centrados. Sección de página (patrón 6.3): lee de site.ts. Mismo tratamiento
+ * visual que BlogHero para mantener la coherencia dentro de /recursos.
+ */
+import { caseStudiesHero } from "@config/site";
+
+const { titleLine1, titleLine2, description } = caseStudiesHero;
+---
+
+<section class="bg-bg pt-[clamp(2.5rem,4.5vw,4rem)]">
+  <div class="mx-auto w-full max-w-[1080px] px-5 text-center sm:px-6">
+    <h1
+      class="text-[clamp(2.375rem,1.8rem_+_2.44vw,3.75rem)] leading-[1.3] font-semibold tracking-[-0.04em] text-ink"
+    >
+      {titleLine1}<br />{titleLine2}
+    </h1>
+
+    <p
+      class="mx-auto mt-[clamp(1.5rem,2.8vw,2.5rem)] max-w-[783px] text-[clamp(1.0625rem,0.6rem_+_0.72vw,1.25rem)] leading-[1.5] tracking-[-0.04em] text-pretty text-ink-secondary"
+    >
+      {description}
+    </p>
+  </div>
+</section>

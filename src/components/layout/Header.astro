@@ -1,62 +1,157 @@
 ---
 /**
- * Header del sitio. Fondo transparente: se monta sobre el hero (el texto es
- * blanco para contrastar con la imagen del hero). Layout con flex, sin
- * position:absolute salvo el propio header sobre el hero. Mobile-first: en
- * pantallas < lg se colapsa en un menú hamburguesa (isla React).
+ * Header del sitio. Componente RECICLABLE (6.2): una sola definición para todas
+ * las páginas mediante la prop `variant`:
+ *  - "transparent" (por defecto): fondo transparente, texto blanco. Se monta
+ *    SOBRE el hero del home (position:absolute). Logo claro.
+ *  - "solid": fondo blanco (bg-surface), texto #1F1F1F (text-ink). Para páginas
+ *    interiores sin hero (módulos, nosotros, recursos…). Se fija al top (sticky)
+ *    y usa el mismo logo que el Footer.
  *
- * La navegación se lee de @config/navigation (no se hardcodea en el marcado).
+ * La navegación se lee de @config/navigation (no se hardcodea en el marcado). Los
+ * ítems con `children` (Módulos, Recursos) despliegan un menú al pasar el cursor
+ * y al enfocar con teclado (focus-within), SIN JavaScript: la regla 6.4 excluye
+ * los "hovers" de las islas React. El disparador lleva un chevron-down que gira
+ * al abrir. El panel es un popover blanco (legible en ambas variantes).
  *
- * Notas de mapeo desde Figma (referencia, no copia literal):
- * - Enlaces Inter 12/600 → mapeados a Geist (font-sans), única familia del sitio.
- * - Botón CTA → primitivo Button (variant primary). Radio 5px, bg-primary.
- * - Ícono del logo: placeholder por slug (AppImage name="logo"). Para reemplazarlo,
- *   agregar el archivo en src/assets/images/logo.(svg|png|jpg|webp).
- * - Contenedor ~1060px derivado del margen de 190px sobre el frame de 1440px.
- *   TODO: confirmar el ancho de contenedor global del sistema.
+ * Accesibilidad: el disparador es un enlace a /modulos con aria-haspopup; el
+ * panel se abre por focus-within, así que es alcanzable por teclado. Se usa
+ * opacity + pointer-events (no `hidden`/`invisible`) para que los enlaces del
+ * panel sigan en el orden de tabulación y el foco pueda abrirlo.
+ *
+ * Notas de mapeo Figma (referencia, no copia literal):
+ * - Enlaces Inter 12/600 → Geist (font-sans). Color #1F1F1F → text-ink (mismo
+ *   criterio que el Footer).
+ * - Botón CTA → primitivo Button (variant primary): 159×38, círculo y flecha.
+ * - Alturas y anchos por token/flex; sin position:absolute salvo el header en la
+ *   variante transparente y el popover del dropdown.
  */
 import { mainNav, headerCta } from "@config/navigation";
+import { Icon } from "astro-icon/components";
 import AppImage from "@components/ui/AppImage.astro";
 import Button from "@components/ui/Button.astro";
 import MobileNav from "@components/islands/MobileNav";
+
+interface Props {
+  variant?: "transparent" | "solid";
+}
+
+const { variant = "transparent" } = Astro.props;
+const isSolid = variant === "solid";
+
+/* Transparente flota sobre el hero; sólida ocupa su espacio y se fija al top. */
+const headerClass = isSolid
+  ? "sticky top-0 z-50 h-20 bg-surface"
+  : "absolute inset-x-0 top-0 z-50 h-20";
+
+const linkColor = isSolid ? "text-ink" : "text-white";
 ---
 
-<header class="absolute inset-x-0 top-0 z-50 h-20">
+<header class:list={[headerClass]}>
   <div
     class="mx-auto flex h-full max-w-[1060px] items-center justify-between px-5 sm:px-6"
   >
     <!-- Logo -->
     <a
       href="/"
-      class="flex items-center gap-2.5 text-white"
+      class:list={["flex items-center gap-2.5", linkColor]}
       aria-label="Risk Solution — Ir al inicio"
     >
       <AppImage
-        name="logo"
+        name={isSolid ? "logo-footer" : "logo"}
         alt="Risk Solution"
-        width={26}
-        height={26}
-        class="size-[26px]"
+        width={isSolid ? 41 : 26}
+        height={isSolid ? 36 : 26}
+        class="h-[26px] w-auto object-contain"
         loading="eager"
       />
       <span
         class="text-2xl leading-none font-semibold tracking-[-0.02em] whitespace-nowrap"
       >
-        Risk Solution
+        Risk solution
       </span>
     </a>
 
     <!-- Navegación desktop -->
     <nav aria-label="Principal" class="hidden items-center gap-8 lg:flex">
       {
-        mainNav.map((item) => (
-          <a
-            href={item.href}
-            class="text-sm font-semibold tracking-[-0.02em] text-white transition-opacity hover:opacity-70"
-          >
-            {item.label}
-          </a>
-        ))
+        mainNav.map((item) =>
+          (item.children?.length ?? 0) > 0 ? (
+            <div class="group relative">
+              {/* menuOnly (Módulos): disparador sin navegación (<button>). El
+                  resto (Recursos): enlace al hub. Ambos abren el menú por hover y
+                  por focus-within. */}
+              <Fragment>
+                {item.menuOnly ? (
+                  <button
+                    type="button"
+                    aria-haspopup="true"
+                    class:list={[
+                      "inline-flex cursor-default items-center gap-1 text-sm font-semibold tracking-[-0.02em] transition-opacity hover:opacity-70",
+                      linkColor,
+                    ]}
+                  >
+                    {item.label}
+                    <Icon
+                      name="lucide:chevron-down"
+                      class="size-4 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
+                      aria-hidden="true"
+                    />
+                  </button>
+                ) : (
+                  <a
+                    href={item.href}
+                    aria-haspopup="true"
+                    class:list={[
+                      "inline-flex items-center gap-1 text-sm font-semibold tracking-[-0.02em] transition-opacity hover:opacity-70",
+                      linkColor,
+                    ]}
+                  >
+                    {item.label}
+                    <Icon
+                      name="lucide:chevron-down"
+                      class="size-4 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
+                      aria-hidden="true"
+                    />
+                  </a>
+                )}
+              </Fragment>
+
+              {/* Popover: cerrado con opacity-0 + pointer-events-none (no
+                  `invisible`, para no sacar sus enlaces del orden de tabulación).
+                  El pt-3 tiende un puente invisible entre disparador y panel para
+                  que el cursor no lo pierda al bajar. */}
+              <div
+                class="pointer-events-none absolute top-full left-0 translate-y-1 pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100"
+              >
+                <ul
+                  class="min-w-[224px] rounded-xl border border-border bg-surface p-2 shadow-xl"
+                >
+                  {(item.children ?? []).map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="block rounded-lg px-3 py-2 text-sm font-medium tracking-[-0.02em] text-ink transition-colors hover:bg-primary-subtle hover:text-primary"
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ) : (
+            <a
+              href={item.href}
+              class:list={[
+                "text-sm font-semibold tracking-[-0.02em] transition-opacity hover:opacity-70",
+                linkColor,
+              ]}
+            >
+              {item.label}
+            </a>
+          ),
+        )
       }
 
       <Button
@@ -69,7 +164,7 @@ import MobileNav from "@components/islands/MobileNav";
 
     <!-- Navegación móvil (isla React) -->
     <div class="lg:hidden">
-      <MobileNav client:idle />
+      <MobileNav variant={variant} client:idle />
     </div>
   </div>
 </header>

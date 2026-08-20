@@ -1,0 +1,33 @@
+---
+/**
+ * Página de Blog (/recursos/blog): listado de artículos y guías. Header sólido +
+ * encabezado + listado filtrable + Footer.
+ *
+ * TODO (ruta): el diseño incluye el filtro "Guías", así que podría ser el hub
+ * /recursos en vez de /recursos/blog. Confirmar y, si aplica, mover.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/layout/Header.astro";
+import BlogHero from "./_sections/BlogHero.astro";
+import BlogList from "./_sections/BlogList.astro";
+import FAQSection from "@components/sections/FAQSection.astro";
+import CTABanner from "@components/sections/CTABanner.astro";
+import Footer from "@components/layout/Footer.astro";
+
+const seo = {
+  title: "Blog y guías — Risk Solution",
+  description:
+    "Artículos y guías sobre gestión de riesgo financiero, SARLAFT y normatividad para entidades financieras en Colombia.",
+};
+---
+
+<BaseLayout seo={seo}>
+  <Header slot="header" variant="solid" />
+
+  <BlogHero />
+  <BlogList />
+  <FAQSection group="home" />
+  <CTABanner />
+
+  <Footer slot="footer" />
+</BaseLayout>

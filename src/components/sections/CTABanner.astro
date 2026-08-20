@@ -31,6 +31,12 @@ interface Props {
   titleTrail?: string;
   description?: string;
   cta?: { label: string; href: string };
+  /**
+   * "primary" (por defecto): fondo azul, texto blanco (home).
+   * "inverted": fondo blanco, título oscuro, descripción #555 y borde superior e
+   * inferior — usado en las páginas de módulo.
+   */
+  variant?: "primary" | "inverted";
 }
 
 const {
@@ -38,7 +44,18 @@ const {
   titleTrail = ctaBanner.titleTrail,
   description = ctaBanner.description,
   cta = ctaBanner.cta,
+  variant = "primary",
 } = Astro.props;
+
+const isInverted = variant === "inverted";
+/* Fondo/borde, colores de texto y variante del botón según la variante. El borde
+   invertido reusa el de la sección "Beneficios": border-ink/20. */
+const sectionClass = isInverted
+  ? "bg-surface border-y border-ink/20"
+  : "bg-primary";
+const titleColor = isInverted ? "text-ink" : "text-white";
+const descColor = isInverted ? "text-ink-secondary" : "text-white/90";
+const buttonVariant = isInverted ? "primary" : "light";
 
 /* Figma 100px */
 const fluidPadY = "py-[clamp(3.5rem,6.9vw,7rem)]";
@@ -55,14 +72,15 @@ const fluidTitleGap = "mt-[clamp(0.75rem,1.18vw,1.25rem)]";
 const fluidCtaGap = "mt-[clamp(1.5rem,2.57vw,2.5rem)]";
 ---
 
-<section class:list={["bg-primary", fluidPadY]} aria-labelledby="cta-titulo">
+<section class:list={[sectionClass, fluidPadY]} aria-labelledby="cta-titulo">
   <div
     class="mx-auto flex w-full max-w-[760px] flex-col items-center px-5 text-center sm:px-6"
   >
     <h2
       id="cta-titulo"
       class:list={[
-        "leading-[1.3] font-bold tracking-[-0.04em] text-white",
+        "leading-[1.3] font-bold tracking-[-0.04em]",
+        titleColor,
         fluidTitle,
       ]}
     >
@@ -79,7 +97,8 @@ const fluidCtaGap = "mt-[clamp(1.5rem,2.57vw,2.5rem)]";
 
     <p
       class:list={[
-        "leading-[1.2] tracking-[-0.04em] text-white/90",
+        "leading-[1.2] tracking-[-0.04em]",
+        descColor,
         fluidTitleGap,
         fluidDescription,
       ]}
@@ -90,7 +109,7 @@ const fluidCtaGap = "mt-[clamp(1.5rem,2.57vw,2.5rem)]";
     <Button
       href={cta.href}
       label={cta.label}
-      variant="light"
+      variant={buttonVariant}
       class={fluidCtaGap}
     />
   </div>

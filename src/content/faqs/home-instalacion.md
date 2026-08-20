@@ -1,7 +1,6 @@
 ---
-# TODO: falta la respuesta. En Figma esta pregunta aparece cerrada y sin copy.
 question: "¿Cómo es el proceso de instalación?"
-answer: "TODO: falta el copy de esta respuesta en el diseño."
+answer: "Inicia con una reunión de diagnóstico, seguida del levantamiento de tus fuentes de información, la configuración de los módulos contratados y la capacitación de tu equipo antes de salir a producción."
 group: "home"
 order: 4
 ---

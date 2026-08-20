@@ -1,6 +1,7 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "zod";
+import { cmsBlogLoader } from "./lib/cms-blog-loader";
 
 /*
  * Esquemas Zod de las content collections (Content Layer API de Astro).
@@ -16,11 +17,50 @@ const modules = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/modules" }),
   schema: z.object({
     title: z.string(),
-    summary: z.string(),
+    // Resumen corto para el listado /modulos. Opcional hasta confirmar ese copy.
+    summary: z.string().optional(),
+    // Párrafo del encabezado (hero) de la página de módulo.
+    description: z.string(),
+    // Chips/etiquetas del hero (borde punteado).
+    highlights: z.array(z.string()).default([]),
+    // Vista previa del dashboard del módulo: KPIs + tarjetas de gráfico
+    // (los gráficos son imágenes). Opcional: si falta, no se renderiza la sección.
+    dashboard: z
+      .object({
+        kpis: z.array(
+          z.object({
+            label: z.string(),
+            value: z.string(),
+            // Color del valor. default → text-ink; primary/danger → tokens.
+            tone: z.enum(["default", "primary", "danger"]).default("default"),
+          }),
+        ),
+        charts: z.array(
+          z.object({
+            title: z.string(),
+            // Slug de la imagen del gráfico bajo src/assets/images/ (AppImage).
+            image: z.string(),
+          }),
+        ),
+      })
+      .optional(),
+    // Sección "Beneficios": título + lista de beneficios (el número 01/02/03 se
+    // deriva del orden). Opcional: si falta, no se renderiza la sección.
+    benefits: z
+      .object({
+        title: z.string(),
+        items: z.array(
+          z.object({
+            title: z.string(),
+            description: z.string(),
+          }),
+        ),
+      })
+      .optional(),
     // Orden de aparición en el listado /modulos.
     order: z.number().default(0),
     draft: z.boolean().default(false),
-    // TODO: añadir campos reales del detalle de módulo (features, capturas, etc.).
+    // TODO: añadir el resto de campos del detalle de módulo (features, capturas, etc.).
   }),
 });
 
@@ -35,30 +75,55 @@ const faqs = defineCollection({
   }),
 });
 
-// Blog (editable a futuro con Keystatic; por ahora archivos locales).
+/*
+ * Blog. Esquema pensado como CONTRATO de datos de la tarjeta del listado.
+ * La fuente de datos es el CMS a medida (repo aparte, Cloudflare Workers): el
+ * loader trae los posts publicados desde su API (GET /api/posts). El esquema NO
+ * cambia respecto a los archivos locales; solo cambia la capa de autoría.
+ */
 const blog = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
+  loader: cmsBlogLoader(),
   schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    publishDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    author: z.string(),
+    // — Campos que muestra la TARJETA del listado —
+    /** Imagen de portada: slug bajo src/assets/images/ (p. ej. "blog/articulo-1"). */
     image: z.string().optional(),
+    /** Fecha de publicación (se muestra como "Julio 14 2026"). */
+    publishDate: z.coerce.date(),
+    /** Título de la tarjeta. */
+    title: z.string(),
+    /** Meta descripción CORTA (resumen/excerpt que se ve en la tarjeta). */
+    description: z.string(),
+    /** Tipo, para el filtro Todo/Blog/Guías. */
+    type: z.enum(["blog", "guia"]).default("blog"),
+
+    // — Campos adicionales (detalle del artículo / administración) —
+    author: z.string(),
+    updatedDate: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),
 });
 
-// Casos de éxito. Solo clientes confirmados (sección 2 del CLAUDE.md).
+// Casos de éxito. El cuerpo (markdown) es el artículo tipo revista; la portada y
+// la galería son slugs de imagen bajo src/assets/images/ (AppImage).
 const caseStudies = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/case-studies" }),
   schema: z.object({
     title: z.string(),
     client: z.string(),
+    /** Resumen para la tarjeta y el encabezado del detalle. */
     description: z.string(),
     publishDate: z.coerce.date(),
+    /** Portada de la tarjeta del listado (slug bajo src/assets/images/). */
     image: z.string().optional(),
+    /** Logo de la entidad (slug bajo src/assets/images/, p. ej. "clients/infihuila"). */
+    logo: z.string().optional(),
+    /** Sector de la entidad (metadato del encabezado). */
+    sector: z.string().optional(),
+    /** Ubicación de la entidad (metadato del encabezado). */
+    location: z.string().optional(),
+    /** Imágenes del detalle tipo revista (~4 slugs bajo src/assets/images/). */
+    gallery: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),
 });

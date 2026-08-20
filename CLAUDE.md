@@ -236,12 +236,13 @@ risk-solution/
 │   │   │   └── og/                 # imágenes Open Graph
 │   │   └── video/                  # VideoRicks
 │   │
-│   ├── components/
-│   │   ├── islands/                # componentes React interactivos
-│   │   ├── layout/                 # Header, Footer, Container
-│   │   ├── sections/               # secciones de página reutilizables
-│   │   ├── modules/                # bloques propios de las páginas de módulo
-│   │   └── ui/                     # primitivos: Button, Card, Badge, Input…
+│   ├── components/                 # SOLO lo reciclable entre páginas
+│   │   ├── islands/                # componentes React interactivos (MobileNav)
+│   │   ├── layout/                 # Header, Footer
+│   │   ├── ui/                     # primitivos: Button, Badge, AppImage…
+│   │   └── sections/               # secciones RECICLABLES: FAQSection, CTABanner
+│   │       │                       #   (las secciones propias de una página NO van aquí;
+│   │       │                       #    viven junto a su página en src/pages/, ver abajo)
 │   │
 │   ├── config/
 │   │   ├── site.ts                 # datos del sitio y de las secciones
@@ -257,30 +258,42 @@ risk-solution/
 │   │   └── testimonials/
 │   │
 │   ├── layouts/
-│   │   ├── BaseLayout.astro
-│   │   ├── ModuleLayout.astro      # plantilla común de las 7 páginas de módulo
+│   │   ├── BaseLayout.astro        # compartido por todas las páginas
 │   │   └── ArticleLayout.astro     # blog y casos de éxito
+│   │                               # (ModuleLayout vive junto a modulos, ver abajo)
 │   │
 │   ├── lib/
 │   │   ├── utils.ts                # cn() y helpers
 │   │   ├── schemas.ts              # validación de formularios (Zod)
 │   │   └── structured-data.ts      # generadores de JSON-LD
 │   │
-│   ├── pages/
-│   │   ├── index.astro                        # Inicio
+│   ├── pages/                      # rutas + secciones COLOCADAS con cada página
+│   │   │                           #   (todo archivo .astro aquí es una ruta, SALVO
+│   │   │                           #    los que empiezan con "_": Astro los excluye)
+│   │   ├── index.astro                        # "/" (Inicio)
+│   │   ├── _home/                             # secciones del inicio (no rutas)
+│   │   │   ├── Hero.astro  Problem.astro  Ecosystem.astro …
+│   │   │   └── Benefits.astro  Clients.astro  Testimonials.astro …
 │   │   ├── modulos/
-│   │   │   ├── index.astro                    # listado de los 7 módulos
-│   │   │   └── [slug].astro                   # página de detalle por módulo
-│   │   ├── nosotros.astro
+│   │   │   ├── index.astro                    # "/modulos" (listado)
+│   │   │   ├── [slug].astro                   # "/modulos/[slug]" (detalle)
+│   │   │   ├── _ModuleLayout.astro            # plantilla común de los módulos
+│   │   │   └── _sections/                     # ModuleHero, ModuleDashboard, ModuleBenefits
+│   │   ├── nosotros/
+│   │   │   ├── index.astro                    # "/nosotros"
+│   │   │   └── _sections/                     # AboutHero, AboutStatement…
 │   │   ├── recursos/
 │   │   │   ├── index.astro                    # hub de recursos
+│   │   │   ├── _sections/
 │   │   │   ├── blog/
 │   │   │   │   ├── index.astro
 │   │   │   │   └── [slug].astro
 │   │   │   └── casos-de-exito/
 │   │   │       ├── index.astro
 │   │   │       └── [slug].astro
-│   │   ├── contacto.astro
+│   │   ├── contacto/
+│   │   │   ├── index.astro                    # "/contacto"
+│   │   │   └── _sections/
 │   │   └── 404.astro
 │   │
 │   ├── stores/                     # nanostores compartidos entre islas
@@ -298,6 +311,26 @@ risk-solution/
 ├── eslint.config.js
 └── package.json
 ```
+
+### Organización de componentes (colocation por página)
+
+- **Sección propia de una página** → vive **junto a su página** en `src/pages/`,
+  dentro de una carpeta con prefijo `_` (Astro excluye del enrutado todo lo que
+  empieza con `_`). Ejemplos: `pages/_home/Hero.astro`,
+  `pages/nosotros/_sections/AboutHero.astro`,
+  `pages/modulos/_sections/ModuleHero.astro`.
+  ⚠️ NUNCA pongas una sección como archivo suelto en `src/pages/` (p. ej.
+  `pages/nosotros/AboutHero.astro`): se convertiría en la ruta `/nosotros/AboutHero`.
+- **Sección reciclada en 2+ páginas** → `components/sections/` (FAQSection,
+  CTABanner). Regla: una sección vive con su página hasta que la usa una segunda
+  página; entonces "asciende" a `components/sections/`.
+- La **plantilla propia** de un grupo de páginas se coloca igual: `ModuleLayout`
+  es `pages/modulos/_ModuleLayout.astro`. `BaseLayout` (de todas) sí va en `layouts/`.
+- **Primitivos** (Button, Badge, AppImage) → `components/ui/`. **Header/Footer** →
+  `components/layout/`. **Islas React** → `components/islands/`.
+- Imports colocados con ruta relativa corta (`./_sections/X.astro`), no con alias.
+- Cada sección es su propio `.astro`; el `index.astro` de la página las compone
+  importándolas. No se juntan varias secciones en un mismo archivo.
 
 ### Alias de rutas
 
@@ -536,16 +569,16 @@ Actualiza esta sección conforme avancemos.
 - [x] Tokens de diseño en `theme.css` (paleta base confirmada; derivados pendientes de Figma)
 - [x] Geist servida localmente (`.woff2` 400/500/600/700 en `public/fonts/geist/`)
 - [x] `public/_headers`
-- [ ] `BaseLayout.astro` (esqueleto inicial creado; completar con Figma)
-- [ ] Header + Footer
-- [ ] Home
-- [ ] Listado de módulos + `ModuleLayout` + 7 páginas
-- [ ] Nosotros
-- [ ] Recursos (hub)
-- [ ] Blog (estructura; CMS después)
-- [ ] Casos de éxito
-- [ ] Contacto (formulario + EmailJS + reCAPTCHA)
-- [ ] 404
+- [x] `BaseLayout.astro` (esqueleto inicial creado; completar con Figma)
+- [x] Header + Footer
+- [x] Home
+- [x] Listado de módulos + `ModuleLayout` + 7 páginas
+- [x] Nosotros
+- [x] Recursos (hub)
+- [x] Blog (estructura; CMS después)
+- [x] Casos de éxito
+- [x] Contacto (formulario + EmailJS + reCAPTCHA)
+- [x] 404
 - [ ] Auditoría de accesibilidad y rendimiento
 - [ ] Integración de Keystatic
 - [ ] Despliegue en Cloudflare Pages

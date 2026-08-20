@@ -1,0 +1,65 @@
+---
+/**
+ * Tarjeta de artículo/guía del listado del blog. Recibe una entrada de la
+ * colección `blog`. Colocada con su página.
+ *
+ * Mapeo Figma (referencia, no literal): tarjeta #FFFFFF radio 10px → bg-surface
+ * rounded-[10px]; imagen 291×174 radio 10px → aspect-[291/174] object-cover;
+ * fecha 14/500 #555 → text-ink-secondary; título 24/500 #000 → text-ink;
+ * descripción 15/400 #555 → text-ink-secondary (recortada a 3 líneas).
+ */
+import type { CollectionEntry } from "astro:content";
+import AppImage from "@components/ui/AppImage.astro";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const { title, description, publishDate, image } = post.data;
+const href = `/recursos/blog/${post.id}`;
+
+/* Fecha "Julio 14 2026" (como en Figma). UTC para no desfasar por zona horaria. */
+const meses = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
+const fecha = `${meses[publishDate.getUTCMonth()]} ${publishDate.getUTCDate()} ${publishDate.getUTCFullYear()}`;
+---
+
+<a
+  href={href}
+  class="group flex flex-col rounded-[10px] bg-surface p-3 transition-shadow hover:shadow-card focus-visible:shadow-card"
+>
+  <div class="aspect-[291/174] w-full overflow-hidden rounded-[10px]">
+    <AppImage
+      name={image ?? "blog/sin-imagen"}
+      alt={title}
+      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+    />
+  </div>
+
+  <p class="mt-2.5 text-sm font-medium tracking-[-0.04em] text-ink-secondary">
+    {fecha}
+  </p>
+  <h2
+    class="mt-1 text-[clamp(1.25rem,1.1rem_+_0.4vw,1.5rem)] leading-[1.3] font-medium tracking-[-0.04em] text-ink group-hover:text-primary"
+  >
+    {title}
+  </h2>
+  <p
+    class="mt-2 line-clamp-3 text-[15px] leading-[1.33] tracking-[-0.02em] text-ink-secondary"
+  >
+    {description}
+  </p>
+</a>

@@ -33,9 +33,19 @@ interface Props {
   label?: string;
   /** Ancla para enlazar la sección (el footer apunta a /#faqs). */
   id?: string;
+  /**
+   * Clase(s) de padding vertical de la sección. Por defecto sigue el ritmo del
+   * sitio (py-section-y); las páginas de módulo lo sobreescriben (68px).
+   */
+  paddingClass?: string;
 }
 
-const { group, label = "Preguntas frecuentes", id = "faqs" } = Astro.props;
+const {
+  group,
+  label = "Preguntas frecuentes",
+  id = "faqs",
+  paddingClass = "py-section-y",
+} = Astro.props;
 
 const faqs = (
   await getCollection("faqs", (entry) => entry.data.group === group)
@@ -59,7 +69,7 @@ const fluidRowGap = "space-y-[clamp(1.5rem,3.33vw,3rem)]";
 const fluidQuestion = "text-[clamp(1.25rem,1.94vw,1.875rem)]";
 ---
 
-<section id={id} class="bg-bg py-section-y" aria-label={label}>
+<section id={id} class:list={["bg-bg", paddingClass]} aria-label={label}>
   <div class="mx-auto w-full max-w-[1064px] px-5 sm:px-6">
     <div class:list={["rounded-[20px] bg-surface", fluidCardPad, fluidRowGap]}>
       {
