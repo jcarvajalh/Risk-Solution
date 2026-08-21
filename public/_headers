@@ -1,5 +1,12 @@
+# Los 'sha256-...' de script-src autorizan los scripts INLINE que Astro emite
+# (cargadores de hidratación de islas + los <script> del carrusel y del filtro de
+# blog). Son estáticos por versión de Astro/código; sin ellos, con script-src
+# 'self' Cloudflare los bloquea y las islas React NO hidratan en producción (el
+# formulario de contacto cae al envío nativo). En dev/preview no se nota porque
+# _headers no se aplica ahí. Si cambian esos scripts o se sube Astro, regenerar:
+#   pnpm build && node -e "const fs=require('fs'),p=require('path'),c=require('crypto');const w=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(e=>{const x=p.join(d,e.name);return e.isDirectory()?w(x):[x]});const re=/<script(\s[^>]*)?>([\s\S]*?)<\/script>/g;const s=new Set();for(const f of w('dist').filter(f=>f.endsWith('.html'))){const h=fs.readFileSync(f,'utf8');let m;while(m=re.exec(h)){const a=m[1]||'';if(/src\s*=/.test(a)||/application\/ld\+json/.test(a)||m[2].trim()==='')continue;s.add(c.createHash('sha256').update(m[2],'utf8').digest('base64'))}}for(const h of s)console.log(\"'sha256-\"+h+\"'\")"
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com; font-src 'self'; connect-src 'self' https://api.emailjs.com https://formsubmit.co https://www.google-analytics.com; frame-src https://www.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com 'sha256-BF0290pkb3jxQsE7z00xR8Imp8X34FLC88L0lkMnrGw=' 'sha256-Ya0pUYrC7nM5Cn/056TyVuEiz6dFGrzmkWzgON0pF0U=' 'sha256-Q2BPg90ZMplYY+FSdApNErhpWafg2hcRRbndmvxuL/Q=' 'sha256-fuh/bedpw1Vu8Z+08eMjpFHEwAHPblX+OXP4tRz/BIw=' 'sha256-4vGmeIORL4ohQMLRoVVOQDJV6YsrPig/gIS1ahU7CF8='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com; font-src 'self'; connect-src 'self' https://api.emailjs.com https://formsubmit.co https://www.google-analytics.com; frame-src https://www.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
