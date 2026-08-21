@@ -2,6 +2,7 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "zod";
 import { cmsBlogLoader } from "./lib/cms-blog-loader";
+import { cmsCaseStudiesLoader } from "./lib/cms-case-studies-loader";
 
 /*
  * Esquemas Zod de las content collections (Content Layer API de Astro).
@@ -104,25 +105,27 @@ const blog = defineCollection({
   }),
 });
 
-// Casos de éxito. El cuerpo (markdown) es el artículo tipo revista; la portada y
-// la galería son slugs de imagen bajo src/assets/images/ (AppImage).
+// Casos de éxito. La fuente de datos es el CMS a medida (mismo que el blog): el
+// loader trae los casos publicados desde su API (GET /api/case-studies). El
+// cuerpo llega como HTML (editor enriquecido) y las imágenes como URL absolutas
+// que sirve el CMS desde R2 (AppImage detecta y renderiza URLs remotas).
 const caseStudies = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/case-studies" }),
+  loader: cmsCaseStudiesLoader(),
   schema: z.object({
     title: z.string(),
     client: z.string(),
     /** Resumen para la tarjeta y el encabezado del detalle. */
     description: z.string(),
     publishDate: z.coerce.date(),
-    /** Portada de la tarjeta del listado (slug bajo src/assets/images/). */
+    /** Portada de la tarjeta del listado (URL absoluta del CMS o slug local). */
     image: z.string().optional(),
-    /** Logo de la entidad (slug bajo src/assets/images/, p. ej. "clients/infihuila"). */
+    /** Logo de la entidad (URL absoluta del CMS o slug local). */
     logo: z.string().optional(),
     /** Sector de la entidad (metadato del encabezado). */
     sector: z.string().optional(),
     /** Ubicación de la entidad (metadato del encabezado). */
     location: z.string().optional(),
-    /** Imágenes del detalle tipo revista (~4 slugs bajo src/assets/images/). */
+    /** Imágenes del detalle tipo revista (URLs absolutas del CMS o slugs locales). */
     gallery: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),
