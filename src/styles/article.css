@@ -132,6 +132,39 @@
 }
 
 /*
+ * Marcador de campo PENDIENTE en las páginas legales (razón social, NIT, dominio,
+ * correo, proveedores…). Resalta en el tono `danger` para que nadie publique con
+ * datos sin completar. Todo por token (regla 4.2). Reemplaza los `[…]` en rojo de
+ * la plantilla original.
+ */
+.rs-article .rs-ph {
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--color-danger) 12%, transparent);
+  padding: 0 0.28em;
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+/*
+ * Aviso destacado al inicio de las páginas legales (vigencia, naturaleza de
+ * plantilla). Caja sutil con borde, distinta del pull-quote de artículo.
+ */
+.rs-article .rs-note {
+  margin-top: 0;
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-primary);
+  border-radius: 8px;
+  background: var(--color-surface);
+  padding: clamp(0.875rem, 1.6vw, 1.125rem) clamp(1rem, 2vw, 1.375rem);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.rs-article .rs-note > * + * {
+  margin-top: 0.6rem;
+}
+
+/*
  * Capitular (drop cap) en el primer párrafo. Es el toque "revista": se activa
  * solo con el modificador .rs-article--lead (lo usa el detalle de casos de
  * éxito). El blog usa la prosa base, sin capitular.

@@ -77,4 +77,26 @@
   }
 }
 
+/*
+ * Entrada de la tarjeta de "mensaje enviado" del formulario de contacto. La
+ * columna del formulario conserva su altura (bloqueada por JS) para que el mapa
+ * de al lado no cambie de tamaño; solo la tarjeta blanca se encoge y aparece con
+ * este fundido + leve escala. El reset de prefers-reduced-motion (arriba) ya la
+ * neutraliza porque alcanza a la clase vía el selector `*`.
+ */
+@keyframes rs-success-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.rs-success-in {
+  animation: rs-success-in 380ms ease-out both;
+}
+
 /* TODO: añadir más keyframes y clases rs-* conforme se construyan las secciones. */
