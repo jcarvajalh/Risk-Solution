@@ -1,4 +1,5 @@
 import type { Loader } from "astro/loaders";
+import { getCmsBase } from "./cms";
 
 /*
  * Custom loader (Content Layer API de Astro) que alimenta la colección `blog`
@@ -10,8 +11,8 @@ import type { Loader } from "astro/loaders";
  * de la colección y renderiza el cuerpo Markdown para que `render()`/<Content />
  * sigan funcionando sin tocar las páginas.
  *
- * URL base configurable con la variable de entorno CMS_API_URL. En local, por
- * defecto apunta al `pnpm dev` del CMS (http://localhost:3001).
+ * La URL base del CMS se resuelve en `getCmsBase()` (ver src/lib/cms.ts):
+ * variable CMS_API_URL si existe, dominio de producción en build, localhost en dev.
  */
 
 type ApiPost = {
@@ -27,13 +28,11 @@ type ApiPost = {
   body: string;
 };
 
-const DEFAULT_BASE = "http://localhost:3000";
-
 export function cmsBlogLoader(): Loader {
   return {
     name: "cms-blog-loader",
     load: async ({ store, logger, parseData }) => {
-      const base = import.meta.env.CMS_API_URL || DEFAULT_BASE;
+      const base = getCmsBase();
       const endpoint = new URL("/api/posts", base);
 
       let posts: ApiPost[];
