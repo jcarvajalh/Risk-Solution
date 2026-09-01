@@ -1,0 +1,11 @@
+Beneficios Riesgo operacional
+-----------------------------
+
+1. Visión clara y priorizada de los riesgos de la organización
+El mapa de riesgos y las matrices de calor permiten identificar y visualizar de forma intuitiva qué procesos concentran mayor probabilidad e impacto, facilitando que la alta dirección enfoque sus esfuerzos y recursos donde realmente importa.
+
+2. Cultura de control y mejora continua
+El registro de controles implementados por riesgo permite evaluar su efectividad, detectar brechas y fortalecer los procesos internos, reduciendo la probabilidad de materialización de eventos que afecten la operación.
+
+3. Trazabilidad y aprendizaje organizacional
+El reporte de eventos de riesgo consolida el histórico de incidentes ocurridos (con sus causas e impactos), permitiendo a la empresa aprender de la experiencia, sustentar decisiones ante entes de control y demostrar una gestión de riesgos madura ante clientes, aliados o inversionistas.

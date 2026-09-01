@@ -99,4 +99,64 @@
   animation: rs-success-in 380ms ease-out both;
 }
 
+/*
+ * Lightbox de imágenes ampliables (ZoomableImage). El <dialog> se centra y su
+ * fondo es transparente: solo se ven la imagen y el botón de cierre sobre el
+ * backdrop oscurecido. El ::backdrop no lo alcanza el reset global (usa `*`),
+ * por eso su animación se neutraliza aquí de forma explícita.
+ */
+.rs-zoom-dialog {
+  margin: auto;
+  max-width: 100vw;
+  max-height: 100vh;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  overflow: visible;
+}
+
+.rs-zoom-dialog::backdrop {
+  background: color-mix(in srgb, var(--color-ink) 80%, transparent);
+}
+
+.rs-zoom-dialog__inner {
+  position: relative;
+  display: inline-flex;
+}
+
+@keyframes rs-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rs-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.rs-zoom-dialog[open] {
+  animation: rs-zoom-in 200ms ease-out;
+}
+
+.rs-zoom-dialog[open]::backdrop {
+  animation: rs-backdrop-in 200ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rs-zoom-dialog[open],
+  .rs-zoom-dialog[open]::backdrop {
+    animation-duration: 0.01ms;
+  }
+}
+
 /* TODO: añadir más keyframes y clases rs-* conforme se construyan las secciones. */

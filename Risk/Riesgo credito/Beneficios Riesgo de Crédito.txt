@@ -1,0 +1,11 @@
+Beneficios Riesgo de Crédito:
+-----------------------------
+
+1. Decisiones de crédito más precisas y rápidas
+Con score de clientes y estudios de crédito integrados, la entidad reduce el tiempo de análisis y evaluación, otorgando créditos con mayor certeza sobre la capacidad de pago y el nivel de riesgo de cada solicitante.
+
+2. Anticipación y control del riesgo de cartera
+El seguimiento de cosechas de cartera y el cálculo de pérdida esperada permiten identificar a tiempo comportamientos de deterioro por línea de crédito o segmento, facilitando ajustes en políticas de originación antes de que el riesgo se materialice.
+
+3. Cumplimiento normativo y solidez financiera
+Al automatizar el cálculo de pérdida esperada y consolidar la información de riesgo, la entidad fortalece su gestión de provisiones y su respaldo ante entes de control (Superintendencia Financiera, Supersolidaria, entre otros), mejorando su solidez patrimonial y confianza ante asociados o clientes.

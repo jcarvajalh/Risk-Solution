@@ -1,0 +1,88 @@
+---
+/**
+ * Imagen ampliable: muestra la miniatura (AppImage) dentro de un <button> y, al
+ * hacer clic, abre la versión grande en un <dialog> modal nativo.
+ *
+ * Por qué <dialog>: da foco atrapado, cierre con Esc y backdrop de forma nativa
+ * (accesibilidad, sección 9) sin librerías. El único JS es un listener delegado
+ * que Astro empaqueta como módulo externo servido desde 'self' (cumple la CSP,
+ * sección 7.1: nada de scripts inline). prefers-reduced-motion lo respeta el
+ * reset global de animations.css.
+ *
+ * Uso: reemplaza a AppImage donde la imagen deba poder ampliarse (p. ej. las
+ * capturas del dashboard de módulo). Misma API de `name`/`alt` que AppImage.
+ */
+import AppImage from "./AppImage.astro";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  /** Slug bajo src/assets/images/ sin extensión (igual que AppImage). */
+  name: string;
+  /** Texto alternativo (obligatorio; describe la imagen para lectores de pantalla). */
+  alt: string;
+  /** Clases de la miniatura. */
+  class?: string;
+  loading?: "lazy" | "eager";
+}
+
+const { name, alt, class: className, loading = "lazy" } = Astro.props;
+
+// Id único por instancia (se genera en build) para enlazar botón ↔ diálogo.
+const dialogId = `rs-zoom-${crypto.randomUUID()}`;
+---
+
+<button
+  type="button"
+  class="rs-zoom-trigger group relative block w-full cursor-zoom-in overflow-hidden rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+  data-zoom-open={dialogId}
+  aria-label={`Ampliar imagen: ${alt}`}
+>
+  <AppImage name={name} alt={alt} class={className} loading={loading} />
+  <span
+    class="pointer-events-none absolute right-2 bottom-2 inline-flex size-8 items-center justify-center rounded-full bg-ink/60 text-surface opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+    aria-hidden="true"
+  >
+    <Icon name="lucide:zoom-in" class="size-4" />
+  </span>
+</button>
+
+<dialog id={dialogId} class="rs-zoom-dialog" aria-label={alt}>
+  <div class="rs-zoom-dialog__inner">
+    <button
+      type="button"
+      class="rs-zoom-close absolute top-2 right-2 z-10 inline-flex size-10 items-center justify-center rounded-full bg-surface text-ink shadow-card transition-colors hover:bg-primary-subtle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      data-zoom-close
+      aria-label="Cerrar"
+    >
+      <Icon name="lucide:x" class="size-5" />
+    </button>
+    <AppImage
+      name={name}
+      alt={alt}
+      class="max-h-[86vh] max-w-[92vw] rounded-lg object-contain"
+    />
+  </div>
+</dialog>
+
+<script>
+  // Listener delegado único (Astro hoistea este módulo una sola vez aunque haya
+  // varias instancias del componente en la página).
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+
+    const opener = target.closest<HTMLElement>("[data-zoom-open]");
+    if (opener) {
+      const dlg = document.getElementById(opener.dataset.zoomOpen ?? "");
+      if (dlg instanceof HTMLDialogElement) dlg.showModal();
+      return;
+    }
+
+    if (target.closest("[data-zoom-close]")) {
+      target.closest("dialog")?.close();
+      return;
+    }
+
+    // Clic en el backdrop (el propio <dialog>, fuera del contenido) → cerrar.
+    if (target instanceof HTMLDialogElement) target.close();
+  });
+</script>

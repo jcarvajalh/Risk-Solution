@@ -1,46 +1,44 @@
 ---
 # Definición oficial, tags y beneficios: contenido.md. Slug confirmado.
-# TODO: el `dashboard` sigue mostrando KPIs/gráficos de cartera de crédito
-# (placeholder heredado); no corresponden a este módulo. Reemplazar por el
-# tablero real de SARLAFT cuando esté disponible.
 title: "SARLAFT"
 description: "Sistema de Administración del Riesgo de Lavado de Activos y Financiación del Terrorismo. Es un modelo obligatorio en muchas entidades de Colombia, especialmente financieras, para prevenir que la organización sea utilizada para mover dinero ilegal o financiar actividades ilícitas."
+# Chips del hero: capacidades del módulo (contenido.md).
 highlights:
   - "Vinculación de clientes, proveedores, contratistas y empleados"
   - "Consulta en listas restrictivas (OFAC, ONU, etc.)"
   - "Informes de gestión"
   - "Seguimiento a PEP (personas políticamente expuestas)"
+# Vista previa del dashboard: fila de indicadores + capturas reales del producto,
+# ampliables al hacer clic. Las cifras de los KPIs son datos reales del cliente
+# tomados de la imagen "Tags" del módulo (fecha de corte 24/08/2026).
 dashboard:
   kpis:
-    - label: "Cartera bruta"
-      value: "$259,750M"
-    - label: "Cartera vencida > 30 días"
-      value: "$7,336M"
-    - label: "ICV > 30 días"
-      value: "2.82%"
-      tone: "primary"
-    - label: "Total deudores"
-      value: "38"
-    - label: "Deudores vencidos"
-      value: "15"
+    - label: "Vinculaciones personas naturales"
+      value: "2,146"
+    - label: "Vinculaciones personas jurídicas"
+      value: "318"
+    - label: "Consultas a listas vinculantes"
+      value: "18,504"
+    - label: "Alertas activas"
+      value: "6"
       tone: "danger"
   charts:
-    - title: "Cartera por línea ($M)"
-      image: "modules/sarlaft/cartera-por-linea"
-    - title: "Concentración por sector (%)"
-      image: "modules/sarlaft/concentracion-por-sector"
-    - title: "Calidad de cartera por calificación (%)"
-      image: "modules/sarlaft/calidad-de-cartera"
-    - title: "Cobertura de cartera vencida (%)"
-      image: "modules/sarlaft/cobertura-cartera-vencida"
+    - alt: "Tipos de vinculación de personas naturales"
+      image: "modules/sarlaft/tipos-vinculacion-naturales"
+    - alt: "Ciudades de ubicación de los vinculados"
+      image: "modules/sarlaft/ciudades-vinculados"
+    - alt: "Vinculaciones ejecutadas por año"
+      image: "modules/sarlaft/vinculaciones-por-ano"
+    - alt: "Registro de vinculación de persona jurídica"
+      image: "modules/sarlaft/vinculacion-persona-juridica"
 benefits:
   title: "Beneficios para tu comité de riesgo"
   items:
-    - title: "Cumple sin fricción"
-      description: "Automatiza un requisito obligatorio para entidades financieras en Colombia, sin procesos manuales."
-    - title: "Detecta riesgo antes de vincular"
-      description: "La consulta automática en listas restrictivas se hace antes de formalizar cualquier vinculación."
-    - title: "Seguimiento continuo a PEP"
-      description: "Monitorea de forma permanente a las personas políticamente expuestas relacionadas con la entidad."
+    - title: "Vinculación de clientes más ágil y confiable"
+      description: "Los formularios digitales de vinculación para personas naturales y jurídicas estandarizan la captura de información, reduciendo errores manuales y agilizando el proceso de conocimiento del cliente desde el primer contacto."
+    - title: "Detección oportuna de riesgos reputacionales y legales"
+      description: "La consulta automática contra listas vinculantes (OFAC, ONU, Interpol, entre otras) permite identificar de forma inmediata posibles coincidencias con clientes, proveedores o terceros, evitando vincular o mantener relaciones con personas de alto riesgo."
+    - title: "Cumplimiento normativo con menor exposición a sanciones"
+      description: "Las alertas automáticas ante la aparición de una persona en listas restrictivas garantizan una respuesta oportuna frente a la Superintendencia y demás entes de control, reduciendo el riesgo de sanciones económicas y protegiendo la reputación de la organización ante clientes y aliados estratégicos."
 order: 7
 ---

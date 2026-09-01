@@ -91,8 +91,8 @@ export const ecosystem = {
       accent: "#155EEF",
       icon: "lucide:triangle-alert",
       description:
-        "Mide la probabilidad de pérdida por incumplimiento: pérdida esperada, análisis de cosechas y gestión de cartera.",
-      chartImage: "modules/riesgo-de-credito",
+        "Mide la probabilidad de pérdida por incumplimiento en el pago de las deudas, con pérdida esperada, calidad y concentración de la cartera.",
+      chartImage: "modules/riesgo-de-credito/concentracion-por-sector",
       href: "/modulos/riesgo-de-credito",
     },
     {
@@ -100,7 +100,7 @@ export const ecosystem = {
       accent: "#4F46E5", // TODO Figma
       icon: "lucide:file-check", // TODO Figma
       description:
-        "Analiza con IA si una persona natural o jurídica es candidata a un crédito, con scoring automático y RPA.",
+        "Analiza con inteligencia artificial si una persona natural o jurídica es candidata a un crédito, con scoring automático y extracción de datos por RPA.",
       chartImage: "modules/otorgamiento-de-credito",
       href: "/modulos/otorgamiento-de-credito",
     },
@@ -109,8 +109,8 @@ export const ecosystem = {
       accent: "#0E7490", // TODO Figma
       icon: "lucide:droplets", // TODO Figma
       description:
-        "Mide la capacidad de la entidad para cubrir sus obligaciones frente a terceros, con escenarios de tensión.",
-      chartImage: "modules/riesgo-de-liquidez",
+        "Mide la capacidad financiera de la entidad para afrontar sus obligaciones de pasivo frente a terceros, con el indicador IRL y escenarios de tensión.",
+      chartImage: "modules/riesgo-de-liquidez/irl-90-dias",
       href: "/modulos/riesgo-de-liquidez",
     },
     {
@@ -118,7 +118,7 @@ export const ecosystem = {
       accent: "#00970F",
       icon: "lucide:bar-chart-3",
       description:
-        "Convierte los datos clave de la organización en indicadores gráficos para la toma de decisiones.",
+        "Recopila los datos clave de la organización y los presenta de forma gráfica y entendible para facilitar la toma de decisiones.",
       chartImage: "modules/business-intelligence",
       href: "/modulos/business-intelligence",
     },
@@ -127,8 +127,8 @@ export const ecosystem = {
       accent: "#7C3AED", // TODO Figma
       icon: "lucide:trending-up", // TODO Figma
       description:
-        "Mide la probabilidad de variación en precio y posición de los activos de la entidad.",
-      chartImage: "modules/riesgo-de-mercado",
+        "Mide la probabilidad de variación en el precio y la posición de los activos, con VaR, cupos de contraparte y margen de intermediación.",
+      chartImage: "modules/riesgo-de-mercado/recursos-propios-por-tipo",
       href: "/modulos/riesgo-de-mercado",
     },
     {
@@ -136,8 +136,8 @@ export const ecosystem = {
       accent: "#DDBF00",
       icon: "lucide:workflow",
       description:
-        "Identifica pérdidas por fallos en procesos internos, errores humanos o eventos externos.",
-      chartImage: "modules/riesgo-operacional",
+        "Mide las pérdidas por fallos en procesos internos, errores humanos, fallas tecnológicas o eventos externos, con mapas de calor y controles.",
+      chartImage: "modules/riesgo-operacional/riesgo-inherente",
       href: "/modulos/riesgo-operacional",
     },
     {
@@ -145,8 +145,8 @@ export const ecosystem = {
       accent: "#DC2626", // TODO Figma
       icon: "lucide:shield-check", // TODO Figma
       description:
-        "Sistema de prevención de lavado de activos y financiación del terrorismo, con consulta a listas restrictivas.",
-      chartImage: "modules/sarlaft",
+        "Sistema de administración del riesgo de lavado de activos y financiación del terrorismo, con vinculación de clientes y consulta a listas restrictivas.",
+      chartImage: "modules/sarlaft/vinculaciones-por-ano",
       href: "/modulos/sarlaft",
     },
   ],
