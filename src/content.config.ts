@@ -28,17 +28,28 @@ const modules = defineCollection({
     // (los gráficos son imágenes). Opcional: si falta, no se renderiza la sección.
     dashboard: z
       .object({
-        kpis: z.array(
-          z.object({
-            label: z.string(),
-            value: z.string(),
-            // Color del valor. default → text-ink; primary/danger → tokens.
-            tone: z.enum(["default", "primary", "danger"]).default("default"),
-          }),
-        ),
+        // Fila de indicadores. Opcional: los módulos cuyas cifras son datos
+        // reales de cliente no la incluyen (sus "tags" pasan a `highlights` del
+        // hero); entonces la sección muestra solo los gráficos.
+        kpis: z
+          .array(
+            z.object({
+              label: z.string(),
+              value: z.string(),
+              // Color del valor. default → text-ink; primary/danger → tokens.
+              tone: z.enum(["default", "primary", "danger"]).default("default"),
+            }),
+          )
+          .default([]),
         charts: z.array(
           z.object({
-            title: z.string(),
+            // Encabezado visible de la tarjeta. Opcional: las capturas reales del
+            // producto ya traen su propio título embebido, así que se omite para
+            // no duplicarlo (ver `alt` para la accesibilidad en ese caso).
+            title: z.string().optional(),
+            // Texto alternativo de la imagen. Se usa cuando no hay `title`
+            // (imagen autocontenida). Si falta, se deriva del `title`.
+            alt: z.string().optional(),
             // Slug de la imagen del gráfico bajo src/assets/images/ (AppImage).
             image: z.string(),
           }),

@@ -1,0 +1,11 @@
+Beneficios Riesgo de mercado:
+-----------------------------
+
+1. Control efectivo de la exposición con contrapartes
+El cálculo automatizado de cupos de contraparte permite a la entidad establecer y monitorear límites de negociación de forma ágil, evitando concentraciones de riesgo y protegiendo la solidez de las operaciones financieras.
+
+2. Medición objetiva del riesgo de las inversiones
+El cálculo del Valor en Riesgo (VaR) le da a la entidad una visión cuantitativa y estandarizada de las pérdidas potenciales de su portafolio, facilitando decisiones de inversión más informadas y alineadas con su apetito de riesgo.
+
+3. Rentabilidad financiera bajo control
+El seguimiento del margen de intermediación permite evaluar de forma continua la relación entre el costo de captación y el rendimiento de las colocaciones, apoyando estrategias que protejan la rentabilidad ante movimientos del mercado.

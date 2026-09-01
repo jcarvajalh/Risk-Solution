@@ -1,0 +1,8 @@
+1. Estudios de crédito más rápidos y sin errores manuales
+Automatiza el cálculo de indicadores financieros y de capacidad de pago que hoy se hacen a mano, reduciendo tiempos de análisis de días a minutos y eliminando el riesgo de errores humanos en fórmulas y datos.
+
+2. Decisiones de crédito respaldadas por normatividad
+Cada indicador se calcula siguiendo la normatividad vigente aplicable, dejando trazabilidad completa de las variables usadas y el resultado obtenido, listo para sustentar la decisión ante comités, entes de control o auditorías.
+
+3. Visibilidad total del riesgo antes de otorgar el crédito
+Compara garantías, cuotas y comportamiento proyectado del crédito a lo largo de su plazo, permitiendo identificar riesgos de sobreendeudamiento o desbalances antes de aprobar, no después.

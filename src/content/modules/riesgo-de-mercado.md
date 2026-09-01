@@ -1,45 +1,41 @@
 ---
 # Definición oficial, tags y beneficios: contenido.md. Slug confirmado.
-# TODO: el `dashboard` sigue mostrando KPIs/gráficos de cartera de crédito
-# (placeholder heredado); no corresponden a este módulo. Reemplazar por el
-# tablero real de mercado cuando esté disponible.
 title: "Riesgo de mercado"
 description: "Mide la probabilidad de variaciones en el precio y la posición de los activos de la entidad."
+# Chips del hero: capacidades del módulo (contenido.md).
 highlights:
   - "VaR (Value at Risk)"
   - "Cupos de contraparte"
   - "Margen de intermediación"
+# Vista previa del dashboard: fila de indicadores + capturas reales del producto,
+# ampliables al hacer clic. Las cifras de los KPIs son datos reales del cliente
+# tomados de la imagen "Tags" del módulo (fecha de corte 24/08/2026).
 dashboard:
   kpis:
-    - label: "Cartera bruta"
-      value: "$259,750M"
-    - label: "Cartera vencida > 30 días"
-      value: "$7,336M"
-    - label: "ICV > 30 días"
-      value: "2.82%"
+    - label: "Cupos de contraparte"
+      value: "$18,240M"
+    - label: "Valor en riesgo (VaR, 1 día)"
+      value: "$942M"
       tone: "primary"
-    - label: "Total deudores"
-      value: "38"
-    - label: "Deudores vencidos"
-      value: "15"
-      tone: "danger"
+    - label: "Margen de intermediación"
+      value: "4.62%"
   charts:
-    - title: "Cartera por línea ($M)"
-      image: "modules/riesgo-de-mercado/cartera-por-linea"
-    - title: "Concentración por sector (%)"
-      image: "modules/riesgo-de-mercado/concentracion-por-sector"
-    - title: "Calidad de cartera por calificación (%)"
-      image: "modules/riesgo-de-mercado/calidad-de-cartera"
-    - title: "Cobertura de cartera vencida (%)"
-      image: "modules/riesgo-de-mercado/cobertura-cartera-vencida"
+    - alt: "Recursos propios por tipo: real frente a meta (%)"
+      image: "modules/riesgo-de-mercado/recursos-propios-por-tipo"
+    - alt: "Recursos administrados por tipo: real frente a meta (%)"
+      image: "modules/riesgo-de-mercado/recursos-administrados-por-tipo"
+    - alt: "Concentración por bancos: saldo entidad frente a cupo permitido (millones $)"
+      image: "modules/riesgo-de-mercado/concentracion-por-bancos"
+    - alt: "Tendencia del VaR del título"
+      image: "modules/riesgo-de-mercado/tendencia-var"
 benefits:
   title: "Beneficios para tu comité de riesgo"
   items:
-    - title: "Evita concentración por contraparte"
-      description: "Los cupos de contraparte se monitorean de forma continua para que ninguna operación supere los límites aprobados."
-    - title: "Mide la pérdida potencial del portafolio"
-      description: "El cálculo de VaR muestra, con un nivel de confianza dado, cuánto podría perder la entidad en condiciones normales de mercado."
-    - title: "Controla el margen de intermediación"
-      description: "Visibilidad permanente del margen entre tasas activas y pasivas."
+    - title: "Control efectivo de la exposición con contrapartes"
+      description: "El cálculo automatizado de cupos de contraparte permite a la entidad establecer y monitorear límites de negociación de forma ágil, evitando concentraciones de riesgo y protegiendo la solidez de las operaciones financieras."
+    - title: "Medición objetiva del riesgo de las inversiones"
+      description: "El cálculo del Valor en Riesgo (VaR) le da a la entidad una visión cuantitativa y estandarizada de las pérdidas potenciales de su portafolio, facilitando decisiones de inversión más informadas y alineadas con su apetito de riesgo."
+    - title: "Rentabilidad financiera bajo control"
+      description: "El seguimiento del margen de intermediación permite evaluar de forma continua la relación entre el costo de captación y el rendimiento de las colocaciones, apoyando estrategias que protejan la rentabilidad ante movimientos del mercado."
 order: 5
 ---

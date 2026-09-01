@@ -1,0 +1,10 @@
+Beneficios SARLAFT (Sistema de Administración del Riesgo de Lavado de Activos y Financiación del Terrorismo):
+
+1. Vinculación de clientes más ágil y confiable
+Los formularios digitales de vinculación para personas naturales y jurídicas estandarizan la captura de información, reduciendo errores manuales y agilizando el proceso de conocimiento del cliente desde el primer contacto.
+
+2. Detección oportuna de riesgos reputacionales y legales
+La consulta automática contra listas vinculantes (OFAC, ONU, Interpol, entre otras) permite identificar de forma inmediata posibles coincidencias con clientes, proveedores o terceros, evitando vincular o mantener relaciones con personas de alto riesgo.
+
+3. Cumplimiento normativo con menor exposición a sanciones
+Las alertas automáticas ante la aparición de una persona en listas restrictivas garantizan una respuesta oportuna frente a la Superintendencia y demás entes de control, reduciendo el riesgo de sanciones económicas y protegiendo la reputación de la organización ante clientes y aliados estratégicos.
