@@ -39,15 +39,20 @@ interface Props {
 const { variant = "transparent" } = Astro.props;
 const isSolid = variant === "solid";
 
-/* Transparente flota sobre el hero; sólida ocupa su espacio y se fija al top. */
+/* Transparente: fijo sobre el hero, fondo transparente que pasa a navy al hacer
+   scroll (clase .rs-header-scrolled vía JS). Sólida: ocupa su espacio y se fija
+   al top con fondo blanco. */
 const headerClass = isSolid
   ? "sticky top-0 z-50 h-20 bg-surface"
-  : "absolute inset-x-0 top-0 z-50 h-20";
+  : "fixed inset-x-0 top-0 z-50 h-20 transition-colors duration-300";
 
 const linkColor = isSolid ? "text-ink" : "text-white";
 ---
 
-<header class:list={[headerClass]}>
+<header
+  class:list={[headerClass]}
+  data-header={isSolid ? "solid" : "transparent"}
+>
   <div
     class="mx-auto flex h-full max-w-[1060px] items-center justify-between px-5 sm:px-6"
   >
@@ -168,3 +173,18 @@ const linkColor = isSolid ? "text-ink" : "text-white";
     </div>
   </div>
 </header>
+
+<script>
+  // Header transparente (home): al bajar, el fondo pasa a navy con transición
+  // suave. En la variante sólida no aplica (ya tiene fondo). Umbral pequeño para
+  // que el cambio ocurra apenas empieza el scroll.
+  const header = document.querySelector<HTMLElement>(
+    '[data-header="transparent"]',
+  );
+  if (header) {
+    const toggle = () =>
+      header.classList.toggle("rs-header-scrolled", window.scrollY > 24);
+    toggle();
+    window.addEventListener("scroll", toggle, { passive: true });
+  }
+</script>

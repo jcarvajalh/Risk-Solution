@@ -62,9 +62,6 @@ export const headerCta: NavLink = {
  * módulos, pero no sus slugs. Hasta tenerlos, los siete apuntan a /modulos —
  * mismo criterio que el carrusel del ecosistema en site.ts. No inventar rutas.
  *
- * TODO: "Guías" no existe en la estructura de páginas del CLAUDE.md (sección 5),
- * y el diseño omite "Casos de éxito", que sí está en la navegación principal.
- * Confirmar cuál de las dos manda.
  */
 export const footerNav: FooterNavGroup[] = [
   {
@@ -83,8 +80,8 @@ export const footerNav: FooterNavGroup[] = [
     title: "Recursos",
     links: [
       { label: "Blog", href: "/recursos/blog" },
-      { label: "Guías", href: "/recursos" }, // TODO: destino sin definir.
-      { label: "Testimonios", href: "/#testimonios" },
+      { label: "Guías", href: "/recursos/blog" },
+      { label: "Casos de éxito", href: "/recursos/casos-de-exito" },
     ],
   },
 ];

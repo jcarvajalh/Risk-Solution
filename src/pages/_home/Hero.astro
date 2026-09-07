@@ -1,34 +1,38 @@
 ---
 /**
- * Hero del home. Fondo de imagen a sangre completa + overlay en gradiente; el
- * contenido (badge, título, descripción y CTAs) va alineado a la izquierda dentro
- * del contenedor. Layout con flex, mobile-first y muy adaptable. Lee su contenido
- * de site.ts (patrón de datos 6.3).
+ * Hero del home. Fondo de video a sangre completa en bucle infinito + overlay en
+ * gradiente; el contenido (badge, título, descripción y CTAs) va alineado a la
+ * izquierda dentro del contenedor. Layout con flex, mobile-first y muy adaptable.
+ * Lee su contenido de site.ts (patrón de datos 6.3).
  *
  * Mapeo Figma (referencia, no copia literal):
  * - Badge en JetBrains Mono → mapeado a Geist (uppercase + tracking). Regla 4.1.
  * - #F5F7FA (badge/CTA secundario) → mapeado a white.
  * - Título Geist 72/70 -0.04em → responsivo (40 → 56 → 72px). "financieros." en primary.
  * - Descripción Geist 20/26 -0.04em. Contenedor de texto máx. ~623px.
- * - Foto de fondo por slug (AppImage name="hero-background").
+ * - Fondo: video en bucle (autoplay muted loop playsinline), con la imagen
+ *   hero-background como poster/fallback mientras carga.
  * - Gradiente → clase CSS .rs-hero-overlay (tokens primary/ink).
  */
 import { hero } from "@config/site";
-import AppImage from "@components/ui/AppImage.astro";
 import Badge from "@components/ui/Badge.astro";
 import Button from "@components/ui/Button.astro";
+import heroVideo from "@assets/video/hero-risk.mp4";
 ---
 
 <section
   class="relative isolate flex min-h-dvh items-center overflow-hidden bg-ink"
 >
-  <!-- Foto de fondo (slug: hero-background) -->
-  <AppImage
-    name={hero.backgroundImage}
-    alt=""
-    loading="eager"
+  <!-- Video de fondo en bucle infinito -->
+  <video
     class="absolute inset-0 -z-20 h-full w-full object-cover"
-  />
+    src={heroVideo}
+    autoplay
+    loop
+    muted
+    playsinline
+    preload="auto"
+    aria-hidden="true"></video>
 
   <!-- Overlay en gradiente -->
   <div class="rs-hero-overlay absolute inset-0 -z-10" aria-hidden="true"></div>

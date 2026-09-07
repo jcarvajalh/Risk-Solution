@@ -22,26 +22,9 @@ lastUpdated: 21 de agosto de 2026
 
 Las cookies son pequeños archivos de texto que se almacenan en el navegador o dispositivo del usuario al visitar un sitio web. Permiten recordar información sobre la visita, mejorar la experiencia de navegación y recopilar datos estadísticos sobre el uso del sitio.
 
-## Tipos de cookies que utilizamos
-
-| Tipo de cookie | Finalidad | ¿Requiere consentimiento? |
-|---|---|---|
-| **Esenciales / funcionales** | Necesarias para el funcionamiento del sitio: gestión de sesión, autenticación, seguridad, recordar preferencias de idioma o configuración. | No (son estrictamente necesarias) |
-| **Analíticas** | Medir tráfico, páginas visitadas, tiempo de permanencia y comportamiento agregado de los usuarios, con el fin de mejorar la Plataforma (ej. <span class="rs-ph">Google Analytics</span>). | Sí |
-| **Marketing / publicidad** | Mostrar anuncios relevantes, medir el rendimiento de campañas y realizar remarketing (ej. <span class="rs-ph">Meta Pixel, Google Ads</span>). | Sí |
-
 ## Cookies propias y de terceros
 
-Algunas cookies son gestionadas directamente por <span class="rs-ph">[NOMBRE DE LA EMPRESA]</span> (cookies propias) y otras por proveedores externos que prestan servicios de analítica o publicidad (cookies de terceros), como <span class="rs-ph">[listar proveedores: Google Analytics, Meta/Facebook Pixel, LinkedIn Insight Tag, HubSpot, etc.]</span>. Estos terceros pueden tener sus propias políticas de privacidad y cookies, independientes de la presente.
-
-## Tabla detallada de cookies
-
-| Nombre de la cookie | Proveedor | Tipo | Duración | Finalidad |
-|---|---|---|---|---|
-| <span class="rs-ph">session_id</span> | Propia | Esencial | Sesión | Mantener la sesión activa del usuario |
-| <span class="rs-ph">_ga / _gid</span> | Google Analytics | Analítica | 2 años / 24 horas | Medición de tráfico y comportamiento |
-| <span class="rs-ph">_fbp</span> | Meta Pixel | Marketing | 90 días | Remarketing y medición de campañas |
-| <span class="rs-ph">[agregar más filas según herramientas usadas]</span> | | | | |
+Algunas cookies son gestionadas directamente por <span >Solution Systems S.A.S.</span> (cookies propias) y otras por proveedores externos que prestan servicios de analítica o publicidad (cookies de terceros), como <span >Google Analytics.</span>. Estos terceros pueden tener sus propias políticas de privacidad y cookies, independientes de la presente.
 
 ## Base legal y consentimiento
 

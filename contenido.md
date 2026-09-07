@@ -154,10 +154,10 @@ Guías
 Recomendación: cada tarjeta debería tener fecha real de publicación, no “Julio 14 2026” repetida en todas.
 
 5. Contacto
-Esta página está bien y sin textos repetidos, salvo el FAQ (ver sección 6). Un detalle a corregir: el correo aparece escrito de dos formas distintas en el sitio — “contacto@e-solutionsystems.net” (footer con guion) y “contacto@e solutionsystems.net” (footer sin guion, con espacio). Deben unificarlo a una sola versión correcta.
+Esta página está bien y sin textos repetidos, salvo el FAQ (ver sección 6). Un detalle a corregir: el correo aparece escrito de dos formas distintas en el sitio — “servcliente@e-solutionsystems.net” (footer con guion) y “servcliente@e solutionsystems.net” (footer sin guion, con espacio). Deben unificarlo a una sola versión correcta.
 Título: Ponte en contacto con nosotros y dinos cómo podemos ayudarte.
-Correo: contacto@e-solutionsystems.net
-Teléfono: +57 301 813 5745
+Correo: servcliente@e-solutionsystems.net
+Teléfono: +57 310 5294169
 Oficina: Calle 22 Nte. #6AN-24
 
 6. FAQ (bloque común a las 5 páginas)

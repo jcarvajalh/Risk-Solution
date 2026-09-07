@@ -98,35 +98,49 @@ const copies = [0, 1, 2];
 
     // --- Arrastre con mouse en desktop. En touch se usa el scroll nativo. ---
     let isDown = false;
+    let dragging = false;
     let startX = 0;
     let startScroll = 0;
     let moved = false;
+    let pointerId = -1;
 
     el.addEventListener("pointerdown", (event) => {
       if (event.pointerType !== "mouse") return;
       isDown = true;
+      dragging = false;
       moved = false;
       startX = event.clientX;
       startScroll = el.scrollLeft;
-      el.setPointerCapture(event.pointerId);
-      el.classList.add("cursor-grabbing");
+      pointerId = event.pointerId;
     });
 
     el.addEventListener("pointermove", (event) => {
       if (!isDown) return;
       const delta = event.clientX - startX;
-      if (Math.abs(delta) > 5) moved = true;
-      el.scrollLeft = startScroll - delta;
+      // La captura del puntero y el arrastre solo empiezan tras superar el umbral.
+      // Si se capturara en el pointerdown, el `click` se dispararía sobre el
+      // contenedor y no sobre el <a>, y los enlaces "Ver módulo" no navegarían.
+      if (!dragging && Math.abs(delta) > 5) {
+        dragging = true;
+        moved = true;
+        el.setPointerCapture(pointerId);
+        el.classList.add("cursor-grabbing");
+      }
+      if (dragging) el.scrollLeft = startScroll - delta;
     });
 
     const stop = () => {
+      if (dragging && el.hasPointerCapture(pointerId)) {
+        el.releasePointerCapture(pointerId);
+      }
       isDown = false;
+      dragging = false;
       el.classList.remove("cursor-grabbing");
     };
     el.addEventListener("pointerup", stop);
     el.addEventListener("pointercancel", stop);
 
-    // Evita que el arrastre dispare un click en los enlaces de las tarjetas.
+    // Solo si hubo arrastre real se anula el click, para no navegar sin querer.
     el.addEventListener(
       "click",
       (event) => {

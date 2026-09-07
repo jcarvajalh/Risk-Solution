@@ -1,8 +1,0 @@
-1. Información financiera centralizada y en tiempo real
-Elimina las hojas de cálculo dispersas y los reportes manuales. Con un BI Financiero, toda tu información clave vive en un solo lugar, actualizada y lista para consultar cuando la necesites.
-
-2. Decisiones más rápidas y basadas en datos
-Visualiza el comportamiento de tu negocio de un vistazo, con gráficos e indicadores claros que te permiten identificar tendencias, anticipar riesgos y actuar a tiempo, sin depender de análisis manuales que toman días.
-
-3. Control y confianza para toda la organización
-Da a tu equipo directivo, financiero y operativo acceso a la misma información confiable y actualizada, fortaleciendo el cumplimiento, la transparencia y la toma de decisiones en todos los niveles.
