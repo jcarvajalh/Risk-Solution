@@ -369,7 +369,7 @@ export const footer = {
  */
 export const contact: ContactInfo = {
   address: "Calle 22 Nte. #6AN-24",
-  phone: "+57 301 813 5745",
-  email: "contacto@e-solutionsystems.net",
+  phone: "+57 310 5294169",
+  email: "servcliente@e-solutionsystems.net",
   hours: undefined, // TODO
 };

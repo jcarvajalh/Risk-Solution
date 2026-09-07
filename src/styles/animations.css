@@ -15,17 +15,39 @@
 }
 
 /*
- * Overlay del hero. Oscurece la foto de fondo para garantizar el contraste del
- * texto blanco. Gradiente construido con tokens (sin hex sueltos): primary al
- * 38.5% en el borde derecho → ink al 70% hacia la izquierda.
- * Mapea: linear-gradient(270deg, rgba(21,94,239,.385) 0%, rgba(0,0,0,.7) 73.56%).
+ * Azul muy oscuro ("navy") de los filtros/overlays sobre media (video del hero) y
+ * del header al hacer scroll. Componentes RGB para poder variar el alfa en los
+ * gradientes sin caer en el "fade a gris". Valor provisional dado por diseño.
+ * TODO: confirmar en Figma y, si se consolida, promover a token en theme.css.
+ */
+:root {
+  --rs-navy: 6 17 31;
+}
+
+/*
+ * Overlay del hero. Filtro azul muy oscuro (navy) sobre el video de fondo para
+ * garantizar el contraste del texto blanco. Gradiente horizontal (izquierda →
+ * derecha): opaco en el borde izquierdo (donde va el texto) y desvaneciéndose a
+ * transparente hacia la derecha, dejando ver el video. Se desvanece variando el
+ * alfa del MISMO navy (no a "transparent") para evitar el fade a gris.
  */
 .rs-hero-overlay {
   background: linear-gradient(
-    270deg,
-    color-mix(in srgb, var(--color-primary) 38.5%, transparent) 0%,
-    color-mix(in srgb, var(--color-ink) 70%, transparent) 73.56%
+    to right,
+    rgb(var(--rs-navy) / 0.9) 0%,
+    rgb(var(--rs-navy) / 0.9) 35%,
+    rgb(var(--rs-navy) / 0) 100%
   );
+}
+
+/*
+ * Header transparente (home) al hacer scroll. El header queda fijo arriba y, al
+ * bajar, su fondo pasa de transparente a navy con una transición suave (la
+ * transición vive en las clases Tailwind del propio header). La clase la conmuta
+ * un script según window.scrollY.
+ */
+.rs-header-scrolled {
+  background-color: rgb(var(--rs-navy));
 }
 
 /*
