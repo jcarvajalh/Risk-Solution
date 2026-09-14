@@ -10,7 +10,9 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/csp-check.mjs",
+    "build:only": "astro build",
+    "csp:check": "node scripts/csp-check.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "typecheck": "astro check",

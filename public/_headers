@@ -1,24 +1,25 @@
-# Los 'sha256-...' de script-src autorizan los scripts INLINE que Astro emite
-# (cargadores de hidratación de islas + los <script> del header, el carrusel, el
-# zoom de imágenes y el filtro de blog). Son estáticos por versión de Astro y por
-# contenido del script; sin ellos, con script-src 'self' Cloudflare los bloquea y
-# la funcionalidad muere EN SILENCIO en producción (sin error visible, solo deja
-# de funcionar). En dev/preview no se nota porque _headers no se aplica ahí.
+# Un script inline solo pasa la CSP si su hash sha256 está en script-src. Si no
+# está, Cloudflare lo bloquea y la funcionalidad muere EN SILENCIO: sin error
+# visible, simplemente deja de ocurrir. Y como este archivo NO se aplica en
+# `pnpm dev` ni en `pnpm preview`, el fallo es invisible hasta producción.
 #
-# ⚠️ Cada vez que toques un <script> de un .astro (o subas la versión de Astro)
-# cambia su hash y HAY QUE REGENERAR esta lista. Regenerar con:
-#   pnpm build && node -e "const fs=require('fs'),p=require('path'),c=require('crypto');const w=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(e=>{const x=p.join(d,e.name);return e.isDirectory()?w(x):[x]});const re=/<script(\s[^>]*)?>([\s\S]*?)<\/script>/g;const s=new Set();for(const f of w('dist').filter(f=>f.endsWith('.html'))){const h=fs.readFileSync(f,'utf8');let m;while(m=re.exec(h)){const a=m[1]||'';if(/src\s*=/.test(a)||/application\/ld\+json/.test(a)||m[2].trim()==='')continue;s.add(c.createHash('sha256').update(m[2],'utf8').digest('base64'))}}for(const h of s)console.log(\"'sha256-\"+h+\"'\")"
+# Por eso los scripts del proyecto ya NO van inline: astro.config.mjs fuerza
+# `assetsInlineLimit` a false para .js, así que cada <script> de un .astro sale
+# como archivo y lo cubre `'self'`. NO hace falta tocar esta lista al editarlos.
 #
-# Inventario actual (regenerado 2026-09-14, Astro 7.1.6):
+# Los 3 hashes de abajo son los cargadores de hidratación que emite el runtime de
+# Astro, que no pasan por ese plugin. Solo cambian al SUBIR LA VERSIÓN DE ASTRO.
+#
+# `pnpm build` ejecuta scripts/csp-check.mjs y falla si esta lista no coincide
+# con dist/, así que la desincronización ya no puede llegar a producción.
+# Para corregirla: pnpm csp:check --fix
+#
+# Inventario (Astro 7.1.6):
 #   BF0290pk… cargador de hidratación client:idle
 #   Ya0pUYrC… runtime de hidratación de islas React
 #   Q2BPg90Z… cargador de hidratación client:visible
-#   bxTi8wnB… Header: toggle de rs-header-scrolled al hacer scroll
-#   3G1WELS3… Ecosystem: carrusel de módulos (deriva automática + flechas)
-#   X83+5WYk… ZoomableImage: <dialog> de las capturas de módulo
-#   4vGmeIOR… Blog: filtro por categoría
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com 'sha256-BF0290pkb3jxQsE7z00xR8Imp8X34FLC88L0lkMnrGw=' 'sha256-Ya0pUYrC7nM5Cn/056TyVuEiz6dFGrzmkWzgON0pF0U=' 'sha256-Q2BPg90ZMplYY+FSdApNErhpWafg2hcRRbndmvxuL/Q=' 'sha256-bxTi8wnBHqFxcWGcxefJAdRYtVPYyCx5/M+sseE61e0=' 'sha256-3G1WELS3jX4GL+NhK0nlDd3jFvY+9imTnQsGj7K6kM0=' 'sha256-X83+5WYkndNPXOkwhIzT8HVk6iDfqoLnXJstCgampig=' 'sha256-4vGmeIORL4ohQMLRoVVOQDJV6YsrPig/gIS1ahU7CF8='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com; font-src 'self'; connect-src 'self' https://api.emailjs.com https://formsubmit.co https://www.google-analytics.com; frame-src https://www.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com 'sha256-BF0290pkb3jxQsE7z00xR8Imp8X34FLC88L0lkMnrGw=' 'sha256-Ya0pUYrC7nM5Cn/056TyVuEiz6dFGrzmkWzgON0pF0U=' 'sha256-Q2BPg90ZMplYY+FSdApNErhpWafg2hcRRbndmvxuL/Q='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com; font-src 'self'; connect-src 'self' https://api.emailjs.com https://formsubmit.co https://www.google-analytics.com; frame-src https://www.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
