@@ -29,7 +29,7 @@ export const hero = {
     "Centraliza crédito, liquidez, mercado, operacional, SARLAFT, otorgamiento y Business Intelligence en un solo lugar, con tableros listos para usar y datos siempre actualizados.",
   backgroundImage: "hero",
   primaryCta: { label: "Solicitar información", href: "/contacto" },
-  secondaryCta: { label: "Explorar módulos", href: "/modulos" },
+  secondaryCta: { label: "Explorar módulos", href: "#ecosystem" },
 };
 
 /**
