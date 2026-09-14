@@ -14,11 +14,11 @@
 #   Ya0pUYrC… runtime de hidratación de islas React
 #   Q2BPg90Z… cargador de hidratación client:visible
 #   bxTi8wnB… Header: toggle de rs-header-scrolled al hacer scroll
-#   C3Ng3xE/… Ecosystem: carrusel de módulos
+#   3G1WELS3… Ecosystem: carrusel de módulos (deriva automática + flechas)
 #   X83+5WYk… ZoomableImage: <dialog> de las capturas de módulo
 #   4vGmeIOR… Blog: filtro por categoría
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com 'sha256-BF0290pkb3jxQsE7z00xR8Imp8X34FLC88L0lkMnrGw=' 'sha256-Ya0pUYrC7nM5Cn/056TyVuEiz6dFGrzmkWzgON0pF0U=' 'sha256-Q2BPg90ZMplYY+FSdApNErhpWafg2hcRRbndmvxuL/Q=' 'sha256-bxTi8wnBHqFxcWGcxefJAdRYtVPYyCx5/M+sseE61e0=' 'sha256-C3Ng3xE/rUBAOxRyoDliWWu6RTHE2B3DLg28VsjKbd0=' 'sha256-X83+5WYkndNPXOkwhIzT8HVk6iDfqoLnXJstCgampig=' 'sha256-4vGmeIORL4ohQMLRoVVOQDJV6YsrPig/gIS1ahU7CF8='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com; font-src 'self'; connect-src 'self' https://api.emailjs.com https://formsubmit.co https://www.google-analytics.com; frame-src https://www.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com 'sha256-BF0290pkb3jxQsE7z00xR8Imp8X34FLC88L0lkMnrGw=' 'sha256-Ya0pUYrC7nM5Cn/056TyVuEiz6dFGrzmkWzgON0pF0U=' 'sha256-Q2BPg90ZMplYY+FSdApNErhpWafg2hcRRbndmvxuL/Q=' 'sha256-bxTi8wnBHqFxcWGcxefJAdRYtVPYyCx5/M+sseE61e0=' 'sha256-3G1WELS3jX4GL+NhK0nlDd3jFvY+9imTnQsGj7K6kM0=' 'sha256-X83+5WYkndNPXOkwhIzT8HVk6iDfqoLnXJstCgampig=' 'sha256-4vGmeIORL4ohQMLRoVVOQDJV6YsrPig/gIS1ahU7CF8='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com; font-src 'self'; connect-src 'self' https://api.emailjs.com https://formsubmit.co https://www.google-analytics.com; frame-src https://www.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff

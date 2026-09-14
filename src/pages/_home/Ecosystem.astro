@@ -3,10 +3,15 @@
  * Sección "El ecosistema Risk". Encabezado centrado + carrusel horizontal de
  * módulos a todo el ancho de la pantalla (full-bleed).
  *
- * Carrusel INFINITO y MANUAL (no automático): los módulos se renderizan ×3 y un
- * script vanilla reposiciona el scroll al cruzar los límites para dar sensación
- * de bucle sin fin. En móvil se desplaza con el dedo (scroll nativo); en desktop
- * se arrastra con el mouse. Sin JS, sigue el scroll nativo (mejora progresiva).
+ * Carrusel INFINITO: los módulos se renderizan ×3 y un script vanilla reposiciona
+ * el scroll al cruzar los límites para dar sensación de bucle sin fin. En móvil se
+ * desplaza con el dedo (scroll nativo); en desktop se arrastra con el mouse o se
+ * avanza con las flechas. Sin JS, sigue el scroll nativo (mejora progresiva).
+ *
+ * Deriva automática: arranca solo, a velocidad baja, y se DETIENE en cuanto el
+ * usuario interviene (hover, foco, arrastre, rueda, dedo o flechas). Pasado
+ * IDLE_DELAY sin interacción, la retoma. No corre si la sección está fuera de
+ * pantalla, si la pestaña está oculta o si hay prefers-reduced-motion.
  *
  * Mapeo Figma (referencia, no copia literal):
  * - Título/subtítulo en Inter → Geist (font-sans), regla 4.1.
@@ -14,10 +19,24 @@
  * - Color por módulo → variable --rs-accent (ver ModuleCard) + .rs-module-tag.
  * - Gráficos = imágenes por slug (placeholder).
  */
+import { Icon } from "astro-icon/components";
 import { ecosystem } from "@config/site";
 import Badge from "@components/ui/Badge.astro";
 import Button from "@components/ui/Button.astro";
 import ModuleCard from "./ModuleCard.astro";
+
+/*
+ * Flechas: son una PISTA de que el carrusel se desliza, no el control principal.
+ * Discretas por tamaño y fondo translúcido, NO bajando el contraste del icono:
+ * WCAG 1.4.11 exige 3:1 en controles, y text-ink-secondary sobre el fondo claro
+ * lo cumple de sobra. Solo desde md: en táctil el gesto de deslizar ya es obvio y
+ * las flechas taparían tarjeta.
+ */
+// cursor-pointer es explícito a propósito: la preflight de Tailwind v4 ya no lo
+// aplica a <button> (v3 sí lo hacía), así que sin esta clase la flecha no se
+// siente pulsable al pasar el cursor.
+const arrowClass =
+  "absolute top-1/2 z-10 hidden size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-border bg-surface/85 text-ink-secondary shadow-card backdrop-blur-sm transition-colors hover:bg-surface hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:inline-flex";
 
 // Copias para el bucle infinito (una real + dos clones).
 const copies = [0, 1, 2];
@@ -60,26 +79,65 @@ const copies = [0, 1, 2];
     </div>
   </div>
 
-  <!-- Carrusel full-bleed -->
-  <div
-    data-carousel
-    role="region"
-    aria-label="Módulos de Risk Solution"
-    tabindex="0"
-    class="mt-12 flex w-full cursor-grab gap-5 overflow-x-auto px-5 pb-4 select-none [scrollbar-width:none] sm:px-6 md:mt-16 [&::-webkit-scrollbar]:hidden"
-  >
-    {
-      copies.map((copy) =>
-        ecosystem.modules.map((mod) => (
-          <ModuleCard module={mod} clone={copy !== 0} />
-        )),
-      )
-    }
+  <!--
+    Carrusel full-bleed. Las flechas van en un contenedor `relative` HERMANO del
+    track (no dentro) para que no se desplacen con su scroll ni entren en el orden
+    de tabulación del propio carrusel.
+  -->
+  <div data-carousel-wrap class="relative mt-12 md:mt-16">
+    <div
+      id="ecosystem-carousel"
+      data-carousel
+      role="region"
+      aria-label="Módulos de Risk Solution"
+      tabindex="0"
+      class="flex w-full cursor-grab gap-5 overflow-x-auto px-5 pb-4 select-none [scrollbar-width:none] sm:px-6 [&::-webkit-scrollbar]:hidden"
+    >
+      {
+        copies.map((copy) =>
+          ecosystem.modules.map((mod) => (
+            <ModuleCard module={mod} clone={copy !== 0} />
+          )),
+        )
+      }
+    </div>
+
+    <button
+      type="button"
+      data-carousel-prev
+      aria-controls="ecosystem-carousel"
+      aria-label="Ver módulos anteriores"
+      class:list={[arrowClass, "left-3 sm:left-5"]}
+    >
+      <Icon name="lucide:chevron-left" class="size-5" aria-hidden="true" />
+    </button>
+
+    <button
+      type="button"
+      data-carousel-next
+      aria-controls="ecosystem-carousel"
+      aria-label="Ver módulos siguientes"
+      class:list={[arrowClass, "right-3 sm:right-5"]}
+    >
+      <Icon name="lucide:chevron-right" class="size-5" aria-hidden="true" />
+    </button>
   </div>
 </section>
 
 <script>
   const carousels = document.querySelectorAll<HTMLElement>("[data-carousel]");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  /** Velocidad de la deriva automática, en px/s. Lenta a propósito: es un gesto
+   *  que insinúa que hay más contenido, no una animación protagonista. */
+  const SPEED = 26;
+  /**
+   * Espera antes de retomar la deriva SOLO en gestos que no tienen un evento de
+   * "fin" fiable: rueda y táctil (el scroll por inercia sigue vivo tras soltar el
+   * dedo, y escribir scrollLeft encima lo cortaría). Con mouse no se usa: al
+   * salir del carrusel la deriva vuelve de inmediato.
+   */
+  const SETTLE_DELAY = 900;
 
   carousels.forEach((el) => {
     // --- Bucle infinito: el contenido se renderiza ×3; se mantiene el scroll
@@ -92,6 +150,162 @@ const copies = [0, 1, 2];
     };
     measure();
     window.addEventListener("resize", measure);
+
+    // --- Deriva automática ---
+    // Avanza con requestAnimationFrame en vez de setInterval para no acumular
+    // desfase, y acumula el sobrante subpíxel (`carry`) porque scrollLeft redondea
+    // a entero: sin eso, a 26 px/s el avance se perdería en el redondeo.
+    //
+    // La pausa NO es un booleano sino un conjunto de "retenciones" con su motivo
+    // (hover, foco, arrastre, rueda, táctil). Con un solo booleano, soltar el
+    // arrastre reanudaba la deriva aunque el cursor siguiera encima; así la
+    // deriva solo vuelve cuando se han liberado TODAS las retenciones activas.
+    const holds = new Set<string>();
+    const timers = new Map<string, number>();
+    let onScreen = true;
+    let rafId = 0;
+    let lastFrame = 0;
+    let carry = 0;
+
+    const canRun = () =>
+      !holds.size && onScreen && !document.hidden && !reducedMotion.matches;
+
+    const stopLoop = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = 0;
+      lastFrame = 0;
+    };
+
+    const frame = (now: number) => {
+      if (!canRun()) return stopLoop();
+      const delta = lastFrame ? (now - lastFrame) / 1000 : 0;
+      lastFrame = now;
+      // Se descartan los saltos largos (pestaña en segundo plano, jank): sin este
+      // tope, al volver el foco el carrusel pegaría un brinco proporcional.
+      if (delta > 0 && delta < 0.1) {
+        carry += SPEED * delta;
+        const step = Math.trunc(carry);
+        if (step) {
+          carry -= step;
+          el.scrollLeft += step;
+        }
+      }
+      rafId = requestAnimationFrame(frame);
+    };
+
+    const start = () => {
+      if (!rafId && canRun()) rafId = requestAnimationFrame(frame);
+    };
+
+    const clearTimer = (reason: string) => {
+      const timer = timers.get(reason);
+      if (timer) window.clearTimeout(timer);
+      timers.delete(reason);
+    };
+
+    const hold = (reason: string) => {
+      clearTimer(reason);
+      holds.add(reason);
+      stopLoop();
+    };
+
+    /** Libera la retención y, si no queda ninguna, retoma la deriva al instante. */
+    const release = (reason: string) => {
+      clearTimer(reason);
+      holds.delete(reason);
+      start();
+    };
+
+    const releaseAfter = (reason: string, ms: number) => {
+      clearTimer(reason);
+      timers.set(
+        reason,
+        window.setTimeout(() => release(reason), ms),
+      );
+    };
+
+    // Solo se anima lo que está a la vista y en una pestaña activa.
+    new IntersectionObserver(
+      (entries) => {
+        onScreen = entries.some((entry) => entry.isIntersecting);
+        if (onScreen) start();
+        else stopLoop();
+      },
+      { threshold: 0 },
+    ).observe(el);
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stopLoop();
+      else start();
+    });
+
+    reducedMotion.addEventListener("change", () => {
+      if (reducedMotion.matches) stopLoop();
+      else start();
+    });
+
+    // Cualquier intervención del usuario manda sobre la deriva.
+    //
+    // El hover se escucha en el CONTENEDOR (track + flechas), no en el track: las
+    // flechas van posicionadas encima pero son hermanas suyas, así que pasar el
+    // cursor del track a una flecha dispararía el pointerleave del track y la
+    // deriva se reanudaría justo cuando el usuario va a hacer clic.
+    const wrap = el.closest<HTMLElement>("[data-carousel-wrap]") ?? el;
+
+    wrap.addEventListener("pointerenter", (event) => {
+      if (event.pointerType === "mouse") hold("hover");
+    });
+    wrap.addEventListener("pointerleave", (event) => {
+      if (event.pointerType === "mouse") release("hover");
+    });
+    wrap.addEventListener("focusin", () => hold("focus"));
+    wrap.addEventListener("focusout", () => release("focus"));
+    el.addEventListener(
+      "wheel",
+      () => {
+        hold("wheel");
+        releaseAfter("wheel", SETTLE_DELAY);
+      },
+      { passive: true },
+    );
+    el.addEventListener("touchstart", () => hold("touch"), { passive: true });
+    el.addEventListener("touchend", () => releaseAfter("touch", SETTLE_DELAY), {
+      passive: true,
+    });
+
+    start();
+
+    // --- Flechas ---
+    // Avanzan una tarjeta. El paso se mide en vivo porque el ancho de la tarjeta
+    // es responsive (280 / 400 / 501px) y el gap viene del CSS.
+    const step = () => {
+      const card = el.firstElementChild;
+      const gap = Number.parseFloat(getComputedStyle(el).columnGap) || 20;
+      return card
+        ? card.getBoundingClientRect().width + gap
+        : el.clientWidth * 0.8;
+    };
+
+    // Tras el clic el cursor sigue sobre la flecha, así que la retención "hover"
+    // mantiene la deriva detenida y el desplazamiento suave termina sin que nada
+    // le escriba scrollLeft encima. Al salir del carrusel, "hover" se libera y la
+    // deriva vuelve al instante. La retención "arrow" solo cubre el caso sin
+    // mouse (activar la flecha con teclado), donde no hay hover que retenga.
+    const nudge = (direction: 1 | -1) => {
+      hold("arrow");
+      el.scrollBy({
+        left: direction * step(),
+        behavior: reducedMotion.matches ? "auto" : "smooth",
+      });
+      releaseAfter("arrow", SETTLE_DELAY);
+    };
+
+    wrap
+      .querySelector("[data-carousel-prev]")
+      ?.addEventListener("click", () => nudge(-1));
+    wrap
+      .querySelector("[data-carousel-next]")
+      ?.addEventListener("click", () => nudge(1));
 
     let ticking = false;
     el.addEventListener("scroll", () => {
@@ -113,6 +327,7 @@ const copies = [0, 1, 2];
     let pointerId = -1;
 
     el.addEventListener("pointerdown", (event) => {
+      hold("drag");
       if (event.pointerType !== "mouse") return;
       isDown = true;
       dragging = false;
@@ -144,6 +359,8 @@ const copies = [0, 1, 2];
       isDown = false;
       dragging = false;
       el.classList.remove("cursor-grabbing");
+      // Si el cursor sigue encima, la retención "hover" mantiene la pausa.
+      release("drag");
     };
     el.addEventListener("pointerup", stop);
     el.addEventListener("pointercancel", stop);
