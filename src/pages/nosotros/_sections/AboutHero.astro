@@ -11,7 +11,8 @@
  * - Descripción 20/400 #555 → text-ink-secondary, medida ~783px.
  * - Estadísticas: número 40/400 'JetBrains Mono' → Geist + tabular-nums
  *   (regla 4.1: Geist es la única familia, sin monoespaciada); etiqueta 16/400
- *   #555 → text-ink-secondary. 4 en fila a ≥sm; 2×2 en móvil.
+ *   #555 → text-ink-secondary. Fila centrada con flex-wrap (no grid) para que la
+ *   fila quede centrada sea cual sea el número de estadísticas.
  */
 import { aboutHero } from "@config/site";
 
@@ -35,11 +36,11 @@ const { title, description, stats } = aboutHero;
     </p>
 
     <dl
-      class="mt-[clamp(2.5rem,4.6vw,4.125rem)] grid grid-cols-2 gap-x-[clamp(1.5rem,3vw,3rem)] gap-y-8 sm:grid-cols-4"
+      class="mt-[clamp(2.5rem,4.6vw,4.125rem)] flex flex-wrap justify-center gap-x-[clamp(1.5rem,3vw,3rem)] gap-y-8"
     >
       {
         stats.map((stat: { value: string; label: string }) => (
-          <div class="flex flex-col items-center gap-1.5">
+          <div class="flex min-w-[9rem] flex-1 flex-col items-center gap-1.5">
             <dd class="order-1 text-[clamp(1.75rem,1.4rem_+_1.2vw,2.5rem)] leading-tight tracking-[-0.02em] tabular-nums text-ink">
               {stat.value}
             </dd>

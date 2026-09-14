@@ -28,8 +28,8 @@ export const hero = {
   description:
     "Centraliza crédito, liquidez, mercado, operacional, SARLAFT, otorgamiento y Business Intelligence en un solo lugar, con tableros listos para usar y datos siempre actualizados.",
   backgroundImage: "hero",
-  primaryCta: { label: "Solicitar Demo", href: "/contacto" },
-  secondaryCta: { label: "Explorar módulos", href: "/modulos" },
+  primaryCta: { label: "Solicitar información", href: "/contacto" },
+  secondaryCta: { label: "Explorar módulos", href: "#ecosystem" },
 };
 
 /**
@@ -84,7 +84,7 @@ export const ecosystem = {
   title: "Siete módulos. Una sola plataforma.",
   subtitle:
     "Cada módulo opera de forma independiente, pero todos comparten una misma fuente de datos y un mismo lenguaje visual ejecutivo.",
-  cta: { label: "Solicitar Demo", href: "/contacto" },
+  cta: { label: "Solicitar información", href: "/contacto" },
   modules: [
     {
       name: "Riesgo de crédito",
@@ -100,7 +100,7 @@ export const ecosystem = {
       accent: "#4F46E5", // TODO Figma
       icon: "lucide:file-check", // TODO Figma
       description:
-        "Analiza con inteligencia artificial si una persona natural o jurídica es candidata a un crédito, con scoring automático y extracción de datos por RPA.",
+        "Analiza con inteligencia artificial si una persona natural o jurídica es candidata a un crédito, con scoring automático y extracción de datos automatizada con n8n.",
       chartImage: "modules/otorgamiento-de-credito",
       href: "/modulos/otorgamiento-de-credito",
     },
@@ -161,13 +161,13 @@ export const benefits = {
   eyebrow: "BENEFICIOS",
   title: "¿Por qué elegir nuestra infraestructura?",
   subtitle: "Construido y diseñado para la decisión ejecutiva.",
-  cta: { label: "Solicitar Demo", href: "/contacto" },
+  cta: { label: "Solicitar información", href: "/contacto" },
   items: [
     {
       number: "01",
       title: "IA integrada",
       description:
-        "Scoring automático, RPA para extracción web y análisis predictivo dentro del flujo de otorgamiento.",
+        "Scoring automático, automatización con n8n para extracción web y análisis predictivo dentro del flujo de otorgamiento.",
     },
     {
       number: "02",
@@ -183,7 +183,7 @@ export const benefits = {
     },
     {
       number: "04",
-      title: "Integración RPA",
+      title: "Automatización con n8n",
       description:
         "Automatización de procesos y extracción de datos de fuentes externas, sin digitación manual.",
     },
@@ -235,7 +235,7 @@ export const ctaBanner = {
   titleLead: "Lleva toda tu gestión de riesgo a",
   titleTrail: "un solo tablero.",
   description:
-    "Agenda una demo y mira cómo el comité de riesgo recibe el reporte en minutos.",
+    "Agenda una reunión y mira cómo el comité de riesgo recibe el reporte en minutos.",
   cta: { label: "Hablar con un experto", href: "/contacto" },
 };
 
@@ -246,12 +246,11 @@ export const ctaBanner = {
 export const aboutHero = {
   title: "Construimos infraestructura de riesgo financiero",
   description:
-    "Desde 2014 desarrollamos software especializado para la gestión de riesgos en entidades del sector financiero.",
+    "Desde 2014 desarrollamos software especializado para la gestión de riesgos.",
   stats: [
     { value: "2014", label: "Año de lanzamiento" },
     { value: "7", label: "Módulos interconectados" },
     { value: "+10", label: "Años de experiencia" },
-    { value: "100%", label: "Enfoque sector financiero" },
   ],
 };
 
@@ -260,7 +259,7 @@ export const aboutHero = {
  * Copy real (contenido.md): un único párrafo de misión + visión.
  */
 export const aboutStatement = {
-  text: "Dotar a cada entidad financiera de herramientas precisas para anticipar el riesgo y decidir con datos, no con intuición. Ser la plataforma de referencia en gestión integral de riesgos para las entidades financieras de Colombia y la región.",
+  text: "En Solution Systems dotamos a cada organización de herramientas precisas para anticipar el riesgo y decidir con datos, no con intuición. Acompañamos a nuestros clientes desde el diagnóstico hasta la puesta en producción, y buscamos ser la plataforma de referencia en gestión integral de riesgos en Colombia y la región.",
 };
 
 /**

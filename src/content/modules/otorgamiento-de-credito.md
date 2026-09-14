@@ -5,7 +5,7 @@ description: "Analiza, mediante inteligencia artificial (IA), las variables nece
 # Chips del hero: capacidades del módulo (contenido.md).
 highlights:
   - "Indicadores por línea de crédito"
-  - "Extracción de información con RPA"
+  - "Extracción de información con n8n"
   - "Estudios de crédito por industria"
   - "Scoring automático"
 # Vista previa del dashboard: fila de indicadores + capturas reales del producto,
@@ -31,6 +31,11 @@ dashboard:
       image: "modules/otorgamiento-de-credito/cuota-vs-garantia"
     - alt: "Estudio de crédito por indicador con la normatividad aplicable"
       image: "modules/otorgamiento-de-credito/estudio-de-credito-por-indicador"
+    # OJO: esta captura muestra la misma vista que la primera gráfica
+    # (solicitudes-aprobadas-por-linea), recapturada. Se incluye para completar la
+    # rejilla 2×2; reemplazar por una gráfica distinta cuando esté disponible.
+    - alt: "Monto total y porcentaje de solicitudes aprobadas por línea de crédito en los últimos 2 años"
+      image: "modules/otorgamiento-de-credito/resumen-solicitudes-aprobadas"
 benefits:
   title: "Beneficios para tu comité de riesgo"
   items:

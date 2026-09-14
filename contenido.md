@@ -25,7 +25,7 @@ Subtítulo: Cada módulo opera de forma independiente, pero todos comparten una 
 Tarjetas de módulos (7, con descripción corta basada en la presentación oficial de junio 2026):
 Módulo	Descripción corta
 Riesgo de crédito	Mide la probabilidad de pérdida por incumplimiento: pérdida esperada, análisis de cosechas y gestión de cartera.
-Otorgamiento de crédito	Analiza con IA si una persona natural o jurídica es candidata a un crédito, con scoring automático y RPA.
+Otorgamiento de crédito	Analiza con IA si una persona natural o jurídica es candidata a un crédito, con scoring automático y automatización con n8n.
 Riesgo de liquidez	Mide la capacidad de la entidad para cubrir sus obligaciones frente a terceros, con escenarios de tensión.
 Business Intelligence	Convierte los datos clave de la organización en indicadores gráficos para la toma de decisiones.
 Riesgo de mercado	Mide la probabilidad de variación en precio y posición de los activos de la entidad.
@@ -36,10 +36,10 @@ Sección “Beneficios” (01–04)
 Eyebrow: BENEFICIOS
 Título: ¿Por qué elegir nuestra infraestructura?
 Subtítulo: Construido y diseñado para la decisión ejecutiva.
-01. IA integrada — Scoring automático, RPA para extracción web y análisis predictivo dentro del flujo de otorgamiento.
+01. IA integrada — Scoring automático, automatización con n8n para extracción web y análisis predictivo dentro del flujo de otorgamiento.
 02. Cumplimiento normativo — Normativa colombiana embebida en cada módulo: Ley 358, 617 y 819, SARLAFT y exigencias de la Superfinanciera.
 03. Visualización ejecutiva — Dashboards listos para presentar al comité de riesgo y a la junta directiva, sin preparación adicional.
-04. Integración RPA — Automatización de procesos y extracción de datos de fuentes externas, sin digitación manual.
+04. Automatización con n8n — Automatización de procesos y extracción de datos de fuentes externas, sin digitación manual.
 Estos 4 ya estaban bien escritos y sin repeticiones — se dejaron igual.
 Testimonios
 En la maqueta ambos testimonios citan el mismo texto; se asignó un texto distinto a cada cliente:
@@ -62,10 +62,10 @@ Beneficios:
 
 2.2 Otorgamiento de crédito
 Subtítulo (definición oficial): Analiza, mediante inteligencia artificial (IA), las variables necesarias para determinar si una persona natural o jurídica es candidata para obtener un crédito.
-Tags (funcionalidades): Indicadores por línea de crédito · Extracción de información con RPA · Estudios de crédito por industria · Scoring automático
+Tags (funcionalidades): Indicadores por línea de crédito · Extracción de información con n8n · Estudios de crédito por industria · Scoring automático
 Beneficios:
 01. Decide más rápido — El scoring automático reduce el tiempo de análisis de una solicitud de crédito de horas a minutos.
-02. Reduce el error humano — La extracción de información vía RPA evita la digitación manual de datos desde fuentes externas.
+02. Reduce el error humano — La extracción de información automatizada con n8n evita la digitación manual de datos desde fuentes externas.
 03. Adapta el criterio por línea de negocio — Configura estudios de crédito distintos según el tipo de industria o línea de crédito.
 
 2.3 Riesgo de liquidez
@@ -166,7 +166,7 @@ El FAQ actual repite la pregunta “¿Qué tipo de soporte brindan?” dos veces
 ¿Qué tipo de soporte brindan?: Acompañamiento durante la implementación, capacitación a tu equipo de riesgo y soporte continuo para resolver dudas funcionales y técnicas una vez la plataforma está en producción.
 ¿Puedo solicitar un desarrollo dentro de un módulo?: Sí. Cada módulo puede ajustarse a necesidades específicas de tu entidad; evaluamos la solicitud con nuestro equipo técnico y te damos un alcance y tiempo de entrega.
 ¿Cómo es el proceso de instalación?: Inicia con una reunión de diagnóstico, seguida del levantamiento de tus fuentes de información, la configuración de los módulos contratados y la capacitación de tu equipo antes de salir a producción.
-¿Sobre qué tecnología está construida la plataforma?: Risk Solution está desarrollado sobre base de datos Oracle, con interfaz en Oracle APEX, lo que garantiza estabilidad, seguridad y trazabilidad de la información.
+¿Sobre qué tecnología está construida la plataforma?: Risk Solution es un producto en la nube: funciona como SaaS, sin instalación en los servidores de la entidad. Está desarrollado sobre base de datos Oracle, con interfaz en Oracle APEX, lo que garantiza estabilidad, seguridad y trazabilidad de la información.
 
 Resumen de cambios clave
 Actualización con la presentación “Solution Riesgos — Junio 2026”

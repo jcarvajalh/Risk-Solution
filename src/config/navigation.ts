@@ -46,12 +46,11 @@ export const mainNav: NavLink[] = [
 ];
 
 /**
- * CTA del header ("Solicitar Demo"). Es una acción separada de los enlaces de
- * navegación (así aparece en el diseño del home).
- * TODO: confirmar destino real (¿/contacto o un formulario de demo dedicado?).
+ * CTA del header ("Solicitar información"). Es una acción separada de los enlaces
+ * de navegación (así aparece en el diseño del home).
  */
 export const headerCta: NavLink = {
-  label: "Solicitar Demo",
+  label: "Solicitar información",
   href: "/contacto",
 };
 

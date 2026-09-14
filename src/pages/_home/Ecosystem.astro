@@ -23,8 +23,15 @@ import ModuleCard from "./ModuleCard.astro";
 const copies = [0, 1, 2];
 ---
 
+<!--
+  El id es el destino del CTA "Explorar módulos" del hero (hero.secondaryCta en
+  site.ts). scroll-mt-20 compensa los 80px del header fijo: sin él, el anclaje
+  deja el encabezado de la sección tapado debajo del header.
+-->
 <section
-  class="flex min-h-[80dvh] flex-col justify-center overflow-hidden bg-surface py-16"
+  id="ecosystem"
+  aria-labelledby="ecosystem-titulo"
+  class="flex min-h-[80dvh] scroll-mt-20 flex-col justify-center overflow-hidden bg-surface py-16"
 >
   <!-- Encabezado (contenedor centrado) -->
   <div class="mx-auto w-full max-w-[1200px] px-5 sm:px-6">
@@ -32,6 +39,7 @@ const copies = [0, 1, 2];
       <Badge variant="primary">{ecosystem.eyebrow}</Badge>
 
       <h2
+        id="ecosystem-titulo"
         class="mt-6 max-w-[647px] text-3xl font-bold tracking-[-0.04em] text-balance text-ink md:text-[40px] md:leading-[48px]"
       >
         {ecosystem.title}
