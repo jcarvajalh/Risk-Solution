@@ -94,7 +94,10 @@ sin consultarme.
 
 ```
 pnpm dev            # servidor de desarrollo
-pnpm build          # build de producción
+pnpm build          # build de producción + verificación de la CSP
+pnpm build:only     # build sin la verificación de la CSP
+pnpm csp:check      # comprueba los hashes de public/_headers contra dist/
+                    #   (--fix los regenera)
 pnpm preview        # previsualizar el build
 pnpm typecheck      # astro check
 pnpm lint           # eslint .
@@ -305,6 +308,9 @@ risk-solution/
 │   └── types/
 │       └── index.ts                # interfaces compartidas
 │
+├── scripts/
+│   └── csp-check.mjs               # valida los hashes de la CSP contra dist/
+│
 ├── CLAUDE.md
 ├── astro.config.mjs
 ├── tsconfig.json
@@ -441,6 +447,23 @@ ninguna política aplica en producción.
 
 Ajusta la CSP si se suma un dominio de terceros, pero **jamás la relajes con
 `unsafe-eval` ni comodines**. Si algo requiere eso, avísame y buscamos otra vía.
+
+**Scripts inline y hashes.** Un `<script>` incrustado en el HTML solo pasa la CSP
+si su hash `sha256` está en `script-src`; si no, Cloudflare lo bloquea y la
+funcionalidad **muere en silencio** (sin error visible). Como `_headers` no se
+aplica en `pnpm dev` ni en `pnpm preview`, el fallo no aparece hasta producción.
+Esto rompió el sitio tres veces, así que está resuelto de raíz:
+
+- `astro.config.mjs` pasa `vite.build.assetsInlineLimit` como función que devuelve
+  `false` para `.js`. Los `<script>` de los `.astro` salen como **archivos
+  externos**, cubiertos por `'self'`. **Editarlos ya no exige tocar `_headers`.**
+- Los únicos inline que quedan son los 3 cargadores de hidratación del runtime de
+  Astro. Solo cambian al **subir la versión de Astro**.
+- `pnpm build` ejecuta `scripts/csp-check.mjs` y **falla** si la lista no coincide
+  con `dist/`. Se corrige con `pnpm csp:check --fix`.
+
+No vuelvas a incrustar scripts a mano ni a añadir `'unsafe-inline'` a `script-src`
+para esquivar esto.
 
 ### 7.2 Formularios
 
